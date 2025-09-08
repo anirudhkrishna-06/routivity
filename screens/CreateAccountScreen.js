@@ -1,5 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
-import React, { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+
+import React, { useState, useEffect } from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -9,32 +11,110 @@ import {
   View,
   Image,
   Dimensions,
-  StatusBar
+  StatusBar,
 } from 'react-native';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 const { width } = Dimensions.get('window');
 
 const CreateAccountScreen = () => {
   const [name, setName] = useState('');
+  const [contact, setContact] = useState('');
+  const [gender, setGender] = useState('');
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [focusedInput, setFocusedInput] = useState(null);
 
   const navigation = useNavigation();
 
-  const handleSignUp = () => {
-    if (!name.trim()) {
-      alert('Please enter your name');
+  // ✅ Email format validation
+  const validateEmailFormat = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  // ✅ Password strength validation
+  const validatePasswordStrength = (password) => {
+    const re = /^(?=.*[0-9])(?=.*[!@#$%^&*]).{6,}$/;
+    return re.test(password);
+  };
+
+  // Local validations
+  useEffect(() => {
+    if (!email) {
+      setEmailError('');
       return;
     }
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredentials => {
-        console.log('Registered with:', userCredentials.user.email);
-        navigation.replace("Home");
-      })
-      .catch(error => alert(error.message));
+    if (!validateEmailFormat(email)) {
+      setEmailError('Invalid email format');
+    } else {
+      setEmailError('');
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (!password) {
+      setPasswordError('');
+      return;
+    }
+    if (!validatePasswordStrength(password)) {
+      setPasswordError(
+        'Password must be 6+ chars, include a number & special char'
+      );
+    } else {
+      setPasswordError('');
+    }
+  }, [password]);
+
+  useEffect(() => {
+    if (!confirmPassword) {
+      setConfirmPasswordError('');
+      return;
+    }
+    if (confirmPassword !== password) {
+      setConfirmPasswordError('Passwords do not match');
+    } else {
+      setConfirmPasswordError('');
+    }
+  }, [confirmPassword, password]);
+
+  const handleSignUp = async () => {
+    if (!name.trim()) return setEmailError('Please enter your full name');
+    if (!contact.trim()) return setEmailError('Please enter your contact number');
+    if (!gender.trim()) return setEmailError('Please enter your gender');
+    if (emailError || passwordError || confirmPasswordError) return;
+
+    try {
+      // ✅ Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // ✅ Store user data in Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        uid: user.uid,
+        fullName: name,
+        contactNumber: contact,
+        gender,
+        email,
+        createdAt: new Date(),
+      });
+
+      console.log('User registered & stored in Firestore:', user.uid);
+      navigation.replace('Home');
+    } catch (error) {
+      console.error('Signup Error:', error.message);
+      setEmailError(error.message);
+    }
   };
 
   return (
@@ -44,6 +124,16 @@ const CreateAccountScreen = () => {
         {/* Background Decorations */}
         <View style={styles.backgroundDecoration} />
         <View style={styles.backgroundDecoration2} />
+
+        {/* Back Arrow */}
+        <TouchableOpacity 
+          style={styles.backButton} 
+          onPress={() => navigation.goBack()}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="arrow-back" size={23} color="#333" />
+        </TouchableOpacity>
+
 
         {/* Logo and Title */}
         <View style={styles.logoContainer}>
@@ -58,53 +148,127 @@ const CreateAccountScreen = () => {
 
         {/* Input Fields */}
         <View style={styles.inputContainer}>
-          <View style={[
-            styles.inputWrapper,
-            focusedInput === 'name' && styles.inputWrapperFocused
-          ]}>
+          {/* Full Name */}
+          <View
+            style={[
+              styles.inputWrapper,
+              focusedInput === 'name' && styles.inputWrapperFocused,
+            ]}
+          >
             <TextInput
               placeholder="Full Name"
               placeholderTextColor="#A9B5DF"
               value={name}
-              onChangeText={text => setName(text)}
+              onChangeText={setName}
               style={styles.input}
               onFocus={() => setFocusedInput('name')}
               onBlur={() => setFocusedInput(null)}
             />
           </View>
 
-          <View style={[
-            styles.inputWrapper,
-            focusedInput === 'email' && styles.inputWrapperFocused
-          ]}>
+          {/* Contact Number */}
+          <View
+            style={[
+              styles.inputWrapper,
+              focusedInput === 'contact' && styles.inputWrapperFocused,
+            ]}
+          >
+            <TextInput
+              placeholder="Contact Number"
+              placeholderTextColor="#A9B5DF"
+              value={contact}
+              onChangeText={setContact}
+              style={styles.input}
+              keyboardType="phone-pad"
+              onFocus={() => setFocusedInput('contact')}
+              onBlur={() => setFocusedInput(null)}
+            />
+          </View>
+
+          {/* Gender */}
+          <View
+            style={[
+              styles.inputWrapper,
+              focusedInput === 'gender' && styles.inputWrapperFocused,
+            ]}
+          >
+            <TextInput
+              placeholder="Gender (Male/Female/Other)"
+              placeholderTextColor="#A9B5DF"
+              value={gender}
+              onChangeText={setGender}
+              style={styles.input}
+              onFocus={() => setFocusedInput('gender')}
+              onBlur={() => setFocusedInput(null)}
+            />
+          </View>
+
+          {/* Email */}
+          <View
+            style={[
+              styles.inputWrapper,
+              focusedInput === 'email' && styles.inputWrapperFocused,
+            ]}
+          >
             <TextInput
               placeholder="Email Address"
               placeholderTextColor="#A9B5DF"
               value={email}
-              onChangeText={text => setEmail(text)}
+              onChangeText={setEmail}
               style={styles.input}
-              onFocus={() => setFocusedInput('email')}
-              onBlur={() => setFocusedInput(null)}
               keyboardType="email-address"
               autoCapitalize="none"
+              onFocus={() => setFocusedInput('email')}
+              onBlur={() => setFocusedInput(null)}
             />
           </View>
+          {emailError ? (
+            <Text style={styles.errorText}>{emailError}</Text>
+          ) : null}
 
-          <View style={[
-            styles.inputWrapper,
-            focusedInput === 'password' && styles.inputWrapperFocused
-          ]}>
+          {/* Password */}
+          <View
+            style={[
+              styles.inputWrapper,
+              focusedInput === 'password' && styles.inputWrapperFocused,
+            ]}
+          >
             <TextInput
               placeholder="Password"
               placeholderTextColor="#A9B5DF"
               value={password}
-              onChangeText={text => setPassword(text)}
+              onChangeText={setPassword}
               style={styles.input}
-              secureTextEntry
+              secureTextEntry={true}
               onFocus={() => setFocusedInput('password')}
               onBlur={() => setFocusedInput(null)}
             />
           </View>
+          {passwordError ? (
+            <Text style={styles.errorText}>{passwordError}</Text>
+          ) : null}
+
+          {/* Confirm Password */}
+          <View
+            style={[
+              styles.inputWrapper,
+              focusedInput === 'confirmPassword' && styles.inputWrapperFocused,
+            ]}
+          >
+            <TextInput
+              placeholder="Confirm Password"
+              placeholderTextColor="#A9B5DF"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              style={styles.input}
+              secureTextEntry={true}
+              onFocus={() => setFocusedInput('confirmPassword')}
+              onBlur={() => setFocusedInput(null)}
+            />
+          </View>
+          {confirmPasswordError ? (
+            <Text style={styles.errorText}>{confirmPasswordError}</Text>
+          ) : null}
         </View>
 
         {/* Register Button */}
@@ -113,18 +277,21 @@ const CreateAccountScreen = () => {
             onPress={handleSignUp}
             style={styles.loginButton}
             activeOpacity={0.8}
+            disabled={
+              !name ||
+              !contact ||
+              !gender ||
+              !email ||
+              !password ||
+              !confirmPassword ||
+              !!emailError ||
+              !!passwordError ||
+              !!confirmPasswordError
+            }
           >
             <View style={styles.buttonGradient}>
               <Text style={styles.loginButtonText}>Register</Text>
             </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.registerButton}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.registerButtonText}>Back to Sign In</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -134,6 +301,8 @@ const CreateAccountScreen = () => {
 
 export default CreateAccountScreen;
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -142,6 +311,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
+  errorText: { color: 'red', fontSize: 12, marginTop: 2, marginLeft: 5 },
+  infoText: { color: 'gray', fontSize: 12, marginTop: 2, marginLeft: 5 },
   backgroundDecoration: {
     position: 'absolute',
     top: -50,
@@ -168,9 +339,10 @@ const styles = StyleSheet.create({
     marginTop: -60,
   },
   logo: {
-    width: 200,
+    width: 250,
     height: 160,
-    marginBottom: 0,
+    marginBottom: -30,
+    marginTop: 60,
   },
   welcomeText: {
     fontSize: 20,
@@ -256,4 +428,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.5,
   },
+  backButton: {
+  position: 'absolute',
+  top: StatusBar.currentHeight ? StatusBar.currentHeight + 10 : 40,
+  left: 20,
+  zIndex: 10,
+},
 });

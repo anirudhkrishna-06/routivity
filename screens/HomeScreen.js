@@ -1,12 +1,43 @@
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Image } from 'react-native';
-import React from 'react';
+// /screens/HomeScreen.js
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, Image, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
-
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase'; // ✅ use your firebase.js db
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const auth = getAuth();
+
+  const [loading, setLoading] = useState(true);
+  const [profileCompleted, setProfileCompleted] = useState(false);
+
+  useEffect(() => {
+    const fetchPreferences = async () => {
+      if (!auth.currentUser) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const ref = doc(db, 'users', auth.currentUser.uid, 'preferences', 'userPrefs');
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+          setProfileCompleted(snap.data()?.profileCompleted || false);
+        } else {
+          setProfileCompleted(false); // ✅ No data → show Get Started
+        }
+      } catch (e) {
+        console.log('Error fetching preferences:', e);
+        setProfileCompleted(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPreferences();
+  }, [auth.currentUser]);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -17,6 +48,14 @@ const HomeScreen = () => {
         console.log(error);
       });
   };
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#2D336B" />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -29,22 +68,54 @@ const HomeScreen = () => {
         {/* Main Content */}
         <View style={styles.contentContainer}>
           {/* Logo */}
-          <Image 
-            source={require('../assets/logo.png')} // <-- Place your logo here
-            style={styles.logo}
-            resizeMode="contain"
-          />
+          <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
 
           {/* Welcome Text */}
           <Text style={styles.emailText}>{auth.currentUser?.email}</Text>
+
+          {/* Show Get Started button if not completed */}
+          {!profileCompleted && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PersonalizationForm')}
+              style={[styles.actionButton, { marginTop: 24, backgroundColor: '#2D336B' }]}
+            >
+              <Text style={[styles.actionText, { color: 'white' }]}>Get Started</Text>
+            </TouchableOpacity>
+          )}
+
+          {/* Other Action Buttons */}
+          {profileCompleted && (
+            <View style={{ marginTop: 24, width: '100%' }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Profile')}
+                style={[styles.actionButton, { marginBottom: 12 }]}
+              >
+                <Text style={styles.actionText}>My Profile</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('PlanTrip')}
+                style={[styles.actionButton, { marginBottom: 12 }]}
+              >
+                <Text style={styles.actionText}>Plan a Trip</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('MyTrips')}
+                style={[styles.actionButton, { marginBottom: 12 }]}
+              >
+                <Text style={styles.actionText}>My Trips</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('JoinTrip')}
+                style={[styles.actionButton, { marginBottom: 12 }]}
+              >
+                <Text style={styles.actionText}>Join a Trip</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
 
         {/* Sign Out Button */}
-        <TouchableOpacity
-          style={styles.signOutButton}
-          onPress={handleSignOut}
-          activeOpacity={0.8}
-        >
+        <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut} activeOpacity={0.8}>
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
@@ -53,6 +124,7 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -89,15 +161,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 260,
     height: 120,
-    marginBottom: 40,
-  },
-  welcomeText: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#2D336B',
-    textAlign: 'center',
-    marginBottom: 16,
-    letterSpacing: 0.5,
+    marginBottom: 20,
   },
   emailText: {
     fontSize: 18,
@@ -113,19 +177,26 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 40,
     alignItems: 'center',
-    shadowColor: '#A9B5DF',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
     elevation: 4,
+    position: 'absolute',
+    bottom: 24,
   },
   signOutText: {
     fontSize: 12,
     fontWeight: '600',
     color: '#2D336B',
     letterSpacing: 0.5,
+  },
+  actionButton: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  actionText: {
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
