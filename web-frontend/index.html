@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routivity - Smart Trip Planning</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-route"></i>
+                    <span>Routivity</span>
+                </div>
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">Plan Trip</a>
+                    <a href="#about" class="nav-link">About</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Plan Your Perfect Road Trip</h1>
+                        <p class="hero-subtitle">Get personalized routes with meal stops based on your preferences and schedule</p>
+                    </div>
+                </section>
+
+                <!-- Trip Planning Form -->
+                <section class="trip-form-section">
+                    <div class="form-container">
+                        <h2 class="form-title">Plan Your Trip</h2>
+                        
+                        <form id="tripForm" class="trip-form">
+                            <!-- Source and Destination -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sourceLat">Source Latitude</label>
+                                    <input type="number" id="sourceLat" name="sourceLat" step="any" placeholder="40.7128" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sourceLng">Source Longitude</label>
+                                    <input type="number" id="sourceLng" name="sourceLng" step="any" placeholder="-74.0060" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="destLat">Destination Latitude</label>
+                                    <input type="number" id="destLat" name="destLat" step="any" placeholder="34.0522" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="destLng">Destination Longitude</label>
+                                    <input type="number" id="destLng" name="destLng" step="any" placeholder="-118.2437" required>
+                                </div>
+                            </div>
+
+                            <!-- Stops -->
+                            <div class="form-group">
+                                <label>Waypoints (Optional)</label>
+                                <div id="stopsContainer">
+                                    <div class="stop-input">
+                                        <input type="number" class="stop-lat" placeholder="Latitude" step="any">
+                                        <input type="number" class="stop-lng" placeholder="Longitude" step="any">
+                                        <button type="button" class="remove-stop" onclick="removeStop(this)">×</button>
+                                    </div>
+                                </div>
+                                <button type="button" class="add-stop-btn" onclick="addStop()">
+                                    <i class="fas fa-plus"></i> Add Stop
+                                </button>
+                            </div>
+
+                            <!-- Meal Preferences -->
+                            <div class="form-group">
+                                <label for="mealPreferences">Meal Preferences</label>
+                                <select id="mealPreferences" name="mealPreferences" required>
+                                    <option value="">Select preference</option>
+                                    <option value="vegetarian">Vegetarian</option>
+                                    <option value="vegan">Vegan</option>
+                                    <option value="non-vegetarian">Non-Vegetarian</option>
+                                    <option value="halal">Halal</option>
+                                    <option value="kosher">Kosher</option>
+                                    <option value="any">Any</option>
+                                </select>
+                            </div>
+
+                            <!-- Meal Windows -->
+                            <div class="meal-windows">
+                                <h3>Meal Times</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="lunchStart">Lunch Start</label>
+                                        <input type="time" id="lunchStart" value="12:00" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lunchEnd">Lunch End</label>
+                                        <input type="time" id="lunchEnd" value="14:00" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="dinnerStart">Dinner Start</label>
+                                        <input type="time" id="dinnerStart" value="18:00" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dinnerEnd">Dinner End</label>
+                                        <input type="time" id="dinnerEnd" value="20:00" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Arrival Time -->
+                            <div class="form-group">
+                                <label for="arrivalTime">Preferred Arrival Time (Optional)</label>
+                                <input type="time" id="arrivalTime" name="arrivalTime">
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-route"></i>
+                                Plan My Trip
+                            </button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section id="resultsSection" class="results-section" style="display: none;">
+                    <div class="results-container">
+                        <h2 class="results-title">Your Trip Plan</h2>
+                        
+                        <!-- Trip Overview -->
+                        <div class="trip-overview">
+                            <div class="overview-card">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h3>Departure Time</h3>
+                                    <p id="departureTime">-</p>
+                                </div>
+                            </div>
+                            <div class="overview-card">
+                                <i class="fas fa-utensils"></i>
+                                <div>
+                                    <h3>Meal Stops</h3>
+                                    <p id="mealStopsCount">-</p>
+                                </div>
+                            </div>
+                            <div class="overview-card">
+                                <i class="fas fa-route"></i>
+                                <div>
+                                    <h3>Route Legs</h3>
+                                    <p id="routeLegsCount">-</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Route Details -->
+                        <div class="route-details">
+                            <h3>Route Details</h3>
+                            <div id="routeLegs" class="route-legs">
+                                <!-- Route legs will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Meal Stops -->
+                        <div class="meal-stops">
+                            <h3>Recommended Meal Stops</h3>
+                            <div id="mealStopsList" class="meal-stops-list">
+                                <!-- Meal stops will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button class="btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-redo"></i>
+                                Plan Another Trip
+                            </button>
+                            <button class="btn-primary" onclick="exportTrip()">
+                                <i class="fas fa-download"></i>
+                                Export Trip
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Loading Spinner -->
+                <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Planning your perfect trip...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 Routivity. Smart trip planning made simple.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
