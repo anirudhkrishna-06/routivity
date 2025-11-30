@@ -9,8 +9,8 @@ import LandingScreen from './screens/LandingScreen';
 
 // Trip Flow Screens
 import PlanTripScreen from './screens/PlanTripScreen';
-import SuggestionsScreen from './screens/SuggestionScreen';
-import ItineraryScreen from './screens/ItenaryScreen';
+import TripSuggestionsScreen from './screens/TripSuggestionScreen';
+import ItineraryScreen from './screens/ItineraryScreen';
 import MyTripsScreen from './screens/MyTripsScreen';
 import JoinTripScreen from './screens/JoinTripScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -48,7 +48,7 @@ export default function App() {
 
         {/* Trip Planning Flow */}
         <Stack.Screen name="PlanTrip" component={PlanTripScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Suggestions" component={SuggestionsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Suggestions" component={TripSuggestionsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Itinerary" component={ItineraryScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}}/>
         <Stack.Screen name="PersonalizationForm" component={PersonalizationForm} options={{headerShown: false}}/>

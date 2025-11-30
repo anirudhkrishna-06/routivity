@@ -1,0 +1,10 @@
+{
+    "source": {"lat": 12.9716, "lng": 77.5946},
+    "destination": {"lat": 13.0827, "lng": 80.2707},
+    "mealPreferences": ["dinner"],
+    "mealWindows": {
+        "dinner": {"start": "19:00", "end": "21:00"}
+    },
+    "preferred_reach_time": "2024-01-15T21:00:00",
+    "veg_pref": "veg"
+}
