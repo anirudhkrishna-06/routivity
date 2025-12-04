@@ -33,13 +33,13 @@ const CreateAccountScreen = () => {
 
   const navigation = useNavigation();
 
-  // ✅ Email format validation
+  // Email format validation
   const validateEmailFormat = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
 
-  // ✅ Password strength validation
+  // Password strength validation
   const validatePasswordStrength = (password) => {
     const re = /^(?=.*[0-9])(?=.*[!@#$%^&*]).{6,}$/;
     return re.test(password);
@@ -91,7 +91,7 @@ const CreateAccountScreen = () => {
     if (emailError || passwordError || confirmPasswordError) return;
 
     try {
-      // ✅ Create user in Firebase Auth
+      // Create user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -99,7 +99,7 @@ const CreateAccountScreen = () => {
       );
       const user = userCredential.user;
 
-      // ✅ Store user data in Firestore
+      // Store user data in Firestore
       await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
         fullName: name,

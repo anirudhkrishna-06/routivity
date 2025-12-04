@@ -12,7 +12,9 @@ import {
   Share,
   Modal,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -85,10 +87,11 @@ const ItineraryScreen = () => {
           duration: 600,
           useNativeDriver: true,
         }),
+        // progressAnim drives width style (not supported by native driver)
         Animated.timing(progressAnim, {
           toValue: 1,
           duration: 1500,
-          useNativeDriver: true,
+          useNativeDriver: false,
         }),
       ]).start();
 
@@ -201,7 +204,7 @@ const ItineraryScreen = () => {
 
   const getStopSubtitle = (stop) => {
     switch (stop.type) {
-      case 'meal': return `${stop.duration} min stop • ${stop.details.detour_minutes} min detour`;
+      case 'meal': return `${stop.duration} min stop - ${stop.details.detour_minutes} min detour`;
       case 'travel': return `${stop.duration} min drive`;
       default: return '';
     }
@@ -302,7 +305,7 @@ const ItineraryScreen = () => {
     try {
       const shareContent = {
         title: `Check out my trip: ${tripName}`,
-        message: `I planned an amazing road trip with Routivity! 🚗\n\n${generateShareText()}`,
+        message: `I planned an amazing road trip with Routivity!\n\n${generateShareText()}`,
         url: 'https://routivity.app', // Your app URL
       };
       
@@ -315,10 +318,10 @@ const ItineraryScreen = () => {
   const generateShareText = () => {
     if (!itinerary) return '';
     
-    return `📍 Trip: ${tripName}
-🚗 Distance: ${itinerary.totalDistance.toFixed(1)} km
-⏱️ Duration: ${Math.round(itinerary.totalDuration)} min
-🍽️ Meal Stops: ${itinerary.timeline.filter(item => item.type === 'meal').length}
+    return `Trip: ${tripName}
+Distance: ${itinerary.totalDistance.toFixed(1)} km
+Duration: ${Math.round(itinerary.totalDuration)} min
+Meal Stops: ${itinerary.timeline.filter(item => item.type === 'meal').length}
 
 Planned with Routivity - Your AI Road Trip Companion!`;
   };
@@ -387,74 +390,86 @@ Planned with Routivity - Your AI Road Trip Companion!`;
       </Animated.View>
     );
   };
-// Replace the MapPreview component in ItineraryScreen.js with this:
-const RouteVisualization = () => (
-  <Animated.View 
-    style={[
-      styles.mapContainer,
-      { 
-        opacity: fadeAnim,
-        transform: [
-          { translateY: slideAnim },
-          { scale: scaleAnim }
-        ]
-      }
-    ]}
-  >
-    <Text style={styles.sectionTitle}>Route Visualization</Text>
-    
-    {/* Custom Route Visualization without maps */}
-    <View style={styles.routeVisualization}>
-      <View style={styles.routeLine}>
-        {/* Source Point */}
-        <View style={[styles.routePoint, styles.routePointSource]}>
-          <Icon name="play-arrow" size={16} color="#fff" />
-        </View>
-        
-        {/* Meal Stops */}
-        {itinerary.stops.filter(stop => stop.type === 'meal').map((stop, index) => (
-          <View key={stop.id} style={styles.routeStopContainer}>
-            <View style={styles.routeConnector} />
-            <View style={[styles.routePoint, styles.routePointMeal]}>
-              <Icon name="restaurant" size={12} color="#fff" />
-            </View>
-            <Text style={styles.routeStopName} numberOfLines={1}>
-              {stop.name}
-            </Text>
-          </View>
-        ))}
-        
-        {/* Destination Point */}
-        <View style={styles.routeStopContainer}>
-          <View style={styles.routeConnector} />
-          <View style={[styles.routePoint, styles.routePointDestination]}>
-            <Icon name="flag" size={16} color="#fff" />
-          </View>
-        </View>
+const RouteVisualization = () => {
+  if (!itinerary?.mapRegion || !Array.isArray(itinerary.polylineCoordinates)) {
+    return null;
+  }
+
+  const region = {
+    latitude: itinerary.mapRegion.latitude,
+    longitude: itinerary.mapRegion.longitude,
+  };
+
+  const coords = itinerary.polylineCoordinates.map((pt) => ({
+    lat: pt.lat,
+    lng: pt.lng,
+  }));
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        />
+        <style>
+          html, body, #map { margin: 0; padding: 0; height: 100%; width: 100%; }
+        </style>
+      </head>
+      <body>
+        <div id="map"></div>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script>
+          const center = ${JSON.stringify(region)};
+          const coords = ${JSON.stringify(coords)};
+
+          const map = L.map('map').setView([center.latitude, center.longitude], 7);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+          }).addTo(map);
+
+          if (coords.length > 0) {
+            const latlngs = coords.map(c => [c.lat, c.lng]);
+            L.polyline(latlngs, { color: '#007AFF', weight: 4 }).addTo(map);
+            L.marker(latlngs[0]).addTo(map).bindPopup('Start');
+            if (latlngs.length > 1) {
+              L.marker(latlngs[latlngs.length - 1]).addTo(map).bindPopup('Destination');
+            }
+            map.fitBounds(latlngs, { padding: [20, 20] });
+          }
+        </script>
+      </body>
+    </html>
+  `;
+
+  return (
+    <Animated.View
+      style={[
+        styles.mapContainer,
+        {
+          opacity: fadeAnim,
+          transform: [
+            { translateY: slideAnim },
+            { scale: scaleAnim },
+          ],
+        },
+      ]}
+    >
+      <Text style={styles.sectionTitle}>Route Overview</Text>
+      <View style={styles.mapWrapper}>
+        <WebView
+          style={styles.map}
+          originWhitelist={['*']}
+          source={{ html }}
+          scrollEnabled={false}
+        />
       </View>
-      
-      {/* Route Stats */}
-      <View style={styles.routeStats}>
-        <View style={styles.routeStat}>
-          <Text style={styles.routeStatValue}>{itinerary.stops.length - 2}</Text>
-          <Text style={styles.routeStatLabel}>Stops</Text>
-        </View>
-        <View style={styles.routeStat}>
-          <Text style={styles.routeStatValue}>
-            {Math.round(itinerary.totalDistance)}
-          </Text>
-          <Text style={styles.routeStatLabel}>KM</Text>
-        </View>
-        <View style={styles.routeStat}>
-          <Text style={styles.routeStatValue}>
-            {Math.round(itinerary.totalDuration)}
-          </Text>
-          <Text style={styles.routeStatLabel}>Min</Text>
-        </View>
-      </View>
-    </View>
-  </Animated.View>
-);
+    </Animated.View>
+  );
+};
 
   if (loading) {
     return (
@@ -560,7 +575,7 @@ const RouteVisualization = () => (
                 ]} 
               />
             </View>
-            <Text style={styles.progressText}>Planned • Ready to Go!</Text>
+            <Text style={styles.progressText}>Planned - Ready to Go!</Text>
           </View>
         </Animated.View>
 
@@ -797,13 +812,13 @@ const styles = StyleSheet.create({
     color: '#1a1a1a',
     marginBottom: 16,
   },
-  map: {
-    height: 200,
+  mapWrapper: {
     borderRadius: 12,
     overflow: 'hidden',
   },
-  mapView: {
-    flex: 1,
+  map: {
+    height: 200,
+    width: '100%',
   },
   marker: {
     width: 24,

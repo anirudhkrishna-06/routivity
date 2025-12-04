@@ -18,7 +18,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const BACKEND_URL = 'http://192.168.31.195:8000';
+const BACKEND_URL = 'http://10.180.18.12:8000';
 
 const PlanTripScreen = () => {
   const navigation = useNavigation();
@@ -38,6 +38,7 @@ const PlanTripScreen = () => {
       breakfast: { start: '08:00', end: '10:00' },
       lunch: { start: '12:00', end: '14:00' },
       dinner: { start: '19:00', end: '21:00' },
+      snacks:  { start: '16:00', end: '18:00' },
     },
     maxDetour: 30,
     mealDuration: 45,
@@ -356,8 +357,22 @@ const PlanTripScreen = () => {
   };
 
   const validateForm = () => {
+    // Ensure user has typed something for both fields
     if (!tripData.source.name || !tripData.destination.name) {
-      Alert.alert('Error', 'Please select both source and destination locations');
+      Alert.alert('Error', 'Please enter both source and destination locations');
+      return false;
+    }
+    // Ensure coordinates are present (i.e., user picked from suggestions)
+    if (
+      tripData.source.lat == null ||
+      tripData.source.lng == null ||
+      tripData.destination.lat == null ||
+      tripData.destination.lng == null
+    ) {
+      Alert.alert(
+        'Location not set',
+        'Please select both source and destination from the suggestions list so we can find exact coordinates.'
+      );
       return false;
     }
     if (tripData.mealPreferences.length === 0) {
@@ -441,7 +456,8 @@ const PlanTripScreen = () => {
       });
 
       // Navigate to suggestions screen with the result
-      navigation.navigate('TripSuggestions', {
+      // Note: route name must match the one registered in App.js ("Suggestions")
+      navigation.navigate('Suggestions', {
         tripData: result,
         firebaseTripId: tripDoc.id,
       });
@@ -455,6 +471,12 @@ const PlanTripScreen = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Helper to strip characters that some devices can't render (avoids tofu boxes)
+  const sanitizeText = (text) => {
+    if (!text) return '';
+    return text.replace(/[^\x20-\x7E]/g, '');
   };
 
   const LocationInput = ({ 
@@ -473,13 +495,15 @@ const PlanTripScreen = () => {
   }, [value]);
 
   const handleTextChange = (text) => {
-    setLocalValue(text);
-    onChangeText(text);
+    const clean = sanitizeText(text);
+    setLocalValue(clean);
+    onChangeText(clean);
   };
 
   const handleSelect = (location) => {
-    setLocalValue(location.name); // Update local state immediately
-    onSelectLocation(location, type);
+    const cleanName = sanitizeText(location.name);
+    setLocalValue(cleanName); // Update local state immediately
+    onSelectLocation({ ...location, name: cleanName }, type);
   };
 
   return (
@@ -505,7 +529,7 @@ const PlanTripScreen = () => {
             >
               <Icon name="place" size={16} color="#007AFF" />
               <Text style={styles.suggestionText} numberOfLines={2}>
-                {location.name}
+                {sanitizeText(location.name)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -514,31 +538,36 @@ const PlanTripScreen = () => {
     </View>
   );
 };
-  const MealTimeSelector = ({ meal }) => (
-    <View style={styles.mealTimeContainer}>
-      <Text style={styles.mealTimeLabel}>{meal.charAt(0).toUpperCase() + meal.slice(1)}</Text>
-      <View style={styles.timeInputsContainer}>
-        <View style={styles.timeInput}>
-          <Text style={styles.timeLabel}>Start</Text>
-          <TouchableOpacity 
-            style={styles.timeButton}
-            onPress={() => setShowTimePicker(meal + '-start')}
-          >
-            <Text style={styles.timeText}>{tripData.mealWindows[meal].start}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.timeInput}>
-          <Text style={styles.timeLabel}>End</Text>
-          <TouchableOpacity 
-            style={styles.timeButton}
-            onPress={() => setShowTimePicker(meal + '-end')}
-          >
-            <Text style={styles.timeText}>{tripData.mealWindows[meal].end}</Text>
-          </TouchableOpacity>
+  const MealTimeSelector = ({ meal }) => {
+    const window = tripData.mealWindows[meal] || {};
+    return (
+      <View style={styles.mealTimeContainer}>
+        <Text style={styles.mealTimeLabel}>
+          {meal.charAt(0).toUpperCase() + meal.slice(1)}
+        </Text>
+        <View style={styles.timeInputsContainer}>
+          <View style={styles.timeInput}>
+            <Text style={styles.timeLabel}>Start</Text>
+            <TouchableOpacity
+              style={styles.timeButton}
+              onPress={() => setShowTimePicker(meal + '-start')}
+            >
+              <Text style={styles.timeText}>{window.start || '--:--'}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.timeInput}>
+            <Text style={styles.timeLabel}>End</Text>
+            <TouchableOpacity
+              style={styles.timeButton}
+              onPress={() => setShowTimePicker(meal + '-end')}
+            >
+              <Text style={styles.timeText}>{window.end || '--:--'}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <KeyboardAvoidingView 
@@ -554,7 +583,7 @@ const PlanTripScreen = () => {
 
         {/* Route Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>📍 Route Details</Text>
+          <Text style={styles.sectionTitle}>Route Details</Text>
           
           <View style={styles.locationSection}>
             <LocationInput
@@ -620,7 +649,7 @@ const PlanTripScreen = () => {
 
         {/* Meal Preferences */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🍽️ Meal Preferences</Text>
+          <Text style={styles.sectionTitle}>Meal Preferences</Text>
           <Text style={styles.sectionSubtitle}>Select meals you'd like to have during your trip</Text>
           
           <View style={styles.mealOptionsContainer}>
@@ -656,7 +685,7 @@ const PlanTripScreen = () => {
 
         {/* Trip Settings */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>⚙️ Trip Settings</Text>
+          <Text style={styles.sectionTitle}>Trip Settings</Text>
           
           <View style={styles.settingRow}>
             <Text style={styles.settingLabel}>Arrival Time</Text>
@@ -673,7 +702,31 @@ const PlanTripScreen = () => {
           <View style={styles.settingRow}>
             <Text style={styles.settingLabel}>Max Detour (minutes)</Text>
             <View style={styles.sliderContainer}>
+            <View style={styles.sliderControlRow}>
+              <TouchableOpacity
+                style={styles.sliderButton}
+                onPress={() =>
+                  setTripData(prev => ({
+                    ...prev,
+                    maxDetour: Math.max(5, prev.maxDetour - 5),
+                  }))
+                }
+              >
+                <Icon name="remove" size={18} color="#007AFF" />
+              </TouchableOpacity>
               <Text style={styles.sliderValue}>{tripData.maxDetour} min</Text>
+              <TouchableOpacity
+                style={styles.sliderButton}
+                onPress={() =>
+                  setTripData(prev => ({
+                    ...prev,
+                    maxDetour: Math.min(60, prev.maxDetour + 5),
+                  }))
+                }
+              >
+                <Icon name="add" size={18} color="#007AFF" />
+              </TouchableOpacity>
+            </View>
               <View style={styles.slider}>
                 <View style={[styles.sliderTrack, { width: `${(tripData.maxDetour / 60) * 100}%` }]} />
               </View>
@@ -687,7 +740,31 @@ const PlanTripScreen = () => {
           <View style={styles.settingRow}>
             <Text style={styles.settingLabel}>Meal Duration (minutes)</Text>
             <View style={styles.sliderContainer}>
+            <View style={styles.sliderControlRow}>
+              <TouchableOpacity
+                style={styles.sliderButton}
+                onPress={() =>
+                  setTripData(prev => ({
+                    ...prev,
+                    mealDuration: Math.max(15, prev.mealDuration - 5),
+                  }))
+                }
+              >
+                <Icon name="remove" size={18} color="#007AFF" />
+              </TouchableOpacity>
               <Text style={styles.sliderValue}>{tripData.mealDuration} min</Text>
+              <TouchableOpacity
+                style={styles.sliderButton}
+                onPress={() =>
+                  setTripData(prev => ({
+                    ...prev,
+                    mealDuration: Math.min(60, prev.mealDuration + 5),
+                  }))
+                }
+              >
+                <Icon name="add" size={18} color="#007AFF" />
+              </TouchableOpacity>
+            </View>
               <View style={styles.slider}>
                 <View style={[styles.sliderTrack, { width: `${((tripData.mealDuration - 15) / 45) * 100}%` }]} />
               </View>
@@ -969,11 +1046,26 @@ const styles = StyleSheet.create({
   sliderContainer: {
     marginTop: 8,
   },
+  sliderControlRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
   sliderValue: {
     fontSize: 14,
     fontWeight: '600',
     color: '#007AFF',
-    marginBottom: 8,
+  },
+  sliderButton: {
+    width: 36,
+    height: 32,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#e1e5e9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   slider: {
     height: 4,

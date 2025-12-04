@@ -2047,3 +2047,961 @@
 2025-09-09 15:20:11,013 - watchfiles.main - INFO - 1 change detected
 2025-09-09 15:20:11,417 - watchfiles.main - INFO - 1 change detected
 2025-09-09 15:20:11,822 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:30:04,862 - __main__ - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-11-30 15:30:16,835 - __main__ - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-11-30 15:30:25,570 - __mp_main__ - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-11-30 15:30:37,346 - __mp_main__ - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-11-30 15:30:37,473 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:30:38,214 - main_osrm - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-11-30 15:30:38,291 - watchfiles.main - INFO - 6 changes detected
+2025-11-30 15:30:50,275 - main_osrm - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-11-30 15:34:48,035 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:34:48,622 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:34:49,036 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:34:55,442 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:34:55,802 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:35:03,739 - __main__ - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-11-30 15:35:15,777 - __main__ - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-11-30 15:35:15,891 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:35:26,101 - __mp_main__ - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-11-30 15:35:38,218 - __mp_main__ - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-11-30 15:35:38,357 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:35:38,364 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:35:38,417 - main_osrm - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-11-30 15:35:38,719 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:35:38,719 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:35:50,383 - main_osrm - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-11-30 15:36:03,360 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:36:03,722 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:39:41,493 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:39:48,962 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:40:32,555 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:40:34,656 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:44:35,481 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:44:42,827 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:49:29,518 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:49:39,028 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:49:39,382 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:54:23,539 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:54:30,596 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:59:17,546 - watchfiles.main - INFO - 1 change detected
+2025-11-30 15:59:24,877 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:04:11,532 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:04:14,067 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:09:05,518 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:09:12,450 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:13:59,549 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:14:06,478 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:14:06,837 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:18:53,551 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:18:55,871 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:23:47,570 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:23:55,007 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:28:41,584 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:28:56,247 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:28:56,601 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:33:35,583 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:33:38,917 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:33:39,281 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:38:29,611 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:38:36,028 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:43:23,600 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:43:26,655 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:48:17,603 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:48:21,291 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:53:11,603 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:53:14,945 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:58:05,607 - watchfiles.main - INFO - 1 change detected
+2025-11-30 16:58:08,040 - watchfiles.main - INFO - 1 change detected
+2025-11-30 17:02:59,637 - watchfiles.main - INFO - 1 change detected
+2025-11-30 17:03:07,526 - watchfiles.main - INFO - 1 change detected
+2025-11-30 17:07:53,657 - watchfiles.main - INFO - 1 change detected
+2025-11-30 17:08:01,102 - watchfiles.main - INFO - 1 change detected
+2025-11-30 17:12:47,654 - watchfiles.main - INFO - 1 change detected
+2025-11-30 17:12:54,890 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:34:02,913 - __main__ - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-12-02 14:34:15,146 - __main__ - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-12-02 14:34:19,001 - __mp_main__ - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-12-02 14:34:31,188 - __mp_main__ - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-12-02 14:34:31,496 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:34:32,124 - main_osrm - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-12-02 14:34:32,202 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:34:44,271 - main_osrm - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-12-02 14:36:09,623 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:36:12,768 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:41:03,627 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:41:06,785 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:41:32,971 - watchfiles.main - INFO - 5 changes detected
+2025-12-02 14:41:52,223 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:42:19,218 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:43:23,097 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:43:37,432 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:43:42,134 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:45:57,725 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:46:01,684 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:47:00,971 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:48:24,589 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-02 14:48:24,589 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-02 14:48:24,590 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-02 14:48:24,590 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-02 14:48:26,646 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;80.2023035,13.0008413?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-02 14:48:26,662 - main_osrm - INFO - Baseline route: duration=805s distance=10995.9m
+2025-12-02 14:48:26,662 - main_osrm - INFO - Initial trip window: depart=2025-12-03T07:34:27.761000+00:00
+2025-12-02 14:48:26,664 - main_osrm - INFO - Extracted 22 checkpoints from baseline route
+2025-12-02 14:48:26,665 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-02 14:48:26,665 - main_osrm - INFO - Considering meals: ['breakfast']
+2025-12-02 14:48:26,665 - main_osrm - INFO - Processing meal 'breakfast' with personalization
+2025-12-02 14:48:26,665 - main_osrm - INFO - Meal 'breakfast' ETA: 2025-12-03T07:47:53.361000+00:00 at 13.00024,80.202249
+2025-12-02 14:48:28,219 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-02 14:48:28,221 - main_osrm - INFO - Overpass returned 56 places for breakfast at radius=3000m
+2025-12-02 14:48:28,221 - main_osrm - INFO - 56 places after SMART preference filtering for breakfast
+2025-12-02 14:48:29,049 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1874068,12.9946821;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:48:39,042 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2043612,13.0008164;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:48:49,037 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057624,13.0064035;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:48:59,045 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057624,13.0062581;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:49:09,063 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057662,13.0061052;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:49:19,048 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2106059,13.0083726;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:49:29,090 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2227101,13.0131553;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:49:39,205 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2179786,12.9805893;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:49:49,071 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2182307,12.9841726;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:49:59,093 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2177291,12.9847606;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:50:09,076 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2001919,12.9933742;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:50:19,229 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1997306,12.9935964;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:50:19,229 - main_osrm - INFO - 12 candidates scored for breakfast
+2025-12-02 14:50:19,239 - main_osrm - INFO - Selected: The Great Kabab Factory score=3.00 detour=6min
+2025-12-02 14:50:19,239 - main_osrm - INFO - Selected: Madras Cafe score=3.00 detour=2min
+2025-12-02 14:50:19,239 - main_osrm - INFO - Selected: Cilantro score=3.00 detour=3min
+2025-12-02 14:50:19,239 - main_osrm - INFO - Selected: Navratna score=3.00 detour=2min
+2025-12-02 14:50:19,239 - main_osrm - INFO - Selected: Kayal score=3.00 detour=3min
+2025-12-02 14:50:19,241 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'breakfast': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=6, eta_iso='2025-12-03T07:53:53.361000+00:00', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-03T07:49:53.361000+00:00', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-03T07:50:53.361000+00:00', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-03T07:49:53.361000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-03T07:50:53.361000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-02 14:50:19,241 - main_osrm - INFO - DEBUG: breakfast has 5 suggestions
+2025-12-02 14:50:19,241 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='257532623' name='The Great Kabab Factory' location=LatLng(lat=12.9946821, lng=80.1874068) detour_minutes=6 eta_iso='2025-12-03T07:53:53.361000+00:00' tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:50:19,241 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='339280986' name='Madras Cafe' location=LatLng(lat=13.0008164, lng=80.2043612) detour_minutes=2 eta_iso='2025-12-03T07:49:53.361000+00:00' tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:50:19,241 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='391835427' name='Cilantro' location=LatLng(lat=13.0064035, lng=80.2057624) detour_minutes=3 eta_iso='2025-12-03T07:50:53.361000+00:00' tags={'amenity': 'restaurant', 'name': 'Cilantro'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:50:19,241 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='391835432' name='Navratna' location=LatLng(lat=13.0062581, lng=80.2057624) detour_minutes=2 eta_iso='2025-12-03T07:49:53.361000+00:00' tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:50:19,243 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='391835434' name='Kayal' location=LatLng(lat=13.0061052, lng=80.2057662) detour_minutes=3 eta_iso='2025-12-03T07:50:53.361000+00:00' tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:50:19,243 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'breakfast': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=6, eta_iso='2025-12-03T07:53:53.361000+00:00', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-03T07:49:53.361000+00:00', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-03T07:50:53.361000+00:00', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-03T07:49:53.361000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-03T07:50:53.361000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-02 14:50:19,244 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-02 14:50:40,427 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-02 14:50:40,428 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-02 14:50:40,428 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-02 14:50:40,428 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-02 14:50:41,626 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;80.2023035,13.0008413?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-02 14:50:41,630 - main_osrm - INFO - Baseline route: duration=805s distance=10995.9m
+2025-12-02 14:50:41,630 - main_osrm - INFO - Initial trip window: depart=2025-12-03T07:34:27.761000+00:00
+2025-12-02 14:50:41,630 - main_osrm - INFO - Extracted 22 checkpoints from baseline route
+2025-12-02 14:50:41,632 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-02 14:50:41,632 - main_osrm - INFO - Considering meals: ['breakfast']
+2025-12-02 14:50:41,632 - main_osrm - INFO - Processing meal 'breakfast' with personalization
+2025-12-02 14:50:41,634 - main_osrm - INFO - Meal 'breakfast' ETA: 2025-12-03T07:47:53.361000+00:00 at 13.00024,80.202249
+2025-12-02 14:50:47,879 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-02 14:50:47,887 - main_osrm - INFO - Overpass returned 56 places for breakfast at radius=3000m
+2025-12-02 14:50:47,887 - main_osrm - INFO - 56 places after SMART preference filtering for breakfast
+2025-12-02 14:50:48,708 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1874068,12.9946821;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:50:51,612 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:50:55,668 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:50:58,710 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2043612,13.0008164;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:51:08,828 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057624,13.0064035;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:51:18,812 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057624,13.0062581;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:51:28,749 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057662,13.0061052;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:51:38,777 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2106059,13.0083726;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:51:48,817 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2227101,13.0131553;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:51:58,753 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2179786,12.9805893;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:52:08,785 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2182307,12.9841726;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:52:18,822 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2177291,12.9847606;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:52:28,749 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2001919,12.9933742;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:52:38,756 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1997306,12.9935964;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 14:52:38,756 - main_osrm - INFO - 12 candidates scored for breakfast
+2025-12-02 14:52:38,756 - main_osrm - INFO - Selected: The Great Kabab Factory score=3.00 detour=6min
+2025-12-02 14:52:38,756 - main_osrm - INFO - Selected: Madras Cafe score=3.00 detour=2min
+2025-12-02 14:52:38,756 - main_osrm - INFO - Selected: Cilantro score=3.00 detour=3min
+2025-12-02 14:52:38,756 - main_osrm - INFO - Selected: Navratna score=3.00 detour=2min
+2025-12-02 14:52:38,761 - main_osrm - INFO - Selected: Kayal score=3.00 detour=3min
+2025-12-02 14:52:38,761 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'breakfast': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=6, eta_iso='2025-12-03T07:53:53.361000+00:00', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-03T07:49:53.361000+00:00', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-03T07:50:53.361000+00:00', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-03T07:49:53.361000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-03T07:50:53.361000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-02 14:52:38,762 - main_osrm - INFO - DEBUG: breakfast has 5 suggestions
+2025-12-02 14:52:38,762 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='257532623' name='The Great Kabab Factory' location=LatLng(lat=12.9946821, lng=80.1874068) detour_minutes=6 eta_iso='2025-12-03T07:53:53.361000+00:00' tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:52:38,762 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='339280986' name='Madras Cafe' location=LatLng(lat=13.0008164, lng=80.2043612) detour_minutes=2 eta_iso='2025-12-03T07:49:53.361000+00:00' tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:52:38,762 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='391835427' name='Cilantro' location=LatLng(lat=13.0064035, lng=80.2057624) detour_minutes=3 eta_iso='2025-12-03T07:50:53.361000+00:00' tags={'amenity': 'restaurant', 'name': 'Cilantro'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:52:38,762 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='391835432' name='Navratna' location=LatLng(lat=13.0062581, lng=80.2057624) detour_minutes=2 eta_iso='2025-12-03T07:49:53.361000+00:00' tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:52:38,765 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='391835434' name='Kayal' location=LatLng(lat=13.0061052, lng=80.2057662) detour_minutes=3 eta_iso='2025-12-03T07:50:53.361000+00:00' tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 14:52:38,765 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'breakfast': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=6, eta_iso='2025-12-03T07:53:53.361000+00:00', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-03T07:49:53.361000+00:00', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-03T07:50:53.361000+00:00', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-03T07:49:53.361000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-03T07:50:53.361000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-02 14:52:38,765 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-02 14:55:45,637 - watchfiles.main - INFO - 1 change detected
+2025-12-02 14:55:48,627 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:00:39,628 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:00:45,998 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:05:33,666 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:05:41,797 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:13:13,235 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:13:21,416 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:15:57,313 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-02 15:15:57,313 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-02 15:15:57,313 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-02 15:15:57,313 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-02 15:15:58,181 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;80.2023035,13.0008413?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-02 15:15:58,191 - main_osrm - INFO - Baseline route: duration=805s distance=10995.9m
+2025-12-02 15:15:58,191 - main_osrm - INFO - Initial trip window: depart=2025-12-03T07:17:17.510000+00:00
+2025-12-02 15:15:58,191 - main_osrm - INFO - Extracted 22 checkpoints from baseline route
+2025-12-02 15:15:58,191 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-02 15:15:58,195 - main_osrm - INFO - Skipping meal 'dinner' - window doesn't intersect trip
+2025-12-02 15:15:58,195 - main_osrm - INFO - Considering meals: ['breakfast']
+2025-12-02 15:15:58,196 - main_osrm - INFO - Processing meal 'breakfast' with personalization
+2025-12-02 15:15:58,196 - main_osrm - INFO - Meal 'breakfast' ETA: 2025-12-03T07:30:43.110000+00:00 at 13.00024,80.202249
+2025-12-02 15:16:00,388 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-02 15:16:00,388 - main_osrm - INFO - Overpass returned 56 places for breakfast at radius=3000m
+2025-12-02 15:16:00,388 - main_osrm - INFO - 56 places after SMART preference filtering for breakfast
+2025-12-02 15:16:01,284 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1874068,12.9946821;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:16:11,394 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2043612,13.0008164;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:16:21,429 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057624,13.0064035;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:16:31,566 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057624,13.0062581;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:16:41,511 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2057662,13.0061052;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:16:51,314 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2106059,13.0083726;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:17:01,361 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2227101,13.0131553;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:17:11,320 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2179786,12.9805893;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:17:21,438 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2182307,12.9841726;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:17:31,360 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2177291,12.9847606;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:17:41,320 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.2001919,12.9933742;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:17:51,369 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1997306,12.9935964;80.2023035,13.0008413?annotations=duration "HTTP/1.1 200 OK"
+2025-12-02 15:17:51,371 - main_osrm - INFO - 12 candidates scored for breakfast
+2025-12-02 15:17:51,371 - main_osrm - INFO - Selected: The Great Kabab Factory score=3.00 detour=6min
+2025-12-02 15:17:51,373 - main_osrm - INFO - Selected: Madras Cafe score=3.00 detour=2min
+2025-12-02 15:17:51,374 - main_osrm - INFO - Selected: Cilantro score=3.00 detour=3min
+2025-12-02 15:17:51,374 - main_osrm - INFO - Selected: Navratna score=3.00 detour=2min
+2025-12-02 15:17:51,375 - main_osrm - INFO - Selected: Kayal score=3.00 detour=3min
+2025-12-02 15:17:51,375 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'breakfast': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=6, eta_iso='2025-12-03T07:36:43.110000+00:00', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-03T07:32:43.110000+00:00', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-03T07:33:43.110000+00:00', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-03T07:32:43.110000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-03T07:33:43.110000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-02 15:17:51,375 - main_osrm - INFO - DEBUG: breakfast has 5 suggestions
+2025-12-02 15:17:51,377 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='257532623' name='The Great Kabab Factory' location=LatLng(lat=12.9946821, lng=80.1874068) detour_minutes=6 eta_iso='2025-12-03T07:36:43.110000+00:00' tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 15:17:51,377 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='339280986' name='Madras Cafe' location=LatLng(lat=13.0008164, lng=80.2043612) detour_minutes=2 eta_iso='2025-12-03T07:32:43.110000+00:00' tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 15:17:51,377 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='391835427' name='Cilantro' location=LatLng(lat=13.0064035, lng=80.2057624) detour_minutes=3 eta_iso='2025-12-03T07:33:43.110000+00:00' tags={'amenity': 'restaurant', 'name': 'Cilantro'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 15:17:51,379 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='391835432' name='Navratna' location=LatLng(lat=13.0062581, lng=80.2057624) detour_minutes=2 eta_iso='2025-12-03T07:32:43.110000+00:00' tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 15:17:51,379 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='391835434' name='Kayal' location=LatLng(lat=13.0061052, lng=80.2057662) detour_minutes=3 eta_iso='2025-12-03T07:33:43.110000+00:00' tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-02 15:17:51,380 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'breakfast': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=6, eta_iso='2025-12-03T07:36:43.110000+00:00', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-03T07:32:43.110000+00:00', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-03T07:33:43.110000+00:00', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-03T07:32:43.110000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-03T07:33:43.110000+00:00', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-02 15:17:51,380 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-02 15:18:05,298 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:18:13,373 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:22:59,520 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:23:02,000 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:27:53,389 - watchfiles.main - INFO - 1 change detected
+2025-12-02 15:27:56,082 - watchfiles.main - INFO - 1 change detected
+2025-12-02 18:08:59,876 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:04:13,563 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:04:14,790 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:04:22,607 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:04:22,973 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:09:01,323 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:09:08,623 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:27:20,717 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:27:32,646 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:41:19,565 - watchfiles.main - INFO - 1 change detected
+2025-12-03 15:41:25,914 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:24:00,016 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:24:07,626 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:28:51,644 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:29:01,289 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:33:45,658 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:33:59,110 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:33:59,464 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:38:39,685 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:38:55,878 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:40:28,122 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 16:40:28,122 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 16:40:28,126 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 16:40:28,126 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 16:40:29,355 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;80.2023035,13.0008413?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 16:40:29,373 - main_osrm - INFO - Baseline route: duration=805s distance=10995.9m
+2025-12-03 16:40:29,373 - main_osrm - INFO - Initial trip window: depart=2025-12-04T10:11:47.789000+00:00
+2025-12-03 16:40:29,376 - main_osrm - INFO - Extracted 22 checkpoints from baseline route
+2025-12-03 16:40:29,376 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 16:40:29,376 - main_osrm - INFO - Considering meals: []
+2025-12-03 16:40:29,376 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-03 16:40:29,380 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-03 16:40:29,380 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 16:41:43,831 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:41:58,867 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:42:13,190 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 16:42:13,190 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 16:42:13,190 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 16:42:13,195 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 16:42:14,313 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;80.2023035,13.0008413?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 16:42:14,321 - main_osrm - INFO - Baseline route: duration=805s distance=10995.9m
+2025-12-03 16:42:14,321 - main_osrm - INFO - Initial trip window: depart=2025-12-04T10:11:47.789000+00:00
+2025-12-03 16:42:14,321 - main_osrm - INFO - Extracted 22 checkpoints from baseline route
+2025-12-03 16:42:14,323 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 16:42:14,323 - main_osrm - INFO - Considering meals: []
+2025-12-03 16:42:14,325 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-03 16:42:14,325 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-03 16:42:14,325 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 16:43:09,577 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 16:43:09,577 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 16:43:09,577 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 16:43:09,577 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 16:43:10,792 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;79.5415844,13.6325279?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 16:43:11,065 - main_osrm - INFO - Baseline route: duration=6129s distance=135802.6m
+2025-12-03 16:43:11,065 - main_osrm - INFO - Initial trip window: depart=2025-12-04T08:43:03.789000+00:00
+2025-12-03 16:43:11,065 - main_osrm - INFO - Extracted 25 checkpoints from baseline route
+2025-12-03 16:43:11,065 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 16:43:11,065 - main_osrm - INFO - Considering meals: []
+2025-12-03 16:43:11,065 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-03 16:43:11,065 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-03 16:43:11,065 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 16:43:33,690 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:43:49,568 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:45:19,717 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:45:36,957 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:45:50,180 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:46:14,445 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 16:46:14,445 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 16:46:14,445 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 16:46:14,445 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 16:46:15,570 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.2023035,13.0008413;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 16:46:16,153 - main_osrm - INFO - Baseline route: duration=15506s distance=310448.6m
+2025-12-03 16:46:16,153 - main_osrm - INFO - Initial trip window: depart=2025-12-04T03:57:19.433000+00:00
+2025-12-03 16:46:16,164 - main_osrm - INFO - Extracted 39 checkpoints from baseline route
+2025-12-03 16:46:16,164 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 16:46:16,164 - main_osrm - INFO - Skipping meal 'dinner' - window doesn't intersect trip
+2025-12-03 16:46:16,164 - main_osrm - INFO - Skipping meal 'snacks' - window doesn't intersect trip
+2025-12-03 16:46:16,164 - main_osrm - INFO - Considering meals: ['breakfast']
+2025-12-03 16:46:16,164 - main_osrm - INFO - Processing meal 'breakfast' with personalization
+2025-12-03 16:46:16,164 - main_osrm - INFO - Meal 'breakfast' ETA: 2025-12-04T08:07:13.333000+00:00 at 11.960534,79.493441
+2025-12-03 16:46:18,639 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-03 16:46:18,643 - main_osrm - INFO - Overpass returned 7 places for breakfast at radius=3000m
+2025-12-03 16:46:18,644 - main_osrm - INFO - 7 places after SMART preference filtering for breakfast
+2025-12-03 16:46:19,735 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4979967,11.9621113;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:46:29,904 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.496043,11.9410714;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:46:39,761 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.497756,11.9399354;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:46:49,749 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4982114,11.9398828;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:46:59,804 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4978252,11.9401915;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:47:09,889 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4913722,11.9407446;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:47:19,806 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4867418,11.9387149;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:47:19,816 - main_osrm - INFO - 7 candidates scored for breakfast
+2025-12-03 16:47:19,817 - main_osrm - INFO - Selected: Unknown score=3.00 detour=1min
+2025-12-03 16:47:19,817 - main_osrm - INFO - Selected: Hotel Anandha score=3.00 detour=6min
+2025-12-03 16:47:19,817 - main_osrm - INFO - Selected: RK Sastha Bhavan score=3.00 detour=7min
+2025-12-03 16:47:19,817 - main_osrm - INFO - Selected: Sri Annai Restaurant score=3.00 detour=7min
+2025-12-03 16:47:19,817 - main_osrm - INFO - Selected: Hotel Kailash score=3.00 detour=7min
+2025-12-03 16:47:19,822 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'breakfast': [PlaceSuggestion(osm_id='2444654565', name='Unknown', location=LatLng(lat=11.9621113, lng=79.4979967), detour_minutes=1, eta_iso='2025-12-04T08:08:13.333000+00:00', tags={'amenity': 'restaurant'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5234806088', name='Hotel Anandha', location=LatLng(lat=11.9410714, lng=79.496043), detour_minutes=6, eta_iso='2025-12-04T08:13:13.333000+00:00', tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'Hotel Anandha'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5234909593', name='RK Sastha Bhavan', location=LatLng(lat=11.9399354, lng=79.497756), detour_minutes=7, eta_iso='2025-12-04T08:14:13.333000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'RK Sastha Bhavan'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5692239870', name='Sri Annai Restaurant', location=LatLng(lat=11.9398828, lng=79.4982114), detour_minutes=7, eta_iso='2025-12-04T08:14:13.333000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'name': 'Sri Annai Restaurant'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='7206180386', name='Hotel Kailash', location=LatLng(lat=11.9401915, lng=79.4978252), detour_minutes=7, eta_iso='2025-12-04T08:14:13.333000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'cuisine': 'local', 'diet:vegetarian': 'only', 'name': 'Hotel Kailash', 'source': 'survey'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 16:47:19,823 - main_osrm - INFO - DEBUG: breakfast has 5 suggestions
+2025-12-03 16:47:19,823 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='2444654565' name='Unknown' location=LatLng(lat=11.9621113, lng=79.4979967) detour_minutes=1 eta_iso='2025-12-04T08:08:13.333000+00:00' tags={'amenity': 'restaurant'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:47:19,823 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='5234806088' name='Hotel Anandha' location=LatLng(lat=11.9410714, lng=79.496043) detour_minutes=6 eta_iso='2025-12-04T08:13:13.333000+00:00' tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'Hotel Anandha'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:47:19,823 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='5234909593' name='RK Sastha Bhavan' location=LatLng(lat=11.9399354, lng=79.497756) detour_minutes=7 eta_iso='2025-12-04T08:14:13.333000+00:00' tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'RK Sastha Bhavan'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:47:19,825 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='5692239870' name='Sri Annai Restaurant' location=LatLng(lat=11.9398828, lng=79.4982114) detour_minutes=7 eta_iso='2025-12-04T08:14:13.333000+00:00' tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'name': 'Sri Annai Restaurant'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:47:19,825 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='7206180386' name='Hotel Kailash' location=LatLng(lat=11.9401915, lng=79.4978252) detour_minutes=7 eta_iso='2025-12-04T08:14:13.333000+00:00' tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'cuisine': 'local', 'diet:vegetarian': 'only', 'name': 'Hotel Kailash', 'source': 'survey'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:47:19,826 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'breakfast': [PlaceSuggestion(osm_id='2444654565', name='Unknown', location=LatLng(lat=11.9621113, lng=79.4979967), detour_minutes=1, eta_iso='2025-12-04T08:08:13.333000+00:00', tags={'amenity': 'restaurant'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5234806088', name='Hotel Anandha', location=LatLng(lat=11.9410714, lng=79.496043), detour_minutes=6, eta_iso='2025-12-04T08:13:13.333000+00:00', tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'Hotel Anandha'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5234909593', name='RK Sastha Bhavan', location=LatLng(lat=11.9399354, lng=79.497756), detour_minutes=7, eta_iso='2025-12-04T08:14:13.333000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'RK Sastha Bhavan'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5692239870', name='Sri Annai Restaurant', location=LatLng(lat=11.9398828, lng=79.4982114), detour_minutes=7, eta_iso='2025-12-04T08:14:13.333000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'name': 'Sri Annai Restaurant'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='7206180386', name='Hotel Kailash', location=LatLng(lat=11.9401915, lng=79.4978252), detour_minutes=7, eta_iso='2025-12-04T08:14:13.333000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'cuisine': 'local', 'diet:vegetarian': 'only', 'name': 'Hotel Kailash', 'source': 'survey'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 16:47:19,826 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 16:48:27,671 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:48:51,517 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:52:33,377 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 16:52:33,377 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 16:52:33,380 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 16:52:33,380 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 16:52:34,858 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.2023035,13.0008413;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 16:52:35,354 - main_osrm - INFO - Baseline route: duration=15506s distance=310448.6m
+2025-12-03 16:52:35,354 - main_osrm - INFO - Initial trip window: depart=2025-12-04T04:48:12.044000+00:00
+2025-12-03 16:52:35,354 - main_osrm - INFO - Extracted 39 checkpoints from baseline route
+2025-12-03 16:52:35,354 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 16:52:35,354 - main_osrm - INFO - Skipping meal 'dinner' - window doesn't intersect trip
+2025-12-03 16:52:35,354 - main_osrm - INFO - Considering meals: ['breakfast']
+2025-12-03 16:52:35,361 - main_osrm - INFO - Processing meal 'breakfast' with personalization
+2025-12-03 16:52:35,361 - main_osrm - INFO - Meal 'breakfast' ETA: 2025-12-04T08:58:05.944000+00:00 at 11.960534,79.493441
+2025-12-03 16:52:36,939 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-03 16:52:36,939 - main_osrm - INFO - Overpass returned 7 places for breakfast at radius=3000m
+2025-12-03 16:52:36,939 - main_osrm - INFO - 7 places after SMART preference filtering for breakfast
+2025-12-03 16:52:37,878 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4979967,11.9621113;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:52:47,967 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.496043,11.9410714;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:52:57,914 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.497756,11.9399354;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:53:07,982 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4982114,11.9398828;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:53:18,005 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4978252,11.9401915;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:53:21,689 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:53:27,929 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4913722,11.9407446;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:53:29,813 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:53:38,135 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;79.4867418,11.9387149;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 16:53:38,135 - main_osrm - INFO - 7 candidates scored for breakfast
+2025-12-03 16:53:38,135 - main_osrm - INFO - Selected: Unknown score=3.00 detour=1min
+2025-12-03 16:53:38,135 - main_osrm - INFO - Selected: Hotel Anandha score=3.00 detour=6min
+2025-12-03 16:53:38,141 - main_osrm - INFO - Selected: RK Sastha Bhavan score=3.00 detour=7min
+2025-12-03 16:53:38,141 - main_osrm - INFO - Selected: Sri Annai Restaurant score=3.00 detour=7min
+2025-12-03 16:53:38,144 - main_osrm - INFO - Selected: Hotel Kailash score=3.00 detour=7min
+2025-12-03 16:53:38,145 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'breakfast': [PlaceSuggestion(osm_id='2444654565', name='Unknown', location=LatLng(lat=11.9621113, lng=79.4979967), detour_minutes=1, eta_iso='2025-12-04T08:59:05.944000+00:00', tags={'amenity': 'restaurant'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5234806088', name='Hotel Anandha', location=LatLng(lat=11.9410714, lng=79.496043), detour_minutes=6, eta_iso='2025-12-04T09:04:05.944000+00:00', tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'Hotel Anandha'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5234909593', name='RK Sastha Bhavan', location=LatLng(lat=11.9399354, lng=79.497756), detour_minutes=7, eta_iso='2025-12-04T09:05:05.944000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'RK Sastha Bhavan'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5692239870', name='Sri Annai Restaurant', location=LatLng(lat=11.9398828, lng=79.4982114), detour_minutes=7, eta_iso='2025-12-04T09:05:05.944000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'name': 'Sri Annai Restaurant'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='7206180386', name='Hotel Kailash', location=LatLng(lat=11.9401915, lng=79.4978252), detour_minutes=7, eta_iso='2025-12-04T09:05:05.944000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'cuisine': 'local', 'diet:vegetarian': 'only', 'name': 'Hotel Kailash', 'source': 'survey'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 16:53:38,147 - main_osrm - INFO - DEBUG: breakfast has 5 suggestions
+2025-12-03 16:53:38,147 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='2444654565' name='Unknown' location=LatLng(lat=11.9621113, lng=79.4979967) detour_minutes=1 eta_iso='2025-12-04T08:59:05.944000+00:00' tags={'amenity': 'restaurant'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:53:38,149 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='5234806088' name='Hotel Anandha' location=LatLng(lat=11.9410714, lng=79.496043) detour_minutes=6 eta_iso='2025-12-04T09:04:05.944000+00:00' tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'Hotel Anandha'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:53:38,149 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='5234909593' name='RK Sastha Bhavan' location=LatLng(lat=11.9399354, lng=79.497756) detour_minutes=7 eta_iso='2025-12-04T09:05:05.944000+00:00' tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'RK Sastha Bhavan'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:53:38,151 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='5692239870' name='Sri Annai Restaurant' location=LatLng(lat=11.9398828, lng=79.4982114) detour_minutes=7 eta_iso='2025-12-04T09:05:05.944000+00:00' tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'name': 'Sri Annai Restaurant'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:53:38,151 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='7206180386' name='Hotel Kailash' location=LatLng(lat=11.9401915, lng=79.4978252) detour_minutes=7 eta_iso='2025-12-04T09:05:05.944000+00:00' tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'cuisine': 'local', 'diet:vegetarian': 'only', 'name': 'Hotel Kailash', 'source': 'survey'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 16:53:38,154 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'breakfast': [PlaceSuggestion(osm_id='2444654565', name='Unknown', location=LatLng(lat=11.9621113, lng=79.4979967), detour_minutes=1, eta_iso='2025-12-04T08:59:05.944000+00:00', tags={'amenity': 'restaurant'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5234806088', name='Hotel Anandha', location=LatLng(lat=11.9410714, lng=79.496043), detour_minutes=6, eta_iso='2025-12-04T09:04:05.944000+00:00', tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'Hotel Anandha'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5234909593', name='RK Sastha Bhavan', location=LatLng(lat=11.9399354, lng=79.497756), detour_minutes=7, eta_iso='2025-12-04T09:05:05.944000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'diet:vegetarian': 'yes', 'name': 'RK Sastha Bhavan'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5692239870', name='Sri Annai Restaurant', location=LatLng(lat=11.9398828, lng=79.4982114), detour_minutes=7, eta_iso='2025-12-04T09:05:05.944000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'name': 'Sri Annai Restaurant'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='7206180386', name='Hotel Kailash', location=LatLng(lat=11.9401915, lng=79.4978252), detour_minutes=7, eta_iso='2025-12-04T09:05:05.944000+00:00', tags={'amenity': 'restaurant', 'check_date': '2023-09-03', 'cuisine': 'local', 'diet:vegetarian': 'only', 'name': 'Hotel Kailash', 'source': 'survey'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 16:53:38,154 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 16:57:19,276 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:58:15,683 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:58:37,174 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:59:09,449 - watchfiles.main - INFO - 1 change detected
+2025-12-03 16:59:38,018 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 16:59:38,018 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 16:59:38,018 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 16:59:38,020 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 16:59:39,508 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 16:59:40,144 - main_osrm - INFO - Baseline route: duration=15067s distance=315081.8m
+2025-12-03 16:59:40,144 - main_osrm - INFO - Initial trip window: depart=2025-12-04T06:33:03.576000+00:00
+2025-12-03 16:59:40,144 - main_osrm - INFO - Extracted 38 checkpoints from baseline route
+2025-12-03 16:59:40,144 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 16:59:40,144 - main_osrm - INFO - Considering meals: []
+2025-12-03 16:59:40,144 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-03 16:59:40,144 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-03 16:59:40,144 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 17:00:41,606 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:00:56,547 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:01:04,489 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:01:09,594 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 17:01:09,594 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 17:01:09,594 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 17:01:09,608 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 17:01:10,923 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 17:01:11,541 - main_osrm - INFO - Baseline route: duration=15067s distance=315081.8m
+2025-12-03 17:01:11,541 - main_osrm - INFO - Initial trip window: depart=2025-12-04T06:33:03.576000+00:00
+2025-12-03 17:01:11,541 - main_osrm - INFO - Extracted 38 checkpoints from baseline route
+2025-12-03 17:01:11,541 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 17:01:11,541 - main_osrm - INFO - Considering meals: []
+2025-12-03 17:01:11,556 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-03 17:01:11,556 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-03 17:01:11,557 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 17:03:09,868 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:03:18,223 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:03:35,773 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:03:54,584 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:04:05,550 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:04:31,380 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:05:41,080 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 17:05:41,080 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 17:05:41,080 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 17:05:41,080 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 17:05:42,365 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.2023035,13.0008413;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 17:05:43,047 - main_osrm - INFO - Baseline route: duration=15506s distance=310448.6m
+2025-12-03 17:05:43,047 - main_osrm - INFO - Initial trip window: depart=2025-12-04T06:31:33.795000+00:00
+2025-12-03 17:05:43,047 - main_osrm - INFO - Extracted 39 checkpoints from baseline route
+2025-12-03 17:05:43,047 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 17:05:43,047 - main_osrm - INFO - Considering meals: []
+2025-12-03 17:05:43,047 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-03 17:05:43,047 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-03 17:05:43,057 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 17:08:03,709 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:08:41,218 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:08:41,581 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:09:21,683 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:10:28,025 - watchfiles.main - INFO - 3 changes detected
+2025-12-03 17:11:02,978 - __mp_main__ - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-12-03 17:11:14,982 - __mp_main__ - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-12-03 17:11:15,298 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:11:16,384 - main_osrm - INFO - Starting Routivity Trip Planner Backend MVP (OSRM + Overpass + Firebase)
+2025-12-03 17:11:16,467 - watchfiles.main - INFO - 6 changes detected
+2025-12-03 17:11:28,340 - main_osrm - WARNING - Firebase Admin initialization failed: Your default credentials were not found. To set up Application Default Credentials, see https://cloud.google.com/docs/authentication/external/set-up-adc for more information.. Some features may not work.
+2025-12-03 17:11:40,500 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 17:11:40,503 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 17:11:40,503 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 17:11:40,514 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 17:11:43,681 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.2023035,13.0008413;77.60445387770035,12.982582068355935?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 17:11:44,624 - main_osrm - INFO - Baseline route: duration=14694s distance=318668.0m
+2025-12-03 17:11:44,624 - main_osrm - INFO - Initial trip window: depart=2025-12-04T12:21:12.609000
+2025-12-03 17:11:44,631 - main_osrm - INFO - Extracted 54 checkpoints from baseline route
+2025-12-03 17:11:44,631 - main_osrm - INFO - Considering meals: ['lunch']
+2025-12-03 17:11:44,631 - main_osrm - INFO - Processing meal 'lunch' with personalization
+2025-12-03 17:11:44,631 - main_osrm - INFO - Meal 'lunch' ETA: 2025-12-04T12:21:18.109000 at 13.000841,80.202301
+2025-12-03 17:11:47,262 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-03 17:11:47,262 - main_osrm - INFO - Overpass returned 56 places for lunch at radius=3000m
+2025-12-03 17:11:47,266 - main_osrm - INFO - 56 places after SMART preference filtering for lunch
+2025-12-03 17:11:48,361 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.1874068,12.9946821;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:11:58,389 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2043612,13.0008164;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:12:08,448 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057624,13.0064035;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:12:18,395 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057624,13.0062581;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:12:28,373 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057662,13.0061052;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:12:38,388 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2106059,13.0083726;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:12:48,458 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2227101,13.0131553;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:12:57,723 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:12:58,380 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2179786,12.9805893;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:13:08,402 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2182307,12.9841726;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:13:18,368 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2177291,12.9847606;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:13:27,182 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:13:27,548 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:13:28,392 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2001919,12.9933742;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:13:38,506 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.1997306,12.9935964;77.60445387770035,12.982582068355935?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:13:38,515 - main_osrm - INFO - 12 candidates scored for lunch
+2025-12-03 17:13:38,516 - main_osrm - INFO - Selected: The Great Kabab Factory score=3.00 detour=4min
+2025-12-03 17:13:38,516 - main_osrm - INFO - Selected: Madras Cafe score=3.00 detour=1min
+2025-12-03 17:13:38,517 - main_osrm - INFO - Selected: Cilantro score=3.00 detour=2min
+2025-12-03 17:13:38,517 - main_osrm - INFO - Selected: Navratna score=3.00 detour=2min
+2025-12-03 17:13:38,519 - main_osrm - INFO - Selected: Kayal score=3.00 detour=2min
+2025-12-03 17:13:38,522 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'lunch': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=4, eta_iso='2025-12-04T12:25:18.109000', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=1, eta_iso='2025-12-04T12:22:18.109000', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-04T12:23:18.109000', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-04T12:23:18.109000', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=2, eta_iso='2025-12-04T12:23:18.109000', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 17:13:38,522 - main_osrm - INFO - DEBUG: lunch has 5 suggestions
+2025-12-03 17:13:38,522 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='257532623' name='The Great Kabab Factory' location=LatLng(lat=12.9946821, lng=80.1874068) detour_minutes=4 eta_iso='2025-12-04T12:25:18.109000' tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:13:38,522 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='339280986' name='Madras Cafe' location=LatLng(lat=13.0008164, lng=80.2043612) detour_minutes=1 eta_iso='2025-12-04T12:22:18.109000' tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:13:38,526 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='391835427' name='Cilantro' location=LatLng(lat=13.0064035, lng=80.2057624) detour_minutes=2 eta_iso='2025-12-04T12:23:18.109000' tags={'amenity': 'restaurant', 'name': 'Cilantro'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:13:38,526 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='391835432' name='Navratna' location=LatLng(lat=13.0062581, lng=80.2057624) detour_minutes=2 eta_iso='2025-12-04T12:23:18.109000' tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:13:38,526 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='391835434' name='Kayal' location=LatLng(lat=13.0061052, lng=80.2057662) detour_minutes=2 eta_iso='2025-12-04T12:23:18.109000' tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:13:38,528 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'lunch': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=4, eta_iso='2025-12-04T12:25:18.109000', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=1, eta_iso='2025-12-04T12:22:18.109000', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-04T12:23:18.109000', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=2, eta_iso='2025-12-04T12:23:18.109000', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=2, eta_iso='2025-12-04T12:23:18.109000', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 17:13:38,531 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 17:14:40,010 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:15:05,714 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:17:01,445 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:17:19,503 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:17:51,711 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:18:28,024 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:22:04,466 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 17:22:04,466 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 17:22:04,466 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 17:22:04,466 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 17:22:05,753 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.2023035,13.0008413;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 17:22:06,403 - main_osrm - INFO - Baseline route: duration=15506s distance=310448.6m
+2025-12-03 17:22:06,403 - main_osrm - INFO - Initial trip window: depart=2025-12-04T12:18:19.441000
+2025-12-03 17:22:06,405 - main_osrm - INFO - Extracted 39 checkpoints from baseline route
+2025-12-03 17:22:06,405 - main_osrm - INFO - Considering meals: ['lunch']
+2025-12-03 17:22:06,406 - main_osrm - INFO - Processing meal 'lunch' with personalization
+2025-12-03 17:22:06,406 - main_osrm - INFO - Meal 'lunch' ETA: 2025-12-04T12:18:31.441000 at 13.000841,80.202301
+2025-12-03 17:22:10,498 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-03 17:22:10,501 - main_osrm - INFO - Overpass returned 56 places for lunch at radius=3000m
+2025-12-03 17:22:10,503 - main_osrm - INFO - 56 places after SMART preference filtering for lunch
+2025-12-03 17:22:11,657 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.1874068,12.9946821;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:22:21,826 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2043612,13.0008164;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:22:31,660 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057624,13.0064035;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:22:41,669 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057624,13.0062581;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:22:45,745 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:22:51,682 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057662,13.0061052;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:23:01,679 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2106059,13.0083726;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:23:07,332 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:23:11,767 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2227101,13.0131553;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:23:21,733 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2179786,12.9805893;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:23:31,710 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2182307,12.9841726;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:23:41,716 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2177291,12.9847606;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:23:51,783 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2001919,12.9933742;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:24:01,708 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.1997306,12.9935964;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 17:24:01,711 - main_osrm - INFO - 12 candidates scored for lunch
+2025-12-03 17:24:01,713 - main_osrm - INFO - Selected: The Great Kabab Factory score=3.00 detour=1min
+2025-12-03 17:24:01,713 - main_osrm - INFO - Selected: Madras Cafe score=3.00 detour=2min
+2025-12-03 17:24:01,715 - main_osrm - INFO - Selected: Cilantro score=3.00 detour=4min
+2025-12-03 17:24:01,715 - main_osrm - INFO - Selected: Navratna score=3.00 detour=3min
+2025-12-03 17:24:01,715 - main_osrm - INFO - Selected: Kayal score=3.00 detour=3min
+2025-12-03 17:24:01,715 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'lunch': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=1, eta_iso='2025-12-04T12:19:31.441000', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-04T12:20:31.441000', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=4, eta_iso='2025-12-04T12:22:31.441000', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-04T12:21:31.441000', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-04T12:21:31.441000', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 17:24:01,719 - main_osrm - INFO - DEBUG: lunch has 5 suggestions
+2025-12-03 17:24:01,719 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='257532623' name='The Great Kabab Factory' location=LatLng(lat=12.9946821, lng=80.1874068) detour_minutes=1 eta_iso='2025-12-04T12:19:31.441000' tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:24:01,719 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='339280986' name='Madras Cafe' location=LatLng(lat=13.0008164, lng=80.2043612) detour_minutes=2 eta_iso='2025-12-04T12:20:31.441000' tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:24:01,721 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='391835427' name='Cilantro' location=LatLng(lat=13.0064035, lng=80.2057624) detour_minutes=4 eta_iso='2025-12-04T12:22:31.441000' tags={'amenity': 'restaurant', 'name': 'Cilantro'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:24:01,723 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='391835432' name='Navratna' location=LatLng(lat=13.0062581, lng=80.2057624) detour_minutes=3 eta_iso='2025-12-04T12:21:31.441000' tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:24:01,723 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='391835434' name='Kayal' location=LatLng(lat=13.0061052, lng=80.2057662) detour_minutes=3 eta_iso='2025-12-04T12:21:31.441000' tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 17:24:01,725 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'lunch': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=1, eta_iso='2025-12-04T12:19:31.441000', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-04T12:20:31.441000', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=4, eta_iso='2025-12-04T12:22:31.441000', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-04T12:21:31.441000', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-04T12:21:31.441000', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 17:24:01,725 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 17:25:29,033 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:26:01,476 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:26:28,979 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:26:53,737 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:27:39,746 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:27:40,101 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:27:55,421 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:28:20,959 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:28:21,375 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:28:44,149 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:29:05,119 - watchfiles.main - INFO - 3 changes detected
+2025-12-03 17:31:35,810 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:32:33,729 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:33:02,991 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:39:10,539 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:40:24,518 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:40:24,884 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:40:56,710 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:41:07,822 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:41:16,713 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:41:27,676 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:41:36,819 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:41:55,892 - watchfiles.main - INFO - 4 changes detected
+2025-12-03 17:44:02,897 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:44:06,478 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:44:06,840 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:44:08,961 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:48:56,777 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:48:59,639 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:51:27,751 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:51:42,509 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:52:00,280 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:53:50,776 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:53:55,228 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:58:44,762 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:58:51,452 - watchfiles.main - INFO - 1 change detected
+2025-12-03 17:59:49,301 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 17:59:49,302 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 17:59:49,303 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 17:59:49,303 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 17:59:50,252 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 17:59:50,984 - main_osrm - INFO - Baseline route: duration=15067s distance=315081.8m
+2025-12-03 17:59:50,986 - main_osrm - INFO - Initial trip window: depart=2025-12-04T12:56:08.019000
+2025-12-03 17:59:50,986 - main_osrm - INFO - Extracted 38 checkpoints from baseline route
+2025-12-03 17:59:50,986 - main_osrm - INFO - Considering meals: ['lunch']
+2025-12-03 17:59:50,987 - main_osrm - INFO - Processing meal 'lunch' with personalization
+2025-12-03 17:59:50,987 - main_osrm - INFO - Meal 'lunch' ETA: 2025-12-04T12:56:14.019000 at 13.060175,80.166689
+2025-12-03 17:59:53,022 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-03 17:59:53,026 - main_osrm - INFO - Overpass returned 10 places for lunch at radius=3000m
+2025-12-03 17:59:53,026 - main_osrm - INFO - 10 places after SMART preference filtering for lunch
+2025-12-03 17:59:53,909 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.192033,13.052763;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:00:03,930 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1725724,13.0405828;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:00:14,016 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1817229,13.0808212;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:00:23,944 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1698754,13.0817972;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:00:34,007 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1769423,13.0619643;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:00:43,928 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1498236,13.0456755;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:00:54,025 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1872924,13.0722272;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:01:03,934 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1822132,13.0438367;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:01:13,927 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1819359,13.0425183;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:01:23,942 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1701293,13.0827474;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:01:23,943 - main_osrm - INFO - 10 candidates scored for lunch
+2025-12-03 18:01:23,943 - main_osrm - INFO - Selected: Sri Parvathy Bhavan score=3.00 detour=12min
+2025-12-03 18:01:23,943 - main_osrm - INFO - Selected: Data Udipi Hotel score=3.00 detour=7min
+2025-12-03 18:01:23,943 - main_osrm - INFO - Selected: Adyar Ananda Bhavan score=3.00 detour=10min
+2025-12-03 18:01:23,946 - main_osrm - INFO - Selected: Buhari Hotel score=3.00 detour=10min
+2025-12-03 18:01:23,946 - main_osrm - INFO - Selected: Moonlight Restaurant score=3.00 detour=6min
+2025-12-03 18:01:23,946 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'lunch': [PlaceSuggestion(osm_id='595714975', name='Sri Parvathy Bhavan', location=LatLng(lat=13.052763, lng=80.192033), detour_minutes=12, eta_iso='2025-12-04T13:08:14.019000', tags={'amenity': 'restaurant', 'name': 'Sri Parvathy Bhavan'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='653152094', name='Data Udipi Hotel', location=LatLng(lat=13.0405828, lng=80.1725724), detour_minutes=7, eta_iso='2025-12-04T13:03:14.019000', tags={'amenity': 'restaurant', 'name': 'Data Udipi Hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='4799154417', name='Adyar Ananda Bhavan', location=LatLng(lat=13.0808212, lng=80.1817229), detour_minutes=10, eta_iso='2025-12-04T13:06:14.019000', tags={'addr:city': 'Chennai', 'addr:postcode': '600037', 'addr:street': 'Pari Rd', 'alt_name': 'A2B', 'amenity': 'restaurant', 'brand': 'Adyar Ananda Bhavan', 'brand:wikidata': 'Q15178238', 'cuisine': 'regional', 'diet:vegetarian': 'only', 'food': 'yes', 'name': 'Adyar Ananda Bhavan', 'operator': 'Adyar Ananda Bhavan', 'phone': '+91 44 4269 0022', 'shop': 'confectionery', 'smoking': 'no', 'website': 'https://www.aabsweets.in', 'wheelchair': 'no'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5230370408', name='Buhari Hotel', location=LatLng(lat=13.0817972, lng=80.1698754), detour_minutes=10, eta_iso='2025-12-04T13:06:14.019000', tags={'addr:city': 'Chennai', 'addr:housenumber': '14', 'addr:postcode': '600037', 'addr:street': 'Bharathi Salai, 4th Block, Mogappair West, Ambattur Industrial Estate', 'amenity': 'restaurant', 'name': 'Buhari Hotel', 'opening_hours': 'Mo-Su 11:30-23:00'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='11125618139', name='Moonlight Restaurant', location=LatLng(lat=13.0619643, lng=80.1769423), detour_minutes=6, eta_iso='2025-12-04T13:02:14.019000', tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'diet:halal': 'yes', 'diet:vegetarian': 'yes', 'indoor_seating': 'yes', 'name': 'Moonlight Restaurant', 'outdoor_seating': 'no', 'payment:credit_cards': 'yes', 'payment:debit_cards': 'yes'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 18:01:23,946 - main_osrm - INFO - DEBUG: lunch has 5 suggestions
+2025-12-03 18:01:23,946 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='595714975' name='Sri Parvathy Bhavan' location=LatLng(lat=13.052763, lng=80.192033) detour_minutes=12 eta_iso='2025-12-04T13:08:14.019000' tags={'amenity': 'restaurant', 'name': 'Sri Parvathy Bhavan'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:01:23,946 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='653152094' name='Data Udipi Hotel' location=LatLng(lat=13.0405828, lng=80.1725724) detour_minutes=7 eta_iso='2025-12-04T13:03:14.019000' tags={'amenity': 'restaurant', 'name': 'Data Udipi Hotel'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:01:23,946 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='4799154417' name='Adyar Ananda Bhavan' location=LatLng(lat=13.0808212, lng=80.1817229) detour_minutes=10 eta_iso='2025-12-04T13:06:14.019000' tags={'addr:city': 'Chennai', 'addr:postcode': '600037', 'addr:street': 'Pari Rd', 'alt_name': 'A2B', 'amenity': 'restaurant', 'brand': 'Adyar Ananda Bhavan', 'brand:wikidata': 'Q15178238', 'cuisine': 'regional', 'diet:vegetarian': 'only', 'food': 'yes', 'name': 'Adyar Ananda Bhavan', 'operator': 'Adyar Ananda Bhavan', 'phone': '+91 44 4269 0022', 'shop': 'confectionery', 'smoking': 'no', 'website': 'https://www.aabsweets.in', 'wheelchair': 'no'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:01:23,946 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='5230370408' name='Buhari Hotel' location=LatLng(lat=13.0817972, lng=80.1698754) detour_minutes=10 eta_iso='2025-12-04T13:06:14.019000' tags={'addr:city': 'Chennai', 'addr:housenumber': '14', 'addr:postcode': '600037', 'addr:street': 'Bharathi Salai, 4th Block, Mogappair West, Ambattur Industrial Estate', 'amenity': 'restaurant', 'name': 'Buhari Hotel', 'opening_hours': 'Mo-Su 11:30-23:00'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:01:23,946 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='11125618139' name='Moonlight Restaurant' location=LatLng(lat=13.0619643, lng=80.1769423) detour_minutes=6 eta_iso='2025-12-04T13:02:14.019000' tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'diet:halal': 'yes', 'diet:vegetarian': 'yes', 'indoor_seating': 'yes', 'name': 'Moonlight Restaurant', 'outdoor_seating': 'no', 'payment:credit_cards': 'yes', 'payment:debit_cards': 'yes'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:01:23,946 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'lunch': [PlaceSuggestion(osm_id='595714975', name='Sri Parvathy Bhavan', location=LatLng(lat=13.052763, lng=80.192033), detour_minutes=12, eta_iso='2025-12-04T13:08:14.019000', tags={'amenity': 'restaurant', 'name': 'Sri Parvathy Bhavan'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='653152094', name='Data Udipi Hotel', location=LatLng(lat=13.0405828, lng=80.1725724), detour_minutes=7, eta_iso='2025-12-04T13:03:14.019000', tags={'amenity': 'restaurant', 'name': 'Data Udipi Hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='4799154417', name='Adyar Ananda Bhavan', location=LatLng(lat=13.0808212, lng=80.1817229), detour_minutes=10, eta_iso='2025-12-04T13:06:14.019000', tags={'addr:city': 'Chennai', 'addr:postcode': '600037', 'addr:street': 'Pari Rd', 'alt_name': 'A2B', 'amenity': 'restaurant', 'brand': 'Adyar Ananda Bhavan', 'brand:wikidata': 'Q15178238', 'cuisine': 'regional', 'diet:vegetarian': 'only', 'food': 'yes', 'name': 'Adyar Ananda Bhavan', 'operator': 'Adyar Ananda Bhavan', 'phone': '+91 44 4269 0022', 'shop': 'confectionery', 'smoking': 'no', 'website': 'https://www.aabsweets.in', 'wheelchair': 'no'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5230370408', name='Buhari Hotel', location=LatLng(lat=13.0817972, lng=80.1698754), detour_minutes=10, eta_iso='2025-12-04T13:06:14.019000', tags={'addr:city': 'Chennai', 'addr:housenumber': '14', 'addr:postcode': '600037', 'addr:street': 'Bharathi Salai, 4th Block, Mogappair West, Ambattur Industrial Estate', 'amenity': 'restaurant', 'name': 'Buhari Hotel', 'opening_hours': 'Mo-Su 11:30-23:00'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='11125618139', name='Moonlight Restaurant', location=LatLng(lat=13.0619643, lng=80.1769423), detour_minutes=6, eta_iso='2025-12-04T13:02:14.019000', tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'diet:halal': 'yes', 'diet:vegetarian': 'yes', 'indoor_seating': 'yes', 'name': 'Moonlight Restaurant', 'outdoor_seating': 'no', 'payment:credit_cards': 'yes', 'payment:debit_cards': 'yes'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 18:01:23,953 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 18:03:38,778 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:03:49,696 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:05:37,165 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:06:16,759 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:06:45,083 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:08:32,789 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:08:46,274 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:09:29,044 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:09:30,213 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:13:26,810 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:13:30,303 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:13:53,748 - watchfiles.main - INFO - 23 changes detected
+2025-12-03 18:13:54,111 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:13:54,477 - watchfiles.main - INFO - 2 changes detected
+2025-12-03 18:14:03,923 - watchfiles.main - INFO - 4 changes detected
+2025-12-03 18:14:05,481 - watchfiles.main - INFO - 60 changes detected
+2025-12-03 18:14:05,854 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:14:06,362 - watchfiles.main - INFO - 5 changes detected
+2025-12-03 18:14:06,778 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:14:12,041 - watchfiles.main - INFO - 9 changes detected
+2025-12-03 18:14:13,510 - watchfiles.main - INFO - 7 changes detected
+2025-12-03 18:14:13,926 - watchfiles.main - INFO - 3 changes detected
+2025-12-03 18:14:14,281 - watchfiles.main - INFO - 14 changes detected
+2025-12-03 18:14:14,659 - watchfiles.main - INFO - 5 changes detected
+2025-12-03 18:14:15,072 - watchfiles.main - INFO - 10 changes detected
+2025-12-03 18:14:15,528 - watchfiles.main - INFO - 14 changes detected
+2025-12-03 18:14:16,295 - watchfiles.main - INFO - 7 changes detected
+2025-12-03 18:14:16,646 - watchfiles.main - INFO - 6 changes detected
+2025-12-03 18:14:17,215 - watchfiles.main - INFO - 3 changes detected
+2025-12-03 18:14:17,578 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:14:17,930 - watchfiles.main - INFO - 3 changes detected
+2025-12-03 18:14:18,293 - watchfiles.main - INFO - 5 changes detected
+2025-12-03 18:14:18,699 - watchfiles.main - INFO - 5 changes detected
+2025-12-03 18:14:19,064 - watchfiles.main - INFO - 6 changes detected
+2025-12-03 18:14:19,426 - watchfiles.main - INFO - 14 changes detected
+2025-12-03 18:14:21,655 - watchfiles.main - INFO - 6 changes detected
+2025-12-03 18:16:13,584 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:16:31,536 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:17:40,011 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:17:40,519 - watchfiles.main - INFO - 4 changes detected
+2025-12-03 18:17:41,086 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:18:20,843 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:18:28,707 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:18:29,069 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:20:24,580 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 18:20:24,580 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 18:20:24,580 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 18:20:24,582 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 18:20:25,576 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;80.2023035,13.0008413?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 18:20:25,587 - main_osrm - INFO - Baseline route: duration=805s distance=10995.9m
+2025-12-03 18:20:25,587 - main_osrm - INFO - Initial trip window: depart=2025-12-04T17:21:23.013000
+2025-12-03 18:20:25,587 - main_osrm - INFO - Extracted 22 checkpoints from baseline route
+2025-12-03 18:20:25,587 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 18:20:25,587 - main_osrm - INFO - Considering meals: []
+2025-12-03 18:20:25,593 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-03 18:20:25,594 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-03 18:20:25,595 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 18:20:58,873 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 18:20:58,874 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 18:20:58,875 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 18:20:58,876 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 18:20:59,775 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 18:21:00,442 - main_osrm - INFO - Baseline route: duration=15067s distance=315081.8m
+2025-12-03 18:21:00,442 - main_osrm - INFO - Initial trip window: depart=2025-12-04T13:23:41.013000
+2025-12-03 18:21:00,442 - main_osrm - INFO - Extracted 38 checkpoints from baseline route
+2025-12-03 18:21:00,442 - main_osrm - INFO - Considering meals: ['lunch']
+2025-12-03 18:21:00,442 - main_osrm - INFO - Processing meal 'lunch' with personalization
+2025-12-03 18:21:00,442 - main_osrm - INFO - Meal 'lunch' ETA: 2025-12-04T13:23:47.013000 at 13.060175,80.166689
+2025-12-03 18:21:01,954 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-03 18:21:01,954 - main_osrm - INFO - Overpass returned 10 places for lunch at radius=3000m
+2025-12-03 18:21:01,954 - main_osrm - INFO - 10 places after SMART preference filtering for lunch
+2025-12-03 18:21:02,822 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.192033,13.052763;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:21:12,878 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1725724,13.0405828;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:21:22,815 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1817229,13.0808212;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:21:32,797 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1698754,13.0817972;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:21:42,810 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1769423,13.0619643;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:21:52,806 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1498236,13.0456755;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:22:02,804 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1872924,13.0722272;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:22:12,887 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1822132,13.0438367;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:22:22,807 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1819359,13.0425183;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:22:32,907 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;80.1701293,13.0827474;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:22:32,907 - main_osrm - INFO - 10 candidates scored for lunch
+2025-12-03 18:22:32,907 - main_osrm - INFO - Selected: Sri Parvathy Bhavan score=3.00 detour=12min
+2025-12-03 18:22:32,907 - main_osrm - INFO - Selected: Data Udipi Hotel score=3.00 detour=7min
+2025-12-03 18:22:32,907 - main_osrm - INFO - Selected: Adyar Ananda Bhavan score=3.00 detour=10min
+2025-12-03 18:22:32,923 - main_osrm - INFO - Selected: Buhari Hotel score=3.00 detour=10min
+2025-12-03 18:22:32,924 - main_osrm - INFO - Selected: Moonlight Restaurant score=3.00 detour=6min
+2025-12-03 18:22:32,924 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'lunch': [PlaceSuggestion(osm_id='595714975', name='Sri Parvathy Bhavan', location=LatLng(lat=13.052763, lng=80.192033), detour_minutes=12, eta_iso='2025-12-04T13:35:47.013000', tags={'amenity': 'restaurant', 'name': 'Sri Parvathy Bhavan'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='653152094', name='Data Udipi Hotel', location=LatLng(lat=13.0405828, lng=80.1725724), detour_minutes=7, eta_iso='2025-12-04T13:30:47.013000', tags={'amenity': 'restaurant', 'name': 'Data Udipi Hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='4799154417', name='Adyar Ananda Bhavan', location=LatLng(lat=13.0808212, lng=80.1817229), detour_minutes=10, eta_iso='2025-12-04T13:33:47.013000', tags={'addr:city': 'Chennai', 'addr:postcode': '600037', 'addr:street': 'Pari Rd', 'alt_name': 'A2B', 'amenity': 'restaurant', 'brand': 'Adyar Ananda Bhavan', 'brand:wikidata': 'Q15178238', 'cuisine': 'regional', 'diet:vegetarian': 'only', 'food': 'yes', 'name': 'Adyar Ananda Bhavan', 'operator': 'Adyar Ananda Bhavan', 'phone': '+91 44 4269 0022', 'shop': 'confectionery', 'smoking': 'no', 'website': 'https://www.aabsweets.in', 'wheelchair': 'no'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5230370408', name='Buhari Hotel', location=LatLng(lat=13.0817972, lng=80.1698754), detour_minutes=10, eta_iso='2025-12-04T13:33:47.013000', tags={'addr:city': 'Chennai', 'addr:housenumber': '14', 'addr:postcode': '600037', 'addr:street': 'Bharathi Salai, 4th Block, Mogappair West, Ambattur Industrial Estate', 'amenity': 'restaurant', 'name': 'Buhari Hotel', 'opening_hours': 'Mo-Su 11:30-23:00'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='11125618139', name='Moonlight Restaurant', location=LatLng(lat=13.0619643, lng=80.1769423), detour_minutes=6, eta_iso='2025-12-04T13:29:47.013000', tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'diet:halal': 'yes', 'diet:vegetarian': 'yes', 'indoor_seating': 'yes', 'name': 'Moonlight Restaurant', 'outdoor_seating': 'no', 'payment:credit_cards': 'yes', 'payment:debit_cards': 'yes'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 18:22:32,924 - main_osrm - INFO - DEBUG: lunch has 5 suggestions
+2025-12-03 18:22:32,924 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='595714975' name='Sri Parvathy Bhavan' location=LatLng(lat=13.052763, lng=80.192033) detour_minutes=12 eta_iso='2025-12-04T13:35:47.013000' tags={'amenity': 'restaurant', 'name': 'Sri Parvathy Bhavan'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:22:32,924 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='653152094' name='Data Udipi Hotel' location=LatLng(lat=13.0405828, lng=80.1725724) detour_minutes=7 eta_iso='2025-12-04T13:30:47.013000' tags={'amenity': 'restaurant', 'name': 'Data Udipi Hotel'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:22:32,924 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='4799154417' name='Adyar Ananda Bhavan' location=LatLng(lat=13.0808212, lng=80.1817229) detour_minutes=10 eta_iso='2025-12-04T13:33:47.013000' tags={'addr:city': 'Chennai', 'addr:postcode': '600037', 'addr:street': 'Pari Rd', 'alt_name': 'A2B', 'amenity': 'restaurant', 'brand': 'Adyar Ananda Bhavan', 'brand:wikidata': 'Q15178238', 'cuisine': 'regional', 'diet:vegetarian': 'only', 'food': 'yes', 'name': 'Adyar Ananda Bhavan', 'operator': 'Adyar Ananda Bhavan', 'phone': '+91 44 4269 0022', 'shop': 'confectionery', 'smoking': 'no', 'website': 'https://www.aabsweets.in', 'wheelchair': 'no'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:22:32,924 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='5230370408' name='Buhari Hotel' location=LatLng(lat=13.0817972, lng=80.1698754) detour_minutes=10 eta_iso='2025-12-04T13:33:47.013000' tags={'addr:city': 'Chennai', 'addr:housenumber': '14', 'addr:postcode': '600037', 'addr:street': 'Bharathi Salai, 4th Block, Mogappair West, Ambattur Industrial Estate', 'amenity': 'restaurant', 'name': 'Buhari Hotel', 'opening_hours': 'Mo-Su 11:30-23:00'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:22:32,924 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='11125618139' name='Moonlight Restaurant' location=LatLng(lat=13.0619643, lng=80.1769423) detour_minutes=6 eta_iso='2025-12-04T13:29:47.013000' tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'diet:halal': 'yes', 'diet:vegetarian': 'yes', 'indoor_seating': 'yes', 'name': 'Moonlight Restaurant', 'outdoor_seating': 'no', 'payment:credit_cards': 'yes', 'payment:debit_cards': 'yes'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:22:32,932 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'lunch': [PlaceSuggestion(osm_id='595714975', name='Sri Parvathy Bhavan', location=LatLng(lat=13.052763, lng=80.192033), detour_minutes=12, eta_iso='2025-12-04T13:35:47.013000', tags={'amenity': 'restaurant', 'name': 'Sri Parvathy Bhavan'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='653152094', name='Data Udipi Hotel', location=LatLng(lat=13.0405828, lng=80.1725724), detour_minutes=7, eta_iso='2025-12-04T13:30:47.013000', tags={'amenity': 'restaurant', 'name': 'Data Udipi Hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='4799154417', name='Adyar Ananda Bhavan', location=LatLng(lat=13.0808212, lng=80.1817229), detour_minutes=10, eta_iso='2025-12-04T13:33:47.013000', tags={'addr:city': 'Chennai', 'addr:postcode': '600037', 'addr:street': 'Pari Rd', 'alt_name': 'A2B', 'amenity': 'restaurant', 'brand': 'Adyar Ananda Bhavan', 'brand:wikidata': 'Q15178238', 'cuisine': 'regional', 'diet:vegetarian': 'only', 'food': 'yes', 'name': 'Adyar Ananda Bhavan', 'operator': 'Adyar Ananda Bhavan', 'phone': '+91 44 4269 0022', 'shop': 'confectionery', 'smoking': 'no', 'website': 'https://www.aabsweets.in', 'wheelchair': 'no'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='5230370408', name='Buhari Hotel', location=LatLng(lat=13.0817972, lng=80.1698754), detour_minutes=10, eta_iso='2025-12-04T13:33:47.013000', tags={'addr:city': 'Chennai', 'addr:housenumber': '14', 'addr:postcode': '600037', 'addr:street': 'Bharathi Salai, 4th Block, Mogappair West, Ambattur Industrial Estate', 'amenity': 'restaurant', 'name': 'Buhari Hotel', 'opening_hours': 'Mo-Su 11:30-23:00'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='11125618139', name='Moonlight Restaurant', location=LatLng(lat=13.0619643, lng=80.1769423), detour_minutes=6, eta_iso='2025-12-04T13:29:47.013000', tags={'air_conditioning': 'yes', 'amenity': 'restaurant', 'diet:halal': 'yes', 'diet:vegetarian': 'yes', 'indoor_seating': 'yes', 'name': 'Moonlight Restaurant', 'outdoor_seating': 'no', 'payment:credit_cards': 'yes', 'payment:debit_cards': 'yes'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 18:22:32,932 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 18:23:13,360 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:23:14,782 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:23:17,692 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:25:04,846 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 18:25:04,846 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 18:25:04,846 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 18:25:04,849 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 18:25:05,768 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.2023035,13.0008413;80.158304,13.0320131?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 18:25:05,774 - main_osrm - INFO - Baseline route: duration=620s distance=7176.4m
+2025-12-03 18:25:05,774 - main_osrm - INFO - Initial trip window: depart=2025-12-04T17:29:25.817000
+2025-12-03 18:25:05,774 - main_osrm - INFO - Extracted 16 checkpoints from baseline route
+2025-12-03 18:25:05,774 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-03 18:25:05,774 - main_osrm - INFO - Considering meals: []
+2025-12-03 18:25:05,774 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-03 18:25:05,774 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-03 18:25:05,774 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 18:25:38,571 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 18:25:38,571 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 18:25:38,571 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 18:25:38,571 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 18:25:39,359 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/78.6880939,10.8071144;80.158304,13.0320131?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 18:25:39,959 - main_osrm - INFO - Baseline route: duration=14719s distance=315963.2m
+2025-12-03 18:25:39,959 - main_osrm - INFO - Initial trip window: depart=2025-12-04T13:34:26.817000
+2025-12-03 18:25:39,959 - main_osrm - INFO - Extracted 50 checkpoints from baseline route
+2025-12-03 18:25:39,959 - main_osrm - INFO - Considering meals: ['lunch']
+2025-12-03 18:25:39,959 - main_osrm - INFO - Processing meal 'lunch' with personalization
+2025-12-03 18:25:39,959 - main_osrm - INFO - Meal 'lunch' ETA: 2025-12-04T13:34:32.617000 at 10.806824,78.688014
+2025-12-03 18:25:45,738 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-03 18:25:45,744 - main_osrm - INFO - Overpass returned 53 places for lunch at radius=3000m
+2025-12-03 18:25:45,744 - main_osrm - INFO - 53 places after SMART preference filtering for lunch
+2025-12-03 18:25:46,694 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6925646,10.8264119;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:25:56,624 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6810445,10.7992897;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:26:06,620 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6919627,10.7861684;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:26:16,724 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.681775,10.7964075;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:26:26,671 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6809061,10.7966865;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:26:36,733 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6814918,10.7989114;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:26:46,648 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.683318,10.8230695;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:26:56,641 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6833398,10.8222866;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:27:06,816 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6858306,10.8275467;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:27:16,642 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6815295,10.7970368;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:27:26,650 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6810678,10.7992674;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:27:36,699 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/78.6880939,10.8071144;78.6812561,10.7973054;80.158304,13.0320131?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:27:36,699 - main_osrm - INFO - 12 candidates scored for lunch
+2025-12-03 18:27:36,699 - main_osrm - INFO - Selected: Banana Leaf score=3.00 detour=1min
+2025-12-03 18:27:36,699 - main_osrm - INFO - Selected: Guru;Guru Hotel score=3.00 detour=3min
+2025-12-03 18:27:36,707 - main_osrm - INFO - Selected: Anjappar score=3.00 detour=7min
+2025-12-03 18:27:36,707 - main_osrm - INFO - Selected: Ashby hotel score=3.00 detour=4min
+2025-12-03 18:27:36,707 - main_osrm - INFO - Selected: Unknown score=3.00 detour=5min
+2025-12-03 18:27:36,707 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'lunch': [PlaceSuggestion(osm_id='2152463907', name='Banana Leaf', location=LatLng(lat=10.8264119, lng=78.6925646), detour_minutes=1, eta_iso='2025-12-04T13:35:32.617000', tags={'amenity': 'restaurant', 'name': 'Banana Leaf'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='2152463909', name='Guru;Guru Hotel', location=LatLng(lat=10.7992897, lng=78.6810445), detour_minutes=3, eta_iso='2025-12-04T13:37:32.617000', tags={'amenity': 'restaurant', 'fixme': 'Correct the tags and name.', 'name': 'Guru;Guru Hotel', 'tourism': 'hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3687738467', name='Anjappar', location=LatLng(lat=10.7861684, lng=78.6919627), detour_minutes=7, eta_iso='2025-12-04T13:41:32.617000', tags={'amenity': 'restaurant', 'name': 'Anjappar'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3699567368', name='Ashby hotel', location=LatLng(lat=10.7964075, lng=78.681775), detour_minutes=4, eta_iso='2025-12-04T13:38:32.617000', tags={'amenity': 'restaurant', 'name': 'Ashby hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3699567369', name='Unknown', location=LatLng(lat=10.7966865, lng=78.6809061), detour_minutes=5, eta_iso='2025-12-04T13:39:32.617000', tags={'amenity': 'restaurant', 'brand': 'Sangeethas'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 18:27:36,707 - main_osrm - INFO - DEBUG: lunch has 5 suggestions
+2025-12-03 18:27:36,707 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='2152463907' name='Banana Leaf' location=LatLng(lat=10.8264119, lng=78.6925646) detour_minutes=1 eta_iso='2025-12-04T13:35:32.617000' tags={'amenity': 'restaurant', 'name': 'Banana Leaf'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:27:36,707 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='2152463909' name='Guru;Guru Hotel' location=LatLng(lat=10.7992897, lng=78.6810445) detour_minutes=3 eta_iso='2025-12-04T13:37:32.617000' tags={'amenity': 'restaurant', 'fixme': 'Correct the tags and name.', 'name': 'Guru;Guru Hotel', 'tourism': 'hotel'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:27:36,712 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='3687738467' name='Anjappar' location=LatLng(lat=10.7861684, lng=78.6919627) detour_minutes=7 eta_iso='2025-12-04T13:41:32.617000' tags={'amenity': 'restaurant', 'name': 'Anjappar'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:27:36,712 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='3699567368' name='Ashby hotel' location=LatLng(lat=10.7964075, lng=78.681775) detour_minutes=4 eta_iso='2025-12-04T13:38:32.617000' tags={'amenity': 'restaurant', 'name': 'Ashby hotel'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:27:36,712 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='3699567369' name='Unknown' location=LatLng(lat=10.7966865, lng=78.6809061) detour_minutes=5 eta_iso='2025-12-04T13:39:32.617000' tags={'amenity': 'restaurant', 'brand': 'Sangeethas'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:27:36,712 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'lunch': [PlaceSuggestion(osm_id='2152463907', name='Banana Leaf', location=LatLng(lat=10.8264119, lng=78.6925646), detour_minutes=1, eta_iso='2025-12-04T13:35:32.617000', tags={'amenity': 'restaurant', 'name': 'Banana Leaf'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='2152463909', name='Guru;Guru Hotel', location=LatLng(lat=10.7992897, lng=78.6810445), detour_minutes=3, eta_iso='2025-12-04T13:37:32.617000', tags={'amenity': 'restaurant', 'fixme': 'Correct the tags and name.', 'name': 'Guru;Guru Hotel', 'tourism': 'hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3687738467', name='Anjappar', location=LatLng(lat=10.7861684, lng=78.6919627), detour_minutes=7, eta_iso='2025-12-04T13:41:32.617000', tags={'amenity': 'restaurant', 'name': 'Anjappar'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3699567368', name='Ashby hotel', location=LatLng(lat=10.7964075, lng=78.681775), detour_minutes=4, eta_iso='2025-12-04T13:38:32.617000', tags={'amenity': 'restaurant', 'name': 'Ashby hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3699567369', name='Unknown', location=LatLng(lat=10.7966865, lng=78.6809061), detour_minutes=5, eta_iso='2025-12-04T13:39:32.617000', tags={'amenity': 'restaurant', 'brand': 'Sangeethas'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 18:27:36,713 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 18:28:08,767 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:28:12,235 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:33:02,793 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:33:05,557 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:33:05,912 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:33:24,676 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:34:15,983 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:34:27,190 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:34:43,144 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:34:59,370 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:35:19,104 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:35:52,741 - watchfiles.main - INFO - 4 changes detected
+2025-12-03 18:35:59,274 - watchfiles.main - INFO - 13 changes detected
+2025-12-03 18:35:59,880 - watchfiles.main - INFO - 131 changes detected
+2025-12-03 18:36:00,259 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:36:00,621 - watchfiles.main - INFO - 3 changes detected
+2025-12-03 18:36:00,985 - watchfiles.main - INFO - 4 changes detected
+2025-12-03 18:36:06,709 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:36:07,070 - watchfiles.main - INFO - 5 changes detected
+2025-12-03 18:36:07,783 - watchfiles.main - INFO - 23 changes detected
+2025-12-03 18:36:08,640 - watchfiles.main - INFO - 2 changes detected
+2025-12-03 18:36:09,105 - watchfiles.main - INFO - 17 changes detected
+2025-12-03 18:36:10,481 - watchfiles.main - INFO - 4 changes detected
+2025-12-03 18:37:56,855 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:38:04,570 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:38:22,737 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:38:47,186 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:39:07,977 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:39:26,458 - watchfiles.main - INFO - 4 changes detected
+2025-12-03 18:39:28,702 - watchfiles.main - INFO - 13 changes detected
+2025-12-03 18:39:29,235 - watchfiles.main - INFO - 162 changes detected
+2025-12-03 18:39:29,616 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:39:29,982 - watchfiles.main - INFO - 2 changes detected
+2025-12-03 18:39:48,076 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:40:01,143 - watchfiles.main - INFO - 2 changes detected
+2025-12-03 18:40:01,511 - watchfiles.main - INFO - 2 changes detected
+2025-12-03 18:40:01,870 - watchfiles.main - INFO - 2 changes detected
+2025-12-03 18:40:02,222 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:41:44,664 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-03 18:41:44,664 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-03 18:41:44,664 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-03 18:41:44,664 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-03 18:41:45,518 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.2023035,13.0008413;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-03 18:41:46,226 - main_osrm - INFO - Baseline route: duration=15506s distance=310448.6m
+2025-12-03 18:41:46,227 - main_osrm - INFO - Initial trip window: depart=2025-12-04T13:37:36.784000
+2025-12-03 18:41:46,227 - main_osrm - INFO - Extracted 39 checkpoints from baseline route
+2025-12-03 18:41:46,227 - main_osrm - INFO - Considering meals: ['lunch']
+2025-12-03 18:41:46,227 - main_osrm - INFO - Processing meal 'lunch' with personalization
+2025-12-03 18:41:46,227 - main_osrm - INFO - Meal 'lunch' ETA: 2025-12-04T13:37:48.784000 at 13.000841,80.202301
+2025-12-03 18:41:47,648 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-03 18:41:47,657 - main_osrm - INFO - Overpass returned 56 places for lunch at radius=3000m
+2025-12-03 18:41:47,657 - main_osrm - INFO - 56 places after SMART preference filtering for lunch
+2025-12-03 18:41:48,557 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.1874068,12.9946821;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:41:58,644 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2043612,13.0008164;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:42:08,525 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057624,13.0064035;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:42:18,543 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057624,13.0062581;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:42:28,534 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2057662,13.0061052;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:42:38,538 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2106059,13.0083726;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:42:48,557 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2227101,13.0131553;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:42:50,804 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:42:55,010 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:42:58,664 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2179786,12.9805893;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:43:08,563 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2182307,12.9841726;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:43:18,558 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2177291,12.9847606;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:43:28,560 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.2001919,12.9933742;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:43:38,626 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.2023035,13.0008413;80.1997306,12.9935964;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-03 18:43:38,643 - main_osrm - INFO - 12 candidates scored for lunch
+2025-12-03 18:43:38,643 - main_osrm - INFO - Selected: The Great Kabab Factory score=3.00 detour=1min
+2025-12-03 18:43:38,643 - main_osrm - INFO - Selected: Madras Cafe score=3.00 detour=2min
+2025-12-03 18:43:38,643 - main_osrm - INFO - Selected: Cilantro score=3.00 detour=4min
+2025-12-03 18:43:38,647 - main_osrm - INFO - Selected: Navratna score=3.00 detour=3min
+2025-12-03 18:43:38,647 - main_osrm - INFO - Selected: Kayal score=3.00 detour=3min
+2025-12-03 18:43:38,649 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'lunch': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=1, eta_iso='2025-12-04T13:38:48.784000', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-04T13:39:48.784000', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=4, eta_iso='2025-12-04T13:41:48.784000', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-04T13:40:48.784000', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-04T13:40:48.784000', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 18:43:38,649 - main_osrm - INFO - DEBUG: lunch has 5 suggestions
+2025-12-03 18:43:38,649 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='257532623' name='The Great Kabab Factory' location=LatLng(lat=12.9946821, lng=80.1874068) detour_minutes=1 eta_iso='2025-12-04T13:38:48.784000' tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:43:38,652 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='339280986' name='Madras Cafe' location=LatLng(lat=13.0008164, lng=80.2043612) detour_minutes=2 eta_iso='2025-12-04T13:39:48.784000' tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:43:38,652 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='391835427' name='Cilantro' location=LatLng(lat=13.0064035, lng=80.2057624) detour_minutes=4 eta_iso='2025-12-04T13:41:48.784000' tags={'amenity': 'restaurant', 'name': 'Cilantro'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:43:38,652 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='391835432' name='Navratna' location=LatLng(lat=13.0062581, lng=80.2057624) detour_minutes=3 eta_iso='2025-12-04T13:40:48.784000' tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:43:38,652 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='391835434' name='Kayal' location=LatLng(lat=13.0061052, lng=80.2057662) detour_minutes=3 eta_iso='2025-12-04T13:40:48.784000' tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-03 18:43:38,652 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'lunch': [PlaceSuggestion(osm_id='257532623', name='The Great Kabab Factory', location=LatLng(lat=12.9946821, lng=80.1874068), detour_minutes=1, eta_iso='2025-12-04T13:38:48.784000', tags={'amenity': 'restaurant', 'name': 'The Great Kabab Factory'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='339280986', name='Madras Cafe', location=LatLng(lat=13.0008164, lng=80.2043612), detour_minutes=2, eta_iso='2025-12-04T13:39:48.784000', tags={'amenity': 'restaurant', 'created_by': 'Potlatch 0.10f', 'name': 'Madras Cafe'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835427', name='Cilantro', location=LatLng(lat=13.0064035, lng=80.2057624), detour_minutes=4, eta_iso='2025-12-04T13:41:48.784000', tags={'amenity': 'restaurant', 'name': 'Cilantro'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835432', name='Navratna', location=LatLng(lat=13.0062581, lng=80.2057624), detour_minutes=3, eta_iso='2025-12-04T13:40:48.784000', tags={'amenity': 'restaurant', 'cuisine': 'north_indian', 'name': 'Navratna'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='391835434', name='Kayal', location=LatLng(lat=13.0061052, lng=80.2057662), detour_minutes=3, eta_iso='2025-12-04T13:40:48.784000', tags={'amenity': 'restaurant', 'cuisine': 'mediterranean', 'name': 'Kayal'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-03 18:43:38,652 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-03 18:48:54,385 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:49:30,663 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:52:26,057 - watchfiles.main - INFO - 1 change detected
+2025-12-03 18:52:49,510 - watchfiles.main - INFO - 1 change detected
+2025-12-03 19:42:12,418 - watchfiles.main - INFO - 1 change detected
+2025-12-04 00:24:20,625 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:36:34,284 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:36:58,374 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:40:46,940 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-04 10:40:46,940 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-04 10:40:46,942 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-04 10:40:46,942 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-04 10:40:47,715 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-04 10:40:48,204 - main_osrm - INFO - Baseline route: duration=15067s distance=315081.8m
+2025-12-04 10:40:48,204 - main_osrm - INFO - Initial trip window: depart=2025-12-05T05:43:56.747000
+2025-12-04 10:40:48,204 - main_osrm - INFO - Extracted 38 checkpoints from baseline route
+2025-12-04 10:40:48,204 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-04 10:40:48,204 - main_osrm - INFO - Considering meals: []
+2025-12-04 10:40:48,204 - main_osrm - INFO - DEBUG: Meal suggestions structure: {}
+2025-12-04 10:40:48,204 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {}
+2025-12-04 10:40:48,204 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-04 10:41:03,901 - main_osrm - INFO - === ENHANCED create_trip with personalization ===
+2025-12-04 10:41:03,901 - main_osrm - WARNING - Firebase not initialized, cannot fetch user preferences
+2025-12-04 10:41:03,902 - main_osrm - INFO - No preferences found for user zpwStsb1U3YoGkLKOaYfRcvBiGl1, using request parameters
+2025-12-04 10:41:03,902 - main_osrm - INFO - Fetching baseline OSRM route...
+2025-12-04 10:41:04,691 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/route/v1/driving/80.1665988,13.0601732;78.6880939,10.8071144?overview=full&geometries=geojson&steps=true "HTTP/1.1 200 OK"
+2025-12-04 10:41:05,197 - main_osrm - INFO - Baseline route: duration=15067s distance=315081.8m
+2025-12-04 10:41:05,198 - main_osrm - INFO - Initial trip window: depart=2025-12-05T03:28:56.747000
+2025-12-04 10:41:05,199 - main_osrm - INFO - Extracted 38 checkpoints from baseline route
+2025-12-04 10:41:05,199 - main_osrm - INFO - Skipping meal 'lunch' - window doesn't intersect trip
+2025-12-04 10:41:05,199 - main_osrm - INFO - Skipping meal 'dinner' - window doesn't intersect trip
+2025-12-04 10:41:05,199 - main_osrm - INFO - Skipping meal 'snacks' - window doesn't intersect trip
+2025-12-04 10:41:05,199 - main_osrm - INFO - Considering meals: ['breakfast']
+2025-12-04 10:41:05,199 - main_osrm - INFO - Processing meal 'breakfast' with personalization
+2025-12-04 10:41:05,199 - main_osrm - INFO - Meal 'breakfast' ETA: 2025-12-05T07:40:04.347000 at 10.806755,78.688336
+2025-12-04 10:41:06,378 - httpx - INFO - HTTP Request: POST https://overpass-api.de/api/interpreter "HTTP/1.1 200 OK"
+2025-12-04 10:41:06,385 - main_osrm - INFO - Overpass returned 53 places for breakfast at radius=3000m
+2025-12-04 10:41:06,385 - main_osrm - INFO - 53 places after SMART preference filtering for breakfast
+2025-12-04 10:41:07,232 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6925646,10.8264119;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:41:16,474 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:41:17,274 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6810445,10.7992897;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:41:19,026 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:41:19,386 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:41:27,241 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6919627,10.7861684;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:41:37,232 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.681775,10.7964075;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:41:47,273 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6809061,10.7966865;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:41:57,255 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6814918,10.7989114;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:42:07,260 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.683318,10.8230695;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:42:17,244 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6833398,10.8222866;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:42:27,307 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6858306,10.8275467;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:42:37,327 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6815295,10.7970368;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:42:47,275 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6810678,10.7992674;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:42:57,309 - httpx - INFO - HTTP Request: GET http://router.project-osrm.org/table/v1/driving/80.1665988,13.0601732;78.6812561,10.7973054;78.6880939,10.8071144?annotations=duration "HTTP/1.1 200 OK"
+2025-12-04 10:42:57,312 - main_osrm - INFO - 12 candidates scored for breakfast
+2025-12-04 10:42:57,314 - main_osrm - INFO - Selected: Banana Leaf score=3.00 detour=1min
+2025-12-04 10:42:57,316 - main_osrm - INFO - Selected: Guru;Guru Hotel score=3.00 detour=4min
+2025-12-04 10:42:57,316 - main_osrm - INFO - Selected: Anjappar score=3.00 detour=7min
+2025-12-04 10:42:57,316 - main_osrm - INFO - Selected: Ashby hotel score=3.00 detour=5min
+2025-12-04 10:42:57,316 - main_osrm - INFO - Selected: Unknown score=3.00 detour=5min
+2025-12-04 10:42:57,321 - main_osrm - INFO - DEBUG: Meal suggestions structure: {'breakfast': [PlaceSuggestion(osm_id='2152463907', name='Banana Leaf', location=LatLng(lat=10.8264119, lng=78.6925646), detour_minutes=1, eta_iso='2025-12-05T07:41:04.347000', tags={'amenity': 'restaurant', 'name': 'Banana Leaf'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='2152463909', name='Guru;Guru Hotel', location=LatLng(lat=10.7992897, lng=78.6810445), detour_minutes=4, eta_iso='2025-12-05T07:44:04.347000', tags={'amenity': 'restaurant', 'fixme': 'Correct the tags and name.', 'name': 'Guru;Guru Hotel', 'tourism': 'hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3687738467', name='Anjappar', location=LatLng(lat=10.7861684, lng=78.6919627), detour_minutes=7, eta_iso='2025-12-05T07:47:04.347000', tags={'amenity': 'restaurant', 'name': 'Anjappar'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3699567368', name='Ashby hotel', location=LatLng(lat=10.7964075, lng=78.681775), detour_minutes=5, eta_iso='2025-12-05T07:45:04.347000', tags={'amenity': 'restaurant', 'name': 'Ashby hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3699567369', name='Unknown', location=LatLng(lat=10.7966865, lng=78.6809061), detour_minutes=5, eta_iso='2025-12-05T07:45:04.347000', tags={'amenity': 'restaurant', 'brand': 'Sangeethas'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-04 10:42:57,322 - main_osrm - INFO - DEBUG: breakfast has 5 suggestions
+2025-12-04 10:42:57,322 - main_osrm - INFO - DEBUG: Suggestion 1: osm_id='2152463907' name='Banana Leaf' location=LatLng(lat=10.8264119, lng=78.6925646) detour_minutes=1 eta_iso='2025-12-05T07:41:04.347000' tags={'amenity': 'restaurant', 'name': 'Banana Leaf'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-04 10:42:57,322 - main_osrm - INFO - DEBUG: Suggestion 2: osm_id='2152463909' name='Guru;Guru Hotel' location=LatLng(lat=10.7992897, lng=78.6810445) detour_minutes=4 eta_iso='2025-12-05T07:44:04.347000' tags={'amenity': 'restaurant', 'fixme': 'Correct the tags and name.', 'name': 'Guru;Guru Hotel', 'tourism': 'hotel'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-04 10:42:57,322 - main_osrm - INFO - DEBUG: Suggestion 3: osm_id='3687738467' name='Anjappar' location=LatLng(lat=10.7861684, lng=78.6919627) detour_minutes=7 eta_iso='2025-12-05T07:47:04.347000' tags={'amenity': 'restaurant', 'name': 'Anjappar'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-04 10:42:57,322 - main_osrm - INFO - DEBUG: Suggestion 4: osm_id='3699567368' name='Ashby hotel' location=LatLng(lat=10.7964075, lng=78.681775) detour_minutes=5 eta_iso='2025-12-05T07:45:04.347000' tags={'amenity': 'restaurant', 'name': 'Ashby hotel'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-04 10:42:57,327 - main_osrm - INFO - DEBUG: Suggestion 5: osm_id='3699567369' name='Unknown' location=LatLng(lat=10.7966865, lng=78.6809061) detour_minutes=5 eta_iso='2025-12-05T07:45:04.347000' tags={'amenity': 'restaurant', 'brand': 'Sangeethas'} personalization_score=3.0 match_reasons=['Standard suggestion']
+2025-12-04 10:42:57,329 - main_osrm - INFO - DEBUG: Final response meal_suggestions: {'breakfast': [PlaceSuggestion(osm_id='2152463907', name='Banana Leaf', location=LatLng(lat=10.8264119, lng=78.6925646), detour_minutes=1, eta_iso='2025-12-05T07:41:04.347000', tags={'amenity': 'restaurant', 'name': 'Banana Leaf'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='2152463909', name='Guru;Guru Hotel', location=LatLng(lat=10.7992897, lng=78.6810445), detour_minutes=4, eta_iso='2025-12-05T07:44:04.347000', tags={'amenity': 'restaurant', 'fixme': 'Correct the tags and name.', 'name': 'Guru;Guru Hotel', 'tourism': 'hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3687738467', name='Anjappar', location=LatLng(lat=10.7861684, lng=78.6919627), detour_minutes=7, eta_iso='2025-12-05T07:47:04.347000', tags={'amenity': 'restaurant', 'name': 'Anjappar'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3699567368', name='Ashby hotel', location=LatLng(lat=10.7964075, lng=78.681775), detour_minutes=5, eta_iso='2025-12-05T07:45:04.347000', tags={'amenity': 'restaurant', 'name': 'Ashby hotel'}, personalization_score=3.0, match_reasons=['Standard suggestion']), PlaceSuggestion(osm_id='3699567369', name='Unknown', location=LatLng(lat=10.7966865, lng=78.6809061), detour_minutes=5, eta_iso='2025-12-05T07:45:04.347000', tags={'amenity': 'restaurant', 'brand': 'Sangeethas'}, personalization_score=3.0, match_reasons=['Standard suggestion'])]}
+2025-12-04 10:42:57,329 - main_osrm - INFO - Enhanced trip created successfully. Personalization: False
+2025-12-04 10:46:07,458 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:46:09,900 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:50:58,513 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:51:05,503 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:55:49,507 - watchfiles.main - INFO - 1 change detected
+2025-12-04 10:55:52,144 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:03:24,425 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:03:27,134 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:03:27,618 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:03:31,269 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:08:15,422 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:08:46,187 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:13:06,414 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:13:09,145 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:17:57,468 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:18:04,077 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:19:15,110 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:22:48,441 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:22:50,723 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:33:25,695 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:33:28,700 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:38:55,984 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:39:02,977 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:43:44,215 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:43:51,155 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:48:35,240 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:48:37,719 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:53:26,252 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:53:29,452 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:53:53,468 - watchfiles.main - INFO - 3 changes detected
+2025-12-04 11:53:53,857 - watchfiles.main - INFO - 3 changes detected
+2025-12-04 11:58:17,309 - watchfiles.main - INFO - 1 change detected
+2025-12-04 11:58:26,922 - watchfiles.main - INFO - 1 change detected
+2025-12-04 12:47:38,948 - watchfiles.main - INFO - 1 change detected
+2025-12-04 12:47:39,317 - watchfiles.main - INFO - 1 change detected
+2025-12-04 12:47:42,295 - watchfiles.main - INFO - 1 change detected
+2025-12-04 12:52:26,585 - watchfiles.main - INFO - 1 change detected
+2025-12-04 12:52:29,218 - watchfiles.main - INFO - 1 change detected
+2025-12-04 12:53:42,069 - watchfiles.main - INFO - 3 changes detected
+2025-12-04 12:57:17,619 - watchfiles.main - INFO - 1 change detected
+2025-12-04 12:57:20,000 - watchfiles.main - INFO - 1 change detected
+2025-12-04 13:02:08,611 - watchfiles.main - INFO - 1 change detected

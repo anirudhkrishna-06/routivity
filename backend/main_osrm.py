@@ -622,6 +622,13 @@ async def create_trip(tr: TripRequest):
         # 2. Parse preferred arrival
         try:
             preferred_arrival = dateparser.isoparse(tr.preferred_reach_time)
+            # Interpret preferred_reach_time in the *user's local clock*.
+            # The client sends an ISO string (usually in UTC, via toISOString),
+            # but meal windows (e.g. "12:00"-"14:00" for lunch) are in local time.
+            # Convert to local timezone and drop tzinfo so meal window checks
+            # use consistent local wall-clock times.
+            if preferred_arrival.tzinfo is not None:
+                preferred_arrival = preferred_arrival.astimezone().replace(tzinfo=None)
         except Exception as e:
             logger.error(f"Invalid preferred_reach_time: {e}")
             raise HTTPException(status_code=400, detail=f"Invalid preferred_reach_time: {e}")

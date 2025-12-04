@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase'; // ✅ use your firebase.js db
+import { db } from '../firebase'; // use your firebase.js db
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -26,7 +26,7 @@ const HomeScreen = () => {
         if (snap.exists()) {
           setProfileCompleted(snap.data()?.profileCompleted || false);
         } else {
-          setProfileCompleted(false); // ✅ No data → show Get Started
+          setProfileCompleted(false); // No data → show Get Started
         }
       } catch (e) {
         console.log('Error fetching preferences:', e);

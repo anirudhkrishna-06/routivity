@@ -92,18 +92,18 @@ const TripSuggestionsScreen = () => {
     
     if (place.match_reasons && place.match_reasons.length > 0) {
       place.match_reasons.forEach(reason => {
-        if (reason.includes('Vegetarian')) badges.push({ text: '🌱 Veg', color: '#4CAF50' });
-        if (reason.includes('budget')) badges.push({ text: '💰 Budget', color: '#FF9800' });
-        if (reason.includes('mood')) badges.push({ text: '😊 Mood Match', color: '#2196F3' });
-        if (reason.includes('Accessibility')) badges.push({ text: '♿ Accessible', color: '#9C27B0' });
+        if (reason.includes('Vegetarian')) badges.push({ text: 'Veg Friendly', color: '#4CAF50' });
+        if (reason.includes('budget')) badges.push({ text: 'Budget', color: '#FF9800' });
+        if (reason.includes('mood')) badges.push({ text: 'Mood Match', color: '#2196F3' });
+        if (reason.includes('Accessibility')) badges.push({ text: 'Accessible', color: '#9C27B0' });
       });
     }
 
     // Add badges based on tags
     const tags = place.tags || {};
-    if (tags['diet:vegetarian'] === 'yes') badges.push({ text: '🌱 Veg', color: '#4CAF50' });
-    if (tags['air_conditioning'] === 'yes') badges.push({ text: '❄️ AC', color: '#03A9F4' });
-    if (tags['cuisine']?.includes('indian')) badges.push({ text: '🇮🇳 Indian', color: '#FF5722' });
+    if (tags['diet:vegetarian'] === 'yes') badges.push({ text: 'Veg Friendly', color: '#4CAF50' });
+    if (tags['air_conditioning'] === 'yes') badges.push({ text: 'AC Available', color: '#03A9F4' });
+    if (tags['cuisine']?.includes('indian')) badges.push({ text: 'Indian Cuisine', color: '#FF5722' });
 
     return badges.slice(0, 3); // Max 3 badges
   };
@@ -170,7 +170,7 @@ const TripSuggestionsScreen = () => {
             </Text>
           </View>
           <Text style={styles.mealSubtitle}>
-            {places.length} suggestions • Choose your preferred spot
+            {places.length} suggestions - Choose your preferred spot
           </Text>
         </View>
 
