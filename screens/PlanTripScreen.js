@@ -18,7 +18,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const BACKEND_URL = 'http://10.180.18.12:8000';
+const BACKEND_URL = 'http://192.168.31.195:8000';
 
 const PlanTripScreen = () => {
   const navigation = useNavigation();
