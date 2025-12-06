@@ -36,3 +36,6 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 backend/serviceAccountKey.json
+__pycache__/
+*.pyc
+routivity.log

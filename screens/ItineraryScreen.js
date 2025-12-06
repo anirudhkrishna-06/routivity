@@ -418,6 +418,7 @@ const ItineraryScreen = () => {
           tripName: tripName,
           notes: notes,
           savedAt: new Date(),
+          members: [auth.currentUser.uid]
         });
 
         Alert.alert('Success', 'Trip saved to My Trips!', [
