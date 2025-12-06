@@ -13,13 +13,14 @@ import {
   Modal,
   TextInput,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { db } from '../firebase';
-import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
 
 const { width, height } = Dimensions.get('window');
 
@@ -29,12 +30,15 @@ const ItineraryScreen = () => {
   const { itineraryData } = route.params;
 
   const [itinerary, setItinerary] = useState(null);
+  const [requestDoc, setRequestDoc] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [tripName, setTripName] = useState('My Amazing Road Trip');
   const [notes, setNotes] = useState('');
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
+  const [detailSelected, setDetailSelected] = useState(null);
   
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -49,8 +53,102 @@ const ItineraryScreen = () => {
 
   const generateItinerary = async () => {
     try {
-      // Simulate API call to generate detailed itinerary
-      // In real implementation, this would call your backend
+      // Fetch original trip request from Firestore (contains source/destination/stops coordinates)
+      let fetchedRequest = null;
+      if (itineraryData.firebaseTripId) {
+        try {
+          const tripRef = doc(db, 'trips', itineraryData.firebaseTripId);
+          const snap = await getDoc(tripRef);
+          if (snap.exists()) {
+            fetchedRequest = snap.data();
+            setRequestDoc(fetchedRequest);
+          }
+        } catch (err) {
+          console.warn('Could not fetch trip request doc:', err);
+        }
+      }
+
+      // Build stops/timeline/polyline immediately using fetchedRequest (if any)
+      const buildStopsFromData = () => {
+        const stopsArr = [];
+        const sourceCoord = (fetchedRequest && fetchedRequest.source) || itineraryData.source || null;
+        stopsArr.push({
+          id: 'source', type: 'source', name: 'Starting Point',
+          time: itineraryData.recommended_departure_iso, duration: 0,
+          coordinates: { latitude: sourceCoord?.lat ?? 12.97, longitude: sourceCoord?.lng ?? 77.59 }
+        });
+
+        Object.keys(itineraryData.selectedMeals || {}).forEach(mealType => {
+          const placeId = itineraryData.selectedMeals[mealType];
+          const mealData = itineraryData.meal_suggestions[mealType]?.find(p => p.osm_id === placeId);
+          if (mealData) {
+            stopsArr.push({
+              id: `${mealType}-${placeId}`,
+              type: 'meal', mealType,
+              name: mealData.name,
+              time: mealData.eta_iso,
+              duration: itineraryData.meal_duration_min || 45,
+              coordinates: { latitude: mealData.location.lat, longitude: mealData.location.lng },
+              details: mealData,
+            });
+          }
+        });
+
+        const destCoord = (fetchedRequest && fetchedRequest.destination) || itineraryData.destination || null;
+        stopsArr.push({
+          id: 'destination', type: 'destination', name: 'Destination',
+          time: new Date(new Date(itineraryData.recommended_departure_iso).getTime() + 
+                (itineraryData.route_summary.total_duration_min * 60 * 1000)).toISOString(),
+          duration: 0,
+          coordinates: { latitude: destCoord?.lat ?? 13.08, longitude: destCoord?.lng ?? 80.27 }
+        });
+
+        return stopsArr.sort((a, b) => new Date(a.time) - new Date(b.time));
+      };
+
+      const stopsLocal = buildStopsFromData();
+
+      // Try to get exact OSRM route (shortest driving route) including stops in sequence
+      let polylineLocal = null;
+      try {
+        // Build coords string: lon,lat;lon,lat;...
+        const coordPts = stopsLocal.map(s => `${s.coordinates.longitude},${s.coordinates.latitude}`).join(';');
+        const osrmUrl = `http://router.project-osrm.org/route/v1/driving/${coordPts}` +
+          `?overview=full&geometries=geojson&steps=false`;
+
+        // basic fetch with timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        const resp = await fetch(osrmUrl, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (resp.ok) {
+          const json = await resp.json();
+          if (json && json.routes && json.routes[0] && json.routes[0].geometry && json.routes[0].geometry.coordinates) {
+            // geometry.coordinates is [[lon, lat], ...]
+            polylineLocal = json.routes[0].geometry.coordinates.map(c => ({ lat: c[1], lng: c[0] }));
+          }
+        }
+      } catch (e) {
+        console.warn('OSRM route fetch failed, falling back to straight-line polyline', e);
+      }
+
+      if (!polylineLocal) {
+        // Fallback: straight line through the stops
+        polylineLocal = stopsLocal.map(s => ({ lat: s.coordinates.latitude, lng: s.coordinates.longitude }));
+      }
+
+      const mapRegionLocal = (() => {
+        const lats = stopsLocal.map(s => s.coordinates.latitude);
+        const lngs = stopsLocal.map(s => s.coordinates.longitude);
+        return {
+          latitude: (Math.max(...lats) + Math.min(...lats)) / 2,
+          longitude: (Math.max(...lngs) + Math.min(...lngs)) / 2,
+          latitudeDelta: (Math.max(...lats) - Math.min(...lats)) * 1.5 || 0.1,
+          longitudeDelta: (Math.max(...lngs) - Math.min(...lngs)) * 1.5 || 0.1,
+        };
+      })();
+
       const generatedItinerary = {
         id: itineraryData.trip_id,
         name: tripName,
@@ -60,10 +158,44 @@ const ItineraryScreen = () => {
                 (itineraryData.route_summary.total_duration_min * 60 * 1000)).toISOString(),
         totalDistance: itineraryData.route_summary.total_distance_km,
         totalDuration: itineraryData.route_summary.total_duration_min,
-        stops: generateStops(),
-        timeline: generateTimeline(),
-        mapRegion: calculateMapRegion(),
-        polylineCoordinates: generateSamplePolyline(), // In real app, use actual route coordinates
+        stops: stopsLocal,
+        timeline: (() => {
+          const t = [];
+          stopsLocal.forEach((stop, index) => {
+            t.push({
+              id: `stop-${index}`,
+              time: stop.time,
+              title: getStopTitle(stop),
+              subtitle: getStopSubtitle(stop),
+              type: stop.type,
+              icon: getStopIcon(stop.type),
+              duration: stop.duration,
+              isActive: index === 0,
+              isCompleted: false,
+            });
+
+            if (index < stopsLocal.length - 1) {
+              const nextStop = stopsLocal[index + 1];
+              const travelTime = Math.round((new Date(nextStop.time) - new Date(stop.time)) / (1000 * 60) - stop.duration);
+              if (travelTime > 0) {
+                t.push({
+                  id: `travel-${index}`,
+                  time: new Date(new Date(stop.time).getTime() + (stop.duration * 60 * 1000)).toISOString(),
+                  title: `Travel to ${getStopTitle(nextStop)}`,
+                  subtitle: `${travelTime} minutes drive`,
+                  type: 'travel',
+                  icon: 'directions-car',
+                  duration: travelTime,
+                  isActive: false,
+                  isCompleted: false,
+                });
+              }
+            }
+          });
+          return t;
+        })(),
+        mapRegion: mapRegionLocal,
+        polylineCoordinates: polylineLocal,
         status: 'planned',
         createdAt: new Date().toISOString(),
       };
@@ -103,17 +235,34 @@ const ItineraryScreen = () => {
     }
   };
 
+  const handleWebViewMessage = (event) => {
+    try {
+      const data = JSON.parse(event.nativeEvent.data);
+      if (data && data.type === 'showDetails' && data.name) {
+        // find stop by name
+        const stop = (itinerary && itinerary.stops || []).find(s => s.name === data.name);
+        if (stop) {
+          setDetailSelected(stop);
+          setDetailModalVisible(true);
+        }
+      }
+    } catch (e) {
+      console.warn('Invalid message from WebView', e);
+    }
+  };
+
   const generateStops = () => {
     const stops = [];
     
-    // Add source
+    // Use requestDoc source coordinates when available
+    const sourceCoord = requestDoc?.source || itineraryData.source || null;
     stops.push({
       id: 'source',
       type: 'source',
       name: 'Starting Point',
       time: itineraryData.recommended_departure_iso,
       duration: 0,
-      coordinates: { latitude: 12.97, longitude: 77.59 }, // Sample coordinates
+      coordinates: { latitude: sourceCoord?.lat ?? 12.97, longitude: sourceCoord?.lng ?? 77.59 },
     });
 
     // Add meal stops
@@ -138,7 +287,8 @@ const ItineraryScreen = () => {
       }
     });
 
-    // Add destination
+    // Add destination - prefer requestDoc destination coordinates
+    const destCoord = requestDoc?.destination || itineraryData.destination || null;
     stops.push({
       id: 'destination',
       type: 'destination',
@@ -146,7 +296,7 @@ const ItineraryScreen = () => {
       time: new Date(new Date(itineraryData.recommended_departure_iso).getTime() + 
             (itineraryData.route_summary.total_duration_min * 60 * 1000)).toISOString(),
       duration: 0,
-      coordinates: { latitude: 13.08, longitude: 80.27 }, // Sample coordinates
+      coordinates: { latitude: destCoord?.lat ?? 13.08, longitude: destCoord?.lng ?? 80.27 },
     });
 
     return stops.sort((a, b) => new Date(a.time) - new Date(b.time));
@@ -235,14 +385,27 @@ const ItineraryScreen = () => {
   };
 
   const generateSamplePolyline = () => {
-    // Sample polyline coordinates - in real app, use actual route from OSRM
-    return [
-      { latitude: 12.97, longitude: 77.59 },
-      { latitude: 12.98, longitude: 77.60 },
-      { latitude: 13.00, longitude: 77.65 },
-      { latitude: 13.05, longitude: 77.70 },
-      { latitude: 13.08, longitude: 80.27 },
-    ];
+    const stops = generateStops();
+    // Fallback simple straight-line polyline through stops
+    return stops.map(s => ({ lat: s.coordinates.latitude, lng: s.coordinates.longitude }));
+  };
+
+  const generatePolylineFromStops = () => {
+    // Prefer route geometry from itineraryData.route_summary.geometry if present
+    try {
+      const geom = itineraryData?.route_summary?.geometry;
+      if (geom && Array.isArray(geom) && geom.length > 0) {
+        // Assume geometry is [[lng, lat], [lng, lat], ...]
+        const pts = geom.map(p => ({ lat: p[1], lng: p[0] }));
+        return pts;
+      }
+    } catch (e) {
+      // ignore and fallback
+    }
+
+    // Fallback: build polyline from stops coordinates
+    const stops = generateStops();
+    return stops.map(s => ({ lat: s.coordinates.latitude, lng: s.coordinates.longitude }));
   };
 
   const handleSaveTrip = async () => {
@@ -400,10 +563,8 @@ const RouteVisualization = () => {
     longitude: itinerary.mapRegion.longitude,
   };
 
-  const coords = itinerary.polylineCoordinates.map((pt) => ({
-    lat: pt.lat,
-    lng: pt.lng,
-  }));
+  const coords = itinerary.polylineCoordinates.map((pt) => ({ lat: pt.lat, lng: pt.lng }));
+  const stopsForMap = (itinerary.stops || []).map(s => ({ lat: s.coordinates.latitude, lng: s.coordinates.longitude, type: s.type, name: s.name, details: s.details || null }));
 
   const html = `
     <!DOCTYPE html>
@@ -425,6 +586,7 @@ const RouteVisualization = () => {
         <script>
           const center = ${JSON.stringify(region)};
           const coords = ${JSON.stringify(coords)};
+          const stops = ${JSON.stringify(stopsForMap)};
 
           const map = L.map('map').setView([center.latitude, center.longitude], 7);
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -433,22 +595,105 @@ const RouteVisualization = () => {
 
           if (coords.length > 0) {
             const latlngs = coords.map(c => [c.lat, c.lng]);
-            L.polyline(latlngs, { color: '#007AFF', weight: 4 }).addTo(map);
-            L.marker(latlngs[0]).addTo(map).bindPopup('Start');
-            if (latlngs.length > 1) {
-              L.marker(latlngs[latlngs.length - 1]).addTo(map).bindPopup('Destination');
+            L.polyline(latlngs, { color: '#007AFF', weight: 4, lineCap: 'round' }).addTo(map);
+            const start = latlngs[0];
+            const end = latlngs[latlngs.length - 1];
+
+            // prettier start/end pin icons using divIcon with shadow and tail
+            function makePinIcon(label, color) {
+              const html = '' +
+                '<div style="display:flex;flex-direction:column;align-items:center;pointer-events:auto">' +
+                  '<div style="width:40px;height:40px;border-radius:20px;background:' + color + ';display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;box-shadow:0 6px 12px rgba(0,0,0,0.25);border:2px solid rgba(255,255,255,0.85)">' + label + '</div>' +
+                  '<div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid ' + color + ';margin-top:-6px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.18))"></div>' +
+                '</div>';
+              return L.divIcon({ html: html, className: 'custom-pin', iconSize: [40, 52], iconAnchor: [20, 52], popupAnchor: [0, -44] });
             }
-            map.fitBounds(latlngs, { padding: [20, 20] });
+
+            const startIcon = makePinIcon('S', '#0D47A1');
+            const endIcon = makePinIcon('D', '#B71C1C');
+            L.marker(start, { icon: startIcon }).addTo(map).bindPopup('<strong>Start</strong>');
+            L.marker(end, { icon: endIcon }).addTo(map).bindPopup('<strong>Destination</strong>');
+
+            // meal/stop pin with emoji and gradient
+            function makeMealIcon(emoji, bgColor) {
+              const html = '' +
+                '<div style="display:flex;flex-direction:column;align-items:center;pointer-events:auto">' +
+                  '<div style="width:44px;height:44px;border-radius:22px;background:linear-gradient(180deg,' + bgColor + ',#c86a00);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;box-shadow:0 8px 16px rgba(0,0,0,0.22);border:2px solid rgba(255,255,255,0.9)">' + emoji + '</div>' +
+                  '<div style="width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-top:14px solid ' + bgColor + ';margin-top:-7px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.18))"></div>' +
+                '</div>';
+              return L.divIcon({ html: html, className: 'custom-meal-pin', iconSize: [44, 58], iconAnchor: [22, 58], popupAnchor: [0, -50] });
+            }
+
+            stops.forEach(s => {
+              const latlng = [s.lat, s.lng];
+              if ((latlng[0] === start[0] && latlng[1] === start[1]) || (latlng[0] === end[0] && latlng[1] === end[1])) return;
+
+              let icon = null;
+              if (s.type === 'meal') {
+                icon = makeMealIcon('🍽️', '#FF9800');
+              } else {
+                icon = makePinIcon('', '#FF9800');
+              }
+
+              const marker = L.marker(latlng, { icon }).addTo(map);
+
+              const details = s.details || {};
+              const tags = (details.tags) ? details.tags : {};
+              const imgUrl = (tags.photo || tags.image) ? (tags.photo || tags.image) : ('https://via.placeholder.com/240x140.png?text=' + encodeURIComponent(s.name));
+              const opening = tags.opening_hours || tags['opening_hours'] || 'N/A';
+              const rating = tags.rating || details.rating || 'N/A';
+              const detour = details.detour_minutes || tags.detour_minutes || '';
+              const reasons = details.match_reasons || [];
+              var popupHtml = '';
+              popupHtml += '<div style="max-width:260px;font-family:Arial,Helvetica,sans-serif">';
+              popupHtml += '<div style="display:flex;align-items:center;margin-bottom:8px">';
+              popupHtml += '<img src="' + imgUrl + '" style="width:80px;height:60px;object-fit:cover;border-radius:6px;margin-right:8px" />';
+              popupHtml += '<div style="flex:1">';
+              popupHtml += '<div style="font-weight:700;color:#1a1a1a;margin-bottom:4px">' + s.name + '</div>';
+              popupHtml += '<div style="font-size:12px;color:#666">' + (tags.cuisine || '') + '</div>';
+              popupHtml += '</div></div>';
+              popupHtml += '<div style="font-size:13px;color:#333;margin-bottom:6px"><strong>Opening:</strong> ' + opening + '</div>';
+              popupHtml += '<div style="font-size:13px;color:#333;margin-bottom:6px"><strong>Rating:</strong> ' + rating + (detour ? ' | <strong>Detour:</strong> ' + detour + ' min' : '') + '</div>';
+              if (reasons.length > 0) {
+                popupHtml += '<div style="margin-top:6px"><strong>Why recommended:</strong><ul style="padding-left:16px;margin:6px 0">';
+                for (var i = 0; i < reasons.length; i++) {
+                  popupHtml += '<li style="font-size:12px;color:#444">' + reasons[i] + '</li>';
+                }
+                popupHtml += '</ul></div>';
+              }
+              var safeName = (s.name || '').replace(/"/g, '\\"').replace(/'/g, "\\'");
+              popupHtml += '<div style="margin-top:8px;text-align:right">';
+              popupHtml += '<button class="view-details" data-name="' + safeName + '" style="background:#007AFF;color:white;border-radius:6px;padding:6px 10px;border:none;cursor:pointer">View Details</button></div>';
+              popupHtml += '</div>';
+
+              marker.bindPopup(popupHtml);
+            });
+
+            map.fitBounds(coords.map(c => [c.lat, c.lng]), { padding: [20, 20] });
+
+            document.addEventListener('click', function(e) {
+              var el = e.target || e.srcElement;
+              if (el && el.classList && el.classList.contains('view-details')) {
+                var name = el.getAttribute('data-name');
+                try {
+                  window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'showDetails', name: name }));
+                } catch (err) {
+                  console.warn('postMessage failed', err);
+                }
+              }
+            });
           }
         </script>
       </body>
     </html>
   `;
 
+  const mapHeight = Math.round(height * 0.75);
+
   return (
     <Animated.View
       style={[
-        styles.mapContainer,
+        { width: '100%', height: mapHeight, backgroundColor: 'transparent' },
         {
           opacity: fadeAnim,
           transform: [
@@ -458,13 +703,13 @@ const RouteVisualization = () => {
         },
       ]}
     >
-      <Text style={styles.sectionTitle}>Route Overview</Text>
-      <View style={styles.mapWrapper}>
+      <View style={[styles.mapWrapper, { height: mapHeight, borderRadius: 0 }]}> 
         <WebView
-          style={styles.map}
+          style={[styles.map, { height: '100%' }]}
           originWhitelist={['*']}
           source={{ html }}
           scrollEnabled={false}
+          onMessage={handleWebViewMessage}
         />
       </View>
     </Animated.View>
@@ -486,6 +731,9 @@ const RouteVisualization = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        {/* Map (full width, 75% height) */}
+        <RouteVisualization />
+
         {/* Header */}
         <Animated.View 
           style={[
@@ -579,8 +827,7 @@ const RouteVisualization = () => {
           </View>
         </Animated.View>
 
-        {/* Map Preview */}
-        <RouteVisualization />
+  {/* Map Preview removed (moved above) */}
 
         {/* Timeline */}
         <Animated.View 
@@ -679,6 +926,41 @@ const RouteVisualization = () => {
                 onPress={handleShareTrip}
               >
                 <Text style={styles.modalButtonTextPrimary}>Share</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Details Modal for map markers */}
+      <Modal
+        visible={detailModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setDetailModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>{detailSelected?.name || 'Place Details'}</Text>
+            <View style={{flexDirection:'row', marginBottom:12}}>
+              <Image source={{ uri: (detailSelected?.details?.tags?.photo || detailSelected?.details?.tags?.image || 'https://via.placeholder.com/240x140.png?text=No+Image') }} style={{width:120,height:80,borderRadius:6,marginRight:12}} />
+              <View style={{flex:1}}>
+                <Text style={{fontSize:14,fontWeight:'600',color:'#333'}}>{detailSelected?.details?.tags?.cuisine || ''}</Text>
+                <Text style={{fontSize:13,color:'#666',marginTop:6}}>Opening: {detailSelected?.details?.tags?.opening_hours || detailSelected?.details?.tags?.opening || 'N/A'}</Text>
+                <Text style={{fontSize:13,color:'#666',marginTop:6}}>Rating: {detailSelected?.details?.tags?.rating || detailSelected?.details?.rating || 'N/A'}</Text>
+              </View>
+            </View>
+            {detailSelected?.details?.match_reasons && (
+              <View style={{marginBottom:8}}>
+                <Text style={{fontWeight:'700',marginBottom:6}}>Why recommended</Text>
+                {detailSelected.details.match_reasons.map((r, i) => (
+                  <Text key={i} style={{fontSize:13,color:'#444'}}>• {r}</Text>
+                ))}
+              </View>
+            )}
+            <View style={{flexDirection:'row',justifyContent:'flex-end',marginTop:12}}>
+              <TouchableOpacity style={[styles.modalButton, styles.modalButtonSecondary]} onPress={() => setDetailModalVisible(false)}>
+                <Text style={styles.modalButtonTextSecondary}>Close</Text>
               </TouchableOpacity>
             </View>
           </View>

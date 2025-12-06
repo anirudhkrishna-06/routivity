@@ -150,6 +150,22 @@ async def get_user_preferences(user_id: str) -> Optional[UserPreferences]:
         logger.error(f"Error fetching user preferences: {e}")
         return None
 
+
+async def save_user_preferences(user_id: str, prefs: UserPreferences) -> bool:
+    """Save user preferences to Firebase"""
+    if not db:
+        logger.warning("Firebase not initialized, cannot save user preferences")
+        return False
+
+    try:
+        doc_ref = db.collection("preferences").document(user_id)
+        doc_ref.set(prefs.dict())
+        logger.info(f"Saved preferences for user {user_id}: {prefs.dict()}")
+        return True
+    except Exception as e:
+        logger.error(f"Error saving user preferences: {e}")
+        return False
+
 async def save_trip_to_firebase(trip_data: Dict[str, Any]) -> str:
     """Save trip data to Firebase and return trip ID"""
     if not db:
@@ -278,6 +294,27 @@ def calculate_personalization_score(place: Dict, user_prefs: UserPreferences, de
     logger.debug(f"Personalization score for {place.get('name')}: {score:.2f}, reasons: {match_reasons}")
     return score, match_reasons
 
+
+# ----------------------------
+# User Preferences endpoints
+# ----------------------------
+
+
+@app.get("/users/{user_id}/preferences", response_model=UserPreferences)
+async def api_get_user_preferences(user_id: str):
+    prefs = await get_user_preferences(user_id)
+    if prefs is None:
+        raise HTTPException(status_code=404, detail="Preferences not found")
+    return prefs
+
+
+@app.put("/users/{user_id}/preferences", response_model=UserPreferences)
+async def api_put_user_preferences(user_id: str, prefs: UserPreferences):
+    ok = await save_user_preferences(user_id, prefs)
+    if not ok:
+        raise HTTPException(status_code=500, detail="Failed to save preferences")
+    return prefs
+
 # ----------------------------
 # Enhanced Place Scoring (Integrates Personalization)
 # ----------------------------
@@ -317,7 +354,7 @@ def score_place_enhanced(place: Dict, detour_minutes: int, user_prefs: UserPrefe
 OSRM_BASE_URL = "http://router.project-osrm.org"
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
-async def call_osrm_route(origin: LatLng, destination: LatLng, waypoints: List[LatLng] = None) -> Dict:
+async def call_osrm_route(origin: LatLng, destination: LatLng, waypoints: Optional[List[LatLng]] = None) -> Dict:
     # ... (keep existing implementation exactly as is)
     coords = f"{origin.lng},{origin.lat}"
     if waypoints:
@@ -417,11 +454,6 @@ def find_point_for_window(checkpoints, departure_dt: datetime, window_start: dti
 # Endpoint
 # ----------------------------
 
-from datetime import datetime, timedelta
-import logging
-
-logger = logging.getLogger(__name__)
-
 # helper: check if ETA falls inside or near a meal window
 def eta_matches_window(eta: datetime, window, tolerance_minutes: int = 30) -> bool:
     start_w = datetime.combine(eta.date(), datetime.strptime(window["start"], "%H:%M").time())
@@ -508,8 +540,17 @@ async def compute_detour_osrm(origin: LatLng, destination: LatLng, via: LatLng) 
             payload = r.json()
         
         durations = payload.get("durations")
-        if not durations:
-            raise ValueError("OSRM table returned no durations")
+        # Defensive checks: ensure durations is a 2xN matrix with expected indices
+        if (
+            not durations
+            or not isinstance(durations, list)
+            or len(durations) < 2
+            or not all(isinstance(r, list) for r in durations)
+            or len(durations[0]) < 3
+            or len(durations[1]) < 3
+        ):
+            logger.warning("compute_detour_osrm: OSRM table returned unexpected 'durations' format: %s", repr(durations))
+            return None
 
         od_seconds = durations[0][2]
         ov_seconds = durations[0][1]

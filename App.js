@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { PreferencesProvider } from './contexts/PreferencesContext';
 
 // Auth + Base Screens
 import HomeScreen from './screens/HomeScreen';
@@ -20,7 +21,8 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <PreferencesProvider>
+      <NavigationContainer>
       <Stack.Navigator>
         {/* Auth Flow */}
         <Stack.Screen
@@ -57,6 +59,7 @@ export default function App() {
         <Stack.Screen name="MyTrips" component={MyTripsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="JoinTrip" component={JoinTripScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+    </PreferencesProvider>
   );
 }

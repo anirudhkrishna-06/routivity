@@ -273,7 +273,7 @@ function addStop() {
     stopInput.innerHTML = `
         <input type="number" class="stop-lat" placeholder="Latitude" step="any">
         <input type="number" class="stop-lng" placeholder="Longitude" step="any">
-        <button type="button" class="remove-stop" onclick="removeStop(this)">×</button>
+        <button type="button" class="remove-stop" onclick="removeStop(this)">&times;</button>
     `;
     
     container.appendChild(stopInput);
@@ -313,7 +313,7 @@ function resetForm() {
         <div class="stop-input">
             <input type="number" class="stop-lat" placeholder="Latitude" step="any">
             <input type="number" class="stop-lng" placeholder="Longitude" step="any">
-            <button type="button" class="remove-stop" onclick="removeStop(this)">×</button>
+            <button type="button" class="remove-stop" onclick="removeStop(this)">&times;</button>
         </div>
     `;
     
@@ -419,7 +419,7 @@ function showAboutModal() {
     `;
     
     const closeButton = document.createElement('button');
-    closeButton.innerHTML = '×';
+    closeButton.innerHTML = '&times;';
     closeButton.style.cssText = `
         position: absolute;
         top: 10px;
@@ -498,11 +498,11 @@ function showBackendStatus(isConnected) {
     if (isConnected) {
         statusIndicator.style.background = '#10b981';
         statusIndicator.style.color = 'white';
-        statusIndicator.innerHTML = '🟢 Backend Connected';
+        statusIndicator.innerHTML = '<span style="display:inline-block;width:10px;height:10px;background:#ffffff;border-radius:50%;margin-right:8px;box-shadow:0 0 0 4px rgba(16,185,129,0.12);vertical-align:middle"></span>Backend Connected';
     } else {
         statusIndicator.style.background = '#f59e0b';
         statusIndicator.style.color = 'white';
-        statusIndicator.innerHTML = '🟡 Demo Mode';
+        statusIndicator.innerHTML = '<span style="display:inline-block;width:10px;height:10px;background:#ffffff;border-radius:50%;margin-right:8px;box-shadow:0 0 0 4px rgba(245,158,11,0.12);vertical-align:middle"></span>Demo Mode';
     }
     
     // Remove existing status indicator

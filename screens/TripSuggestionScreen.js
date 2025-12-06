@@ -12,6 +12,8 @@ import {
   Animated,
   Dimensions,
   RefreshControl,
+  Linking,
+  Platform,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -148,6 +150,66 @@ const TripSuggestionsScreen = () => {
     }
   };
 
+  // Open external maps app (or web) to view or navigate to a place
+  const openInMaps = async (place, navigate = false) => {
+    try {
+      const lat = place.location?.lat ?? place.lat ?? place.coordinates?.latitude;
+      const lng = place.location?.lng ?? place.lng ?? place.coordinates?.longitude;
+      if (!lat || !lng) {
+        Alert.alert('Location unavailable', 'This place does not have coordinates.');
+        return;
+      }
+
+      const label = place.name ? encodeURIComponent(place.name) : 'Destination';
+      const dest = `${lat},${lng}`;
+
+      const originLat = tripData?.source?.lat;
+      const originLng = tripData?.source?.lng;
+
+      if (Platform.OS === 'ios') {
+        if (navigate) {
+          let url = `http://maps.apple.com/?daddr=${dest}&dirflg=d`;
+          if (originLat && originLng) url += `&saddr=${originLat},${originLng}`;
+          await Linking.openURL(url);
+        } else {
+          const url = `http://maps.apple.com/?q=${label}&ll=${dest}`;
+          await Linking.openURL(url);
+        }
+      } else {
+        if (navigate) {
+          let url = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=driving`;
+          if (originLat && originLng) url += `&origin=${originLat},${originLng}`;
+          await Linking.openURL(url);
+        } else {
+          const geo = `geo:${dest}?q=${dest}(${label})`;
+          const can = await Linking.canOpenURL(geo);
+          if (can) await Linking.openURL(geo);
+          else await Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${dest}`);
+        }
+      }
+    } catch (err) {
+      console.warn('openInMaps failed', err);
+      Alert.alert('Unable to open maps', 'Could not open the maps application.');
+    }
+  };
+
+  // Return true if the place detour is close to the user's max detour setting
+  const isNearDetourLimit = (place) => {
+    try {
+      const max = Number(tripData?.maxDetour ?? tripData?.max_detour_minutes ?? 0);
+      if (!max || max <= 0) return false;
+      const detour = Number(place?.detour_minutes ?? place?.tags?.detour_minutes ?? 0);
+      if (!detour || detour <= 0) return false;
+
+      // Consider 'near' when detour is >= 85% of max OR within 2 minutes of max
+      if (detour >= 0.85 * max) return true;
+      if ((max - detour) <= 2) return true;
+      return false;
+    } catch (e) {
+      return false;
+    }
+  };
+
   const MealSuggestionCard = ({ mealType, places }) => {
     const selectedPlaceId = selectedMeals[mealType];
     
@@ -179,84 +241,139 @@ const TripSuggestionsScreen = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.placesContainer}
         >
-          {places.map((place, index) => (
-            <TouchableOpacity
-              key={place.osm_id}
-              style={[
-                styles.placeCard,
-                selectedPlaceId === place.osm_id && styles.placeCardSelected,
-              ]}
-              onPress={() => handleSelectMeal(mealType, place)}
-            >
-              {/* Selection Indicator */}
-              <View style={styles.selectionIndicator}>
-                {selectedPlaceId === place.osm_id ? (
-                  <View style={styles.selectedIndicator}>
-                    <Icon name="check-circle" size={20} color="#4CAF50" />
+          {/* Small inner component to allow each card to manage expanded 'why' state */}
+          {(() => {
+            const PlaceCard = ({ place, selected, onPress }) => {
+              const [showReasons, setShowReasons] = useState(false);
+              return (
+                <TouchableOpacity
+                  key={place.osm_id}
+                  style={[
+                    styles.placeCard,
+                    selected && styles.placeCardSelected,
+                  ]}
+                  onPress={onPress}
+                >
+                  {/* Selection Indicator */}
+                  <View style={styles.selectionIndicator}>
+                    {selected ? (
+                      <View style={styles.selectedIndicator}>
+                        <Icon name="check-circle" size={20} color="#4CAF50" />
+                      </View>
+                    ) : (
+                      <View style={styles.unselectedIndicator} />
+                    )}
                   </View>
-                ) : (
-                  <View style={styles.unselectedIndicator} />
-                )}
-              </View>
 
-              {/* Place Image */}
-              <Image
-                source={{ uri: getPlaceImage(place) }}
-                style={styles.placeImage}
-                defaultSource={require('../assets/placeholder-image.png')}
-              />
+                  {/* Place Image */}
+                  <Image
+                    source={{ uri: getPlaceImage(place) }}
+                    style={styles.placeImage}
+                    defaultSource={require('../assets/placeholder-image.png')}
+                  />
 
-              {/* Place Details */}
-              <View style={styles.placeDetails}>
-                <Text style={styles.placeName} numberOfLines={2}>
-                  {place.name}
-                </Text>
-
-                {/* Personalization Score */}
-                <View style={styles.scoreContainer}>
-                  <View style={styles.scoreStars}>
-                    {[1, 2, 3, 4, 5].map(star => (
-                      <Icon
-                        key={star}
-                        name="star"
-                        size={14}
-                        color={star <= calculatePersonalizationScore(place) ? getScoreColor(calculatePersonalizationScore(place)) : '#E0E0E0'}
-                      />
-                    ))}
-                  </View>
-                  <Text style={styles.scoreText}>
-                    {calculatePersonalizationScore(place).toFixed(1)}
-                  </Text>
-                </View>
-
-                {/* Match Badges */}
-                <View style={styles.badgesContainer}>
-                  {getMatchBadges(place).map((badge, idx) => (
-                    <View key={idx} style={[styles.badge, { backgroundColor: badge.color }]}>
-                      <Text style={styles.badgeText}>{badge.text}</Text>
-                    </View>
-                  ))}
-                </View>
-
-                {/* Detour Info */}
-                <View style={styles.detourInfo}>
-                  <Icon name="directions-car" size={14} color="#666" />
-                  <Text style={styles.detourText}>
-                    {place.detour_minutes} min detour
-                  </Text>
-                </View>
-
-                {/* Additional Info */}
-                <View style={styles.additionalInfo}>
-                  {place.tags?.cuisine && (
-                    <Text style={styles.cuisineText} numberOfLines={1}>
-                      {place.tags.cuisine}
+                  {/* Place Details */}
+                  <View style={styles.placeDetails}>
+                    <Text style={styles.placeName} numberOfLines={2}>
+                      {place.name}
                     </Text>
-                  )}
-                </View>
-              </View>
-            </TouchableOpacity>
-          ))}
+
+                    {/* Why recommended toggle */}
+                    <TouchableOpacity
+                      onPress={() => setShowReasons(prev => !prev)}
+                      style={styles.whyButton}
+                    >
+                      <Text style={styles.whyText}>{showReasons ? 'Hide reasons' : 'Why recommended?'}</Text>
+                    </TouchableOpacity>
+
+                    {showReasons && place.match_reasons && place.match_reasons.length > 0 && (
+                      <View style={styles.reasonsContainer}>
+                        {place.match_reasons.map((r, i) => (
+                          <Text key={i} style={styles.reasonText}>• {r}</Text>
+                        ))}
+                      </View>
+                    )}
+
+                    {/* Personalization Score */}
+                    <View style={styles.scoreContainer}>
+                      <View style={styles.scoreStars}>
+                        {[1, 2, 3, 4, 5].map(star => (
+                          <Icon
+                            key={star}
+                            name="star"
+                            size={14}
+                            color={star <= calculatePersonalizationScore(place) ? getScoreColor(calculatePersonalizationScore(place)) : '#E0E0E0'}
+                          />
+                        ))}
+                      </View>
+                      <Text style={styles.scoreText}>
+                        {calculatePersonalizationScore(place).toFixed(1)}
+                      </Text>
+                    </View>
+
+                    {/* Match Badges */}
+                    <View style={styles.badgesContainer}>
+                      {getMatchBadges(place).map((badge, idx) => (
+                        <View key={idx} style={[styles.badge, { backgroundColor: badge.color }]}>
+                          <Text style={styles.badgeText}>{badge.text}</Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    {/* Detour Info */}
+                    <View style={styles.detourInfo}>
+                      <Icon name="directions-car" size={14} color="#666" />
+                      <Text style={styles.detourText}>
+                        {place.detour_minutes} min detour
+                      </Text>
+                    </View>
+                    {isNearDetourLimit(place) && (
+                      <View style={{marginTop:6}}>
+                        <Text style={styles.nearLimitText}>Near limit — this detour is close to your maximum allowed detour</Text>
+                      </View>
+                    )}
+
+                    {/* Additional Info */}
+                    <View style={styles.additionalInfo}>
+                      {place.tags?.cuisine && (
+                        <Text style={styles.cuisineText} numberOfLines={1}>
+                          {place.tags.cuisine}
+                        </Text>
+                      )}
+                    </View>
+
+                    {/* Map Actions */}
+                    <View style={styles.mapActionsRow}>
+                      <TouchableOpacity
+                        style={styles.mapButton}
+                        onPress={() => openInMaps(place, false)}
+                      >
+                        <Icon name="map" size={16} color="#007AFF" />
+                        <Text style={styles.mapButtonText}>View on map</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={[styles.mapButton, styles.navigateButton]}
+                        onPress={() => openInMaps(place, true)}
+                      >
+                        <Icon name="navigation" size={16} color="#fff" />
+                        <Text style={[styles.mapButtonText, { color: '#fff' }]}>Navigate</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            };
+
+            return places.map((place) => (
+              <PlaceCard
+                key={place.osm_id}
+                place={place}
+                selected={selectedPlaceId === place.osm_id}
+                onPress={() => handleSelectMeal(mealType, place)}
+              />
+            ));
+          })()}
         </ScrollView>
 
         {/* No selection warning */}
@@ -601,6 +718,26 @@ const styles = StyleSheet.create({
     color: '#888',
     fontStyle: 'italic',
   },
+  whyButton: {
+    marginTop: 6,
+  },
+  whyText: {
+    fontSize: 12,
+    color: '#007AFF',
+    fontWeight: '600',
+    marginBottom: 6,
+  },
+  reasonsContainer: {
+    backgroundColor: '#F6F9FF',
+    padding: 8,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  reasonText: {
+    fontSize: 12,
+    color: '#333',
+    marginBottom: 4,
+  },
   selectionWarning: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -634,6 +771,36 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 100,
+  },
+  mapActionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  mapButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    marginRight: 8,
+  },
+  navigateButton: {
+    backgroundColor: '#007AFF',
+    borderWidth: 0,
+  },
+  mapButtonText: {
+    marginLeft: 8,
+    color: '#007AFF',
+    fontWeight: '600',
+  },
+  nearLimitText: {
+    color: '#E65100',
+    fontSize: 12,
+    fontWeight: '600',
   },
   actionButtonContainer: {
     position: 'absolute',

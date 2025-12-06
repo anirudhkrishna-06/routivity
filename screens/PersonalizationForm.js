@@ -204,6 +204,25 @@ export default function PersonalizationForm() {
     try {
       const ref = doc(db, 'users', user.uid, 'preferences', 'userPrefs');
       await setDoc(ref, payload, { merge: true });
+      // Also save to backend preferences endpoint so server-side personalization can read it
+      try {
+        const BACKEND_URL = 'http://10.180.18.12:8000';
+        await fetch(`${BACKEND_URL}/users/${user.uid}/preferences`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            foodPreference: (foodPreference || 'any').toLowerCase(),
+            budget: (budget || 'moderate').toLowerCase(),
+            pace: (pace || 'balanced').toLowerCase(),
+            mood: (mood || 'adventure').toLowerCase(),
+            companions: companions || 'solo',
+            activities: activities || [],
+            accessibility: accessibility || 'none'
+          })
+        });
+      } catch (err) {
+        console.warn('Failed to save preferences to backend:', err);
+      }
       Alert.alert('Saved', 'Your preferences have been saved successfully.');
       navigation.navigate('Home'); // or navigation.replace('Home') depending on flow
     } catch (err) {

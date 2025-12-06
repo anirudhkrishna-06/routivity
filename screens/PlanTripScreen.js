@@ -25,6 +25,7 @@ const PlanTripScreen = () => {
   const [loading, setLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [userPrefs, setUserPrefs] = useState(null);
   
 
   // Form state
@@ -335,6 +336,57 @@ const PlanTripScreen = () => {
     }));
   };
 
+  // Fetch user preferences from backend and autofill some fields
+  useEffect(() => {
+    const fetchPrefs = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) return;
+        const res = await fetch(`${BACKEND_URL}/users/${user.uid}/preferences`);
+        if (res.ok) {
+          const prefs = await res.json();
+          setUserPrefs(prefs);
+          // Map some preferences into tripData defaults
+          setTripData(prev => ({
+            ...prev,
+            veg_pref: prefs.foodPreference === 'vegetarian' ? 'vegetarian' : 'any',
+            // keep existing maxDetour but you could map e.g., pace -> maxDetour heuristics
+          }));
+        }
+      } catch (err) {
+        console.warn('Failed to fetch user preferences', err);
+      }
+    };
+
+    fetchPrefs();
+  }, []);
+
+  const savePreferences = async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        Alert.alert('Login required', 'Please login to save preferences');
+        return;
+      }
+      if (!userPrefs) {
+        Alert.alert('No preferences to save');
+        return;
+      }
+
+      const res = await fetch(`${BACKEND_URL}/users/${user.uid}/preferences`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userPrefs),
+      });
+
+      if (!res.ok) throw new Error('Failed to save');
+      Alert.alert('Saved', 'Preferences saved successfully');
+    } catch (err) {
+      console.warn('savePreferences error', err);
+      Alert.alert('Error', 'Failed to save preferences');
+    }
+  };
+
   const updateMealTime = (meal, field, time) => {
     setTripData(prev => ({
       ...prev,
@@ -419,10 +471,11 @@ const PlanTripScreen = () => {
             return acc;
           }, {}),
         preferred_reach_time: tripData.preferredReachTime.toISOString(),
-        veg_pref: 'any', // Will be overridden by user preferences from backend
+        veg_pref: (userPrefs && userPrefs.foodPreference === 'vegetarian') ? 'vegetarian' : 'any',
         max_detour_minutes: tripData.maxDetour,
         meal_duration_min: tripData.mealDuration,
         user_id: user.uid,
+        user_preferences: userPrefs || {},
       };
 
       console.log('Sending trip data:', requestData);
@@ -774,6 +827,47 @@ const PlanTripScreen = () => {
               </View>
             </View>
           </View>
+
+          {/* User Preferences (autofilled from backend, editable) */}
+          <View style={styles.preferencesCard}>
+            <Text style={styles.sectionTitle}>Preferences</Text>
+            <Text style={styles.prefLabel}>Food preference</Text>
+            <TextInput
+              style={styles.textInput}
+              value={userPrefs?.foodPreference || ''}
+              placeholder="e.g. any, vegetarian"
+              onChangeText={(t) => setUserPrefs(prev => ({ ...(prev||{}), foodPreference: t }))}
+            />
+
+            <Text style={styles.prefLabel}>Budget</Text>
+            <TextInput
+              style={styles.textInput}
+              value={userPrefs?.budget || ''}
+              placeholder="e.g. budget, moderate, luxury"
+              onChangeText={(t) => setUserPrefs(prev => ({ ...(prev||{}), budget: t }))}
+            />
+
+            <Text style={styles.prefLabel}>Accessibility</Text>
+            <TextInput
+              style={styles.textInput}
+              value={userPrefs?.accessibility || ''}
+              placeholder="e.g. none, wheelchair"
+              onChangeText={(t) => setUserPrefs(prev => ({ ...(prev||{}), accessibility: t }))}
+            />
+
+            <Text style={styles.prefLabel}>Activities (comma separated)</Text>
+            <TextInput
+              style={styles.textInput}
+              value={(userPrefs?.activities || []).join(', ')}
+              placeholder="e.g. hiking, shopping"
+              onChangeText={(t) => setUserPrefs(prev => ({ ...(prev||{}), activities: t.split(',').map(s => s.trim()).filter(Boolean) }))}
+            />
+            <View style={{flexDirection:'row',justifyContent:'flex-end',marginTop:12}}>
+              <TouchableOpacity style={[styles.planButton, {paddingHorizontal:12,paddingVertical:8,marginLeft:8}]} onPress={savePreferences}>
+                <Text style={[styles.planButtonText, {fontSize:14}]}>Save Preferences</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
 
         {/* Action Button */}
@@ -832,6 +926,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f9fa',
+  },
+  preferencesCard: {
+    backgroundColor: '#fff',
+    margin: 16,
+    padding: 16,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  prefLabel: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 8,
+    marginBottom: 4,
   },
   scrollView: {
     flex: 1,
