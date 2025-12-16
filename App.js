@@ -25,7 +25,7 @@ import BillTrackerScreen from './screens/Expenses/BillTrackerScreen';
 import AddExpenseScreen from './screens/Expenses/AddExpenseScreen';
 import ExpenseListScreen from './screens/Expenses/ExpenseListScreen';
 import ExpenseDetailScreen from './screens/Expenses/ExpenseDetailScreen';
-
+import NotFoundScreen from './screens/NotFoundScreen'
 
 
 
@@ -72,13 +72,15 @@ export default function App() {
         <Stack.Screen name="MyTrips" component={MyTripsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="JoinTrip" component={JoinTripScreen} options={{ headerShown: false }} />
         <Stack.Screen name="TripDashboard" component={TripDashboardScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ManageMembers" component={ManageMembersScreen}/>
-        <Stack.Screen name="AddMember" component={AddMemberScreen} />
-        <Stack.Screen name="QRScanner" component={QRScannerScreen} />
-        <Stack.Screen name="BillTracker" component={BillTrackerScreen} />
-        <Stack.Screen name="AddExpense" component={AddExpenseScreen} />
-        <Stack.Screen name="ExpenseList" component={ExpenseListScreen} />
-        <Stack.Screen name="ExpenseDetail" component={ExpenseDetailScreen} />
+        <Stack.Screen name="ManageMembers" component={ManageMembersScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="AddMember" component={AddMemberScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="QRScanner" component={QRScannerScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="BillTracker" component={BillTrackerScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="AddExpense" component={AddExpenseScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="ExpenseList" component={ExpenseListScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="ExpenseDetail" component={ExpenseDetailScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ headerShown: false }} />
+
 
 
 

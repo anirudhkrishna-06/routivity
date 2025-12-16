@@ -423,6 +423,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    marginTop: 40
   },
   loadingContainer: {
     flex: 1,

@@ -257,11 +257,11 @@ const TripDashboardScreen = () => {
   };
 
   const handleFindServices = () => {
-    navigation.navigate('ServiceFinder', { tripId });
+    navigation.navigate('NotFound', { tripId });
   };
 
   const handleViewAlerts = () => {
-    navigation.navigate('AlertCenter', { tripId });
+    navigation.navigate('NotFound', { tripId });
   };
 
   
@@ -817,6 +817,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    marginTop: 30
   },
   loadingContainer: {
     flex: 1,

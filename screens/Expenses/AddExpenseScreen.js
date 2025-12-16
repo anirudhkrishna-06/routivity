@@ -475,6 +475,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    marginTop: 40
   },
   keyboardView: {
     flex: 1,
@@ -606,7 +607,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   paidByOptionSelected: {
-    backgroundColor: '#E3F2FD',
+    backgroundColor: '#ffffffff',
   },
   paidByAvatar: {
     width: 56,
@@ -618,7 +619,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   paidByAvatarSelected: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#f7ed67ff',
   },
   avatarImage: {
     width: 56,
@@ -687,11 +688,12 @@ const styles = StyleSheet.create({
   },
   splitMemberAvatarSelected: {
     backgroundColor: '#4CAF50',
+    color: '#fff'
   },
   splitMemberAvatarText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#666',
+    color: '#ffffffff',
   },
   splitMemberName: {
     fontSize: 16,

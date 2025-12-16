@@ -744,7 +744,7 @@ const PlanTripScreen = () => {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Plan Your Journey</Text>
-          <Text style={styles.subtitle}>Let's create your perfect road trip with amazing food stops!</Text>
+          <Text style={styles.subtitle}>Let's create your perfect Road Trip!</Text>
         </View>
 
         {/* Route Section */}
@@ -764,11 +764,7 @@ const PlanTripScreen = () => {
               type="source"
             />
 
-            <View style={styles.divider}>
-              <View style={styles.dividerLine} />
-              <Icon name="arrow-downward" size={20} color="#007AFF" />
-              <View style={styles.dividerLine} />
-            </View>
+            
 
             <LocationInput
               value={tripData.destination.name}
@@ -1063,7 +1059,6 @@ const PlanTripScreen = () => {
           ) : (
             <>
               <Text style={styles.planButtonText}>Plan My Trip</Text>
-              <Icon name="arrow-forward" size={20} color="#fff" />
             </>
           )}
         </TouchableOpacity>
@@ -1107,10 +1102,12 @@ const PlanTripScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FB', // Lighter, cooler grey
+    backgroundColor: '#02214aff',
+    paddingTop: 20,
+    paddingBottom: 0 // Lighter, cooler grey
   },
   scrollView: {
-    padding: 20,
+    padding: 15,
   },
   header: {
     marginBottom: 24,
@@ -1119,20 +1116,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '800', // Extra bold
-    color: '#111',
-    marginBottom: 8,
+    color: '#f0f0f0ff',
+    marginBottom: 2,
     letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#f3f9c5ff',
     lineHeight: 24,
   },
   section: {
     backgroundColor: '#fff',
     borderRadius: 20, // More rounded
     padding: 24, // More breathing room
-    marginBottom: 24,
+    marginBottom: 14,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.06, // Softer shadow
@@ -1142,40 +1139,40 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0.03)',
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '700',
     color: '#111',
     marginBottom: 16,
     letterSpacing: -0.3,
   },
   sectionSubtitle: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#888',
     marginBottom: 20,
     marginTop: -10,
   },
   locationSection: {
-    marginBottom: 8,
+    marginBottom: 2,
   },
   locationInputContainer: {
-    marginBottom: 12,
+    marginBottom: 6,
     position: 'relative',
   },
   inputWithIcon: {
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
     backgroundColor: '#F5F7F9', // Light background instead of border
   },
   inputIcon: {
-    marginRight: 12,
+    marginRight: 2,
     opacity: 0.5,
   },
   textInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 12,
     color: '#111',
     fontWeight: '500',
   },
@@ -1221,12 +1218,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   stopsTitle: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     color: '#666',
     marginBottom: 12,
     marginTop: 8,
-    textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   addedStop: {
@@ -1239,17 +1235,18 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   addedStopText: {
-    fontSize: 15,
+    fontSize: 10,
     color: '#333',
     flex: 1,
-    marginRight: 8,
+    marginRight: 2,
     fontWeight: '500',
   },
   mealOptionsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginBottom: 16,
-    marginHorizontal: -4,
+    marginHorizontal: -12,
+    alignItems: 'center'
   },
   mealOption: {
     paddingHorizontal: 20,
@@ -1267,7 +1264,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   mealOptionText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     color: '#555',
   },
@@ -1281,7 +1278,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#f0f0f0',
   },
   mealTimesTitle: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '600',
     color: '#1a1a1a',
     marginBottom: 16,
@@ -1290,7 +1287,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   mealTimeLabel: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     color: '#444',
     marginBottom: 10,
@@ -1303,7 +1300,7 @@ const styles = StyleSheet.create({
     flex: 0.48,
   },
   timeLabel: {
-    fontSize: 12,
+    fontSize: 10,
     color: '#888',
     marginBottom: 6,
     fontWeight: '500',
@@ -1315,7 +1312,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   timeText: {
-    fontSize: 15,
+    fontSize: 12,
     color: '#333',
     fontWeight: '600',
   },
@@ -1323,7 +1320,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   settingLabel: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '600',
     color: '#333',
     marginBottom: 12,
@@ -1341,7 +1338,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   sliderValue: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '700',
     color: '#007AFF',
     minWidth: 60,
@@ -1388,7 +1385,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 18,
-    borderRadius: 20, // Bigger rounding
+    borderRadius: 40, // Bigger rounding
     marginBottom: 40,
     shadowColor: '#007AFF',
     shadowOffset: { width: 0, height: 8 },
@@ -1396,6 +1393,8 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
     elevation: 8,
     marginHorizontal: 4,
+    alignSelf: 'center',
+    width: 180
   },
   planButtonDisabled: {
     backgroundColor: '#DBE2E8',
@@ -1403,7 +1402,7 @@ const styles = StyleSheet.create({
   },
   planButtonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '700',
     marginRight: 8,
     letterSpacing: 0.5,
@@ -1421,7 +1420,7 @@ const styles = StyleSheet.create({
   chipContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginHorizontal: -4,
+    marginHorizontal: -12,
   },
   chip: {
     paddingHorizontal: 20,
@@ -1437,12 +1436,12 @@ const styles = StyleSheet.create({
     borderColor: '#007AFF',
   },
   chipText: {
-    fontSize: 14,
+    fontSize: 10,
     color: '#555',
     fontWeight: '500',
   },
   chipTextSelected: {
-    color: '#007AFF', // Blue text for selected state
+    color: '#007AFF', 
     fontWeight: '700',
   },
 });

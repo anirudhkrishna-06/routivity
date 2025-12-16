@@ -19,9 +19,12 @@
     "expo": "~54.0.25",
     "expo-barcode-generator": "^4.0.0",
     "expo-barcode-scanner": "^13.0.1",
+    "expo-camera": "~17.0.10",
     "expo-clipboard": "~8.0.8",
     "expo-file-system": "~19.0.20",
+    "expo-image-picker": "^17.0.10",
     "expo-intent-launcher": "~13.0.8",
+    "expo-linear-gradient": "^15.0.8",
     "expo-maps": "^0.12.8",
     "expo-media-library": "~18.2.1",
     "expo-sharing": "~14.0.8",
@@ -35,8 +38,7 @@
     "react-native-screens": "~4.16.0",
     "react-native-svg": "15.12.1",
     "react-native-vector-icons": "^10.3.0",
-    "react-native-webview": "^13.15.0",
-    "expo-camera": "~17.0.10"
+    "react-native-webview": "^13.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

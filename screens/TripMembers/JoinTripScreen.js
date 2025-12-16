@@ -118,7 +118,7 @@ const JoinTripScreen = () => {
   const handleScanQRCode = () => {
     // For now, show a message
     // In next step, we'll implement QR scanning
-    navigation.navigate('QRScanner');
+    navigation.navigate('NotFound');
     // setScanning(true);
     // navigation.navigate('QRScanner');
   };
@@ -143,8 +143,8 @@ const JoinTripScreen = () => {
             style={styles.scanButton}
             onPress={handleScanQRCode}
           >
-            <Ionicons name="qr-code" size={20} color="#007AFF" />
-            <Text style={styles.scanButtonText}>Scan QR Code</Text>
+            <Ionicons name="qr-code" size={15} color="#007AFF" />
+            <Text style={styles.scanButtonText}>Scan QR</Text>
           </TouchableOpacity>
         </View>
 
@@ -189,12 +189,7 @@ const JoinTripScreen = () => {
             </TouchableOpacity>
           </View>
 
-          {/* OR Divider */}
-          <View style={styles.dividerContainer}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>OR</Text>
-            <View style={styles.dividerLine} />
-          </View>
+         
 
           {/* QR Code Option */}
           <TouchableOpacity
@@ -232,7 +227,8 @@ const JoinTripScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#02214aff',
+    marginTop: 10
   },
   keyboardView: {
     flex: 1,
@@ -242,18 +238,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 22,
     backgroundColor: 'white',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
   },
   backButton: {
     padding: 4,
+    marginTop: 10
+
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+    marginTop: 10
   },
   headerRightPlaceholder: {
     width: 32,
@@ -299,7 +298,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   inputLabel: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     color: '#333',
     marginBottom: 8,
@@ -308,9 +307,9 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1,
     borderColor: '#ddd',
-    borderRadius: 8,
+    borderRadius: 28,
     paddingHorizontal: 16,
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 'bold',
     letterSpacing: 2,
     textAlign: 'center',
@@ -320,17 +319,20 @@ const styles = StyleSheet.create({
   joinButton: {
     backgroundColor: '#007AFF',
     height: 50,
-    borderRadius: 8,
+    borderRadius: 28,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    width: 140,
+    margin: 0,
+    alignSelf: 'center'
   },
   joinButtonDisabled: {
     backgroundColor: '#ccc',
   },
   joinButtonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     marginLeft: 8,
   },
@@ -363,9 +365,9 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   qrIconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 46,
+    height: 46,
+    borderRadius: 48,
     backgroundColor: '#E8F5E9',
     justifyContent: 'center',
     alignItems: 'center',
@@ -375,7 +377,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   qrOptionTitle: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '600',
     color: '#333',
   },
@@ -412,14 +414,15 @@ const styles = StyleSheet.create({
   justifyContent: 'center',
   paddingVertical: 12,
   backgroundColor: 'white',
-  borderRadius: 8,
+  borderRadius: 30,
   marginTop: 12,
   borderWidth: 1,
   borderColor: '#007AFF',
+  padding: 10
 },
 scanButtonText: {
   color: '#007AFF',
-  fontSize: 16,
+  fontSize: 12,
   fontWeight: '600',
   marginLeft: 8,
 },
