@@ -14,6 +14,7 @@ import { collection, query, where, getDocs, doc, deleteDoc } from 'firebase/fire
 import { getAuth } from 'firebase/auth';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; // or any icon library you use
+import logger from '../utils/logger';
 
 const MyTripsScreen = () => {
   const auth = getAuth();
@@ -25,6 +26,7 @@ const MyTripsScreen = () => {
   const fetchTrips = async () => {
   setLoading(true);
   try {
+    logger.info('Fetching MyTrips for user', auth.currentUser.uid);
     const tripsRef = collection(db, 'trips');
     // Query trips where user is creator OR member
     const q = query(
@@ -77,8 +79,9 @@ const MyTripsScreen = () => {
     });
     
     setTrips(items);
+    logger.info('MyTrips fetched, count=', items.length);
   } catch (err) {
-    console.warn('Failed to fetch trips', err);
+    logger.error('Failed to fetch trips', err);
     Alert.alert('Error', 'Failed to load trips. Please try again.');
   } finally {
     setLoading(false);

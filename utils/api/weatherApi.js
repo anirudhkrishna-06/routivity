@@ -1,10 +1,12 @@
 import axios from 'axios';
+import logger from '../logger';
 
 const OPENWEATHER_API_KEY = '48d89ccf2d58499a882fdd8d4ec6424c';
 const OPENWEATHER_URL = 'https://api.openweathermap.org/data/2.5/forecast';
 
 export const getWeatherData = async (lat, lng) => {
   try {
+    logger.info('Fetching weather for', lat, lng);
     const response = await axios.get(OPENWEATHER_URL, {
       params: {
         lat,
@@ -16,6 +18,7 @@ export const getWeatherData = async (lat, lng) => {
     });
 
     const data = response.data;
+  logger.info('Weather response received for', lat, lng);
     
     // Current weather
     const current = data.list[0];
@@ -38,7 +41,7 @@ export const getWeatherData = async (lat, lng) => {
 
     return weather;
   } catch (error) {
-    console.error('Error fetching weather data:', error);
+    logger.error('Error fetching weather data:', error);
     
     // Return mock data for development
     return getMockWeatherData();

@@ -206,7 +206,7 @@ export default function PersonalizationForm() {
       await setDoc(ref, payload, { merge: true });
       // Also save to backend preferences endpoint so server-side personalization can read it
       try {
-        const BACKEND_URL = 'http://10.180.18.12:8000';
+        const BACKEND_URL = 'http://10.209.137.12:8000';
         await fetch(`${BACKEND_URL}/users/${user.uid}/preferences`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },

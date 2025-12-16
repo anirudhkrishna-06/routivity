@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { db } from '../firebase';
 import { doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
+import logger from '../utils/logger';
 import { getAuth } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,6 +20,7 @@ const JoinTripScreen = () => {
 
     try {
       const tripRef = doc(db, 'trips', code.trim());
+      logger.info('Attempting to join trip', code.trim());
       const tripSnap = await getDoc(tripRef);
       if (!tripSnap.exists()) {
         Alert.alert('Trip not found', 'Check the code and try again.');
@@ -29,6 +31,7 @@ const JoinTripScreen = () => {
       await updateDoc(tripRef, {
         members: arrayUnion(auth.currentUser.uid),
       });
+      logger.info('User added to trip members', auth.currentUser.uid, code.trim());
 
       // Also update user's joinedTrips
       const userRef = doc(db, 'users', auth.currentUser.uid);

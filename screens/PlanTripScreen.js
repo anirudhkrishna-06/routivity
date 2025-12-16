@@ -15,18 +15,24 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { auth, db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import logger from '../utils/logger';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const BACKEND_URL = 'http://192.168.31.195:8000';
+const BACKEND_URL = 'http://192.168.31.131:8000';
 
 const PlanTripScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const [userPrefs, setUserPrefs] = useState(null);
-  
+  // User Preferences State
+  const [prefFood, setPrefFood] = useState('any');
+  const [prefBudget, setPrefBudget] = useState('moderate');
+  const [prefPace, setPrefPace] = useState('balanced');
+  const [prefMood, setPrefMood] = useState('adventure');
+  const [prefCompanions, setPrefCompanions] = useState('solo');
+
 
   // Form state
   const [tripData, setTripData] = useState({
@@ -39,7 +45,7 @@ const PlanTripScreen = () => {
       breakfast: { start: '08:00', end: '10:00' },
       lunch: { start: '12:00', end: '14:00' },
       dinner: { start: '19:00', end: '21:00' },
-      snacks:  { start: '16:00', end: '18:00' },
+      snacks: { start: '16:00', end: '18:00' },
     },
     maxDetour: 30,
     mealDuration: 45,
@@ -53,14 +59,14 @@ const PlanTripScreen = () => {
   // Enhanced location search with multiple fallback services
   const searchLocation = async (query, type) => {
     if (query.length < 3) return [];
-    
+
     try {
       // Try OpenStreetMap Nominatim first
       let data = await fetchWithTimeout(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&addressdetails=1`,
         { timeout: 5000 }
       );
-      
+
       if (data && data.length > 0) {
         return data.map(item => ({
           name: item.display_name,
@@ -76,7 +82,7 @@ const PlanTripScreen = () => {
         `https://us1.locationiq.com/v1/search.php?key=pk.YOUR_LOCATIONIQ_KEY&q=${encodeURIComponent(query)}&format=json&limit=5`,
         { timeout: 5000 }
       );
-      
+
       if (data && data.length > 0) {
         return data.map(item => ({
           name: item.display_name,
@@ -89,7 +95,7 @@ const PlanTripScreen = () => {
 
       // Final fallback - Mock data for common Indian cities
       return getMockLocations(query);
-      
+
     } catch (error) {
       console.error('Location search error:', error);
       // Return mock data as final fallback
@@ -100,7 +106,7 @@ const PlanTripScreen = () => {
   // Helper function for timeout handling
   const fetchWithTimeout = async (url, options = {}) => {
     const { timeout = 8000 } = options;
-    
+
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
 
@@ -113,7 +119,7 @@ const PlanTripScreen = () => {
           'Accept': 'application/json',
         }
       });
-      
+
       clearTimeout(id);
 
       if (!response.ok) {
@@ -222,7 +228,7 @@ const PlanTripScreen = () => {
     };
 
     const normalizedQuery = query.toLowerCase().trim();
-    
+
     // Check for exact matches first
     if (commonLocations[normalizedQuery]) {
       return commonLocations[normalizedQuery];
@@ -345,12 +351,19 @@ const PlanTripScreen = () => {
         const res = await fetch(`${BACKEND_URL}/users/${user.uid}/preferences`);
         if (res.ok) {
           const prefs = await res.json();
-          setUserPrefs(prefs);
-          // Map some preferences into tripData defaults
+          // setUserPrefs(prefs); // Removed: state no longer exists
+
+          // Autofill local state
+          if (prefs.foodPreference) setPrefFood(prefs.foodPreference);
+          if (prefs.budget) setPrefBudget(prefs.budget);
+          if (prefs.pace) setPrefPace(prefs.pace);
+          if (prefs.mood) setPrefMood(prefs.mood);
+          if (prefs.companions) setPrefCompanions(prefs.companions);
+
+          // Map legacy default if needed
           setTripData(prev => ({
             ...prev,
             veg_pref: prefs.foodPreference === 'vegetarian' ? 'vegetarian' : 'any',
-            // keep existing maxDetour but you could map e.g., pace -> maxDetour heuristics
           }));
         }
       } catch (err) {
@@ -368,15 +381,21 @@ const PlanTripScreen = () => {
         Alert.alert('Login required', 'Please login to save preferences');
         return;
       }
-      if (!userPrefs) {
-        Alert.alert('No preferences to save');
-        return;
-      }
+
+      const prefsToSave = {
+        foodPreference: prefFood,
+        budget: prefBudget,
+        pace: prefPace,
+        mood: prefMood,
+        companions: prefCompanions,
+        activities: [],
+        accessibility: 'none'
+      };
 
       const res = await fetch(`${BACKEND_URL}/users/${user.uid}/preferences`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userPrefs),
+        body: JSON.stringify(prefsToSave),
       });
 
       if (!res.ok) throw new Error('Failed to save');
@@ -471,11 +490,20 @@ const PlanTripScreen = () => {
             return acc;
           }, {}),
         preferred_reach_time: tripData.preferredReachTime.toISOString(),
-        veg_pref: (userPrefs && userPrefs.foodPreference === 'vegetarian') ? 'vegetarian' : 'any',
+        veg_pref: (prefFood === 'vegetarian') ? 'vegetarian' : 'any',
         max_detour_minutes: tripData.maxDetour,
         meal_duration_min: tripData.mealDuration,
         user_id: user.uid,
-        user_preferences: userPrefs || {},
+        // Send explicit overrides from the form
+        user_preferences: {
+          foodPreference: prefFood,
+          budget: prefBudget,
+          pace: prefPace,
+          mood: prefMood,
+          companions: prefCompanions,
+          activities: [], // can add if needed
+          accessibility: 'none'
+        },
       };
 
       console.log('Sending trip data:', requestData);
@@ -493,20 +521,105 @@ const PlanTripScreen = () => {
       }
 
       const result = await response.json();
-      
+
       console.log('Trip created successfully:', result);
 
+      // Attempt to compute an accurate driving polyline using OSRM (shortest driving route)
+      // Build a waypoint list that includes source and destination so routing works even without middle stops.
+      let osrmPolyline = null;
+      try {
+        const waypoints = [];
+        // include source
+        if (tripData.source && tripData.source.lat != null && tripData.source.lng != null) {
+          waypoints.push({ lat: tripData.source.lat, lng: tripData.source.lng });
+        }
+        // include intermediate stops
+        if (Array.isArray(tripData.stops) && tripData.stops.length > 0) {
+          tripData.stops.forEach(s => {
+            if (s.lat != null && s.lng != null) waypoints.push({ lat: s.lat, lng: s.lng });
+            else if (s.coordinates && s.coordinates.latitude != null && s.coordinates.longitude != null) waypoints.push({ lat: s.coordinates.latitude, lng: s.coordinates.longitude });
+          });
+        }
+        // include destination
+        if (tripData.destination && tripData.destination.lat != null && tripData.destination.lng != null) {
+          waypoints.push({ lat: tripData.destination.lat, lng: tripData.destination.lng });
+        }
+
+        if (waypoints.length >= 2) {
+          const coordPts = waypoints.map(s => `${s.lng},${s.lat}`).join(';');
+          const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${coordPts}?overview=full&geometries=geojson&steps=false`;
+          logger.info('Requesting OSRM route:', osrmUrl);
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 10000);
+          const resp = await fetch(osrmUrl, { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (resp.ok) {
+            const json = await resp.json();
+            if (json && json.routes && json.routes[0] && json.routes[0].geometry && json.routes[0].geometry.coordinates) {
+              osrmPolyline = json.routes[0].geometry.coordinates.map(c => ({ latitude: c[1], longitude: c[0] }));
+              logger.info('OSRM polyline computed, points:', osrmPolyline.length);
+            }
+          } else {
+            logger.warn('OSRM request failed with status', resp.status);
+          }
+        } else {
+          logger.info('Not enough waypoints for OSRM (need >=2). Waypoints count:', waypoints.length);
+        }
+      } catch (err) {
+        logger.warn('OSRM polyline generation failed:', err);
+        osrmPolyline = null;
+      }
+
       // Save trip to Firebase
-      const tripDoc = await addDoc(collection(db, 'trips'), {
+      // Construct a full trip document payload containing all expected fields.
+      const generatedTripId = result.trip_id || `temp_${Date.now()}`;
+      const payload = {
         userId: user.uid,
-        ...requestData,
-        tripId: result.trip_id,
+        user_id: user.uid,
+        tripId: generatedTripId,
+        tripName: tripData.tripName || 'My Amazing Road Trip',
+        name: tripData.tripName || 'My Amazing Road Trip',
         status: 'planned',
-        createdAt: serverTimestamp(),
+        // Use client timestamp string so it matches the example structure
+        createdAt: new Date().toISOString(),
+        savedAt: null,
+        source: {
+          lat: tripData.source.lat,
+          lng: tripData.source.lng,
+        },
         sourceName: tripData.source.name,
+        destination: {
+          lat: tripData.destination.lat,
+          lng: tripData.destination.lng,
+        },
         destinationName: tripData.destination.name,
         stopNames: tripData.stops.map(stop => stop.name),
-      });
+        // Include results from the planner backend when available
+        ...result,
+        // Ensure commonly used fields exist (fallbacks)
+        itinerary: result.itinerary || result.itineraryData || {},
+        mapRegion: result.mapRegion || null,
+        // Prefer OSRM-generated polyline if available, otherwise use backend result
+        polylineCoordinates: osrmPolyline || result.polylineCoordinates || result.polyline || [],
+        polylineSource: osrmPolyline ? 'osrm' : (result.polylineCoordinates ? 'backend' : 'none'),
+        stops: result.stops || [],
+        timeline: result.timeline || [],
+        totalDistance: result.totalDistance || result.route_summary?.total_distance_km || 0,
+        totalDuration: result.totalDuration || result.route_summary?.total_duration_min || 0,
+        max_detour_minutes: requestData.max_detour_minutes || tripData.maxDetour || 0,
+        mealPreferences: requestData.mealPreferences || tripData.mealPreferences || [],
+        mealWindows: requestData.mealWindows || {},
+        meal_duration_min: requestData.meal_duration_min || tripData.mealDuration || 0,
+        members: [user.uid],
+        notes: tripData.notes || '',
+        preferred_reach_time: requestData.preferred_reach_time || (tripData.preferredReachTime ? tripData.preferredReachTime.toISOString() : null),
+        selectedMeals: {},
+        veg_pref: requestData.veg_pref || 'any',
+        user_preferences: requestData.user_preferences || {},
+      };
+
+      // Save to Firestore
+      const tripDoc = await addDoc(collection(db, 'trips'), payload);
 
       // Navigate to suggestions screen with the result
       // Note: route name must match the one registered in App.js ("Suggestions")
@@ -532,65 +645,65 @@ const PlanTripScreen = () => {
     return text.replace(/[^\x20-\x7E]/g, '');
   };
 
-  const LocationInput = ({ 
-  value, 
-  onChangeText, 
-  placeholder, 
-  suggestions, 
-  showSuggestions, 
-  onSelectLocation, 
-  type 
-}) => {
-  const [localValue, setLocalValue] = useState(value);
-  
-  useEffect(() => {
-    setLocalValue(value);
-  }, [value]);
+  const LocationInput = ({
+    value,
+    onChangeText,
+    placeholder,
+    suggestions,
+    showSuggestions,
+    onSelectLocation,
+    type
+  }) => {
+    const [localValue, setLocalValue] = useState(value);
 
-  const handleTextChange = (text) => {
-    const clean = sanitizeText(text);
-    setLocalValue(clean);
-    onChangeText(clean);
-  };
+    useEffect(() => {
+      setLocalValue(value);
+    }, [value]);
 
-  const handleSelect = (location) => {
-    const cleanName = sanitizeText(location.name);
-    setLocalValue(cleanName); // Update local state immediately
-    onSelectLocation({ ...location, name: cleanName }, type);
-  };
+    const handleTextChange = (text) => {
+      const clean = sanitizeText(text);
+      setLocalValue(clean);
+      onChangeText(clean);
+    };
 
-  return (
-    <View style={styles.locationInputContainer}>
-      <View style={styles.inputWithIcon}>
-        <Icon name="location-on" size={20} color="#666" style={styles.inputIcon} />
-        <TextInput
-          style={styles.textInput}
-          placeholder={placeholder}
-          value={localValue} // Use local state
-          onChangeText={handleTextChange} // Use local handler
-          placeholderTextColor="#999"
-        />
-      </View>
-      
-      {showSuggestions && suggestions.length > 0 && (
-        <View style={styles.suggestionsContainer}>
-          {suggestions.map((location, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.suggestionItem}
-              onPress={() => handleSelect(location)} // Use local handler
-            >
-              <Icon name="place" size={16} color="#007AFF" />
-              <Text style={styles.suggestionText} numberOfLines={2}>
-                {sanitizeText(location.name)}
-              </Text>
-            </TouchableOpacity>
-          ))}
+    const handleSelect = (location) => {
+      const cleanName = sanitizeText(location.name);
+      setLocalValue(cleanName); // Update local state immediately
+      onSelectLocation({ ...location, name: cleanName }, type);
+    };
+
+    return (
+      <View style={styles.locationInputContainer}>
+        <View style={styles.inputWithIcon}>
+          <Icon name="location-on" size={20} color="#666" style={styles.inputIcon} />
+          <TextInput
+            style={styles.textInput}
+            placeholder={placeholder}
+            value={localValue} // Use local state
+            onChangeText={handleTextChange} // Use local handler
+            placeholderTextColor="#999"
+          />
         </View>
-      )}
-    </View>
-  );
-};
+
+        {showSuggestions && suggestions.length > 0 && (
+          <View style={styles.suggestionsContainer}>
+            {suggestions.map((location, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.suggestionItem}
+                onPress={() => handleSelect(location)} // Use local handler
+              >
+                <Icon name="place" size={16} color="#007AFF" />
+                <Text style={styles.suggestionText} numberOfLines={2}>
+                  {sanitizeText(location.name)}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
+    );
+  };
   const MealTimeSelector = ({ meal }) => {
     const window = tripData.mealWindows[meal] || {};
     return (
@@ -623,7 +736,7 @@ const PlanTripScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
@@ -637,7 +750,7 @@ const PlanTripScreen = () => {
         {/* Route Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Route Details</Text>
-          
+
           <View style={styles.locationSection}>
             <LocationInput
               value={tripData.source.name}
@@ -685,7 +798,7 @@ const PlanTripScreen = () => {
               onSelectLocation={selectLocation}
               type="stop"
             />
-            
+
             {/* Added Stops */}
             {tripData.stops.map((stop, index) => (
               <View key={index} style={styles.addedStop}>
@@ -700,11 +813,115 @@ const PlanTripScreen = () => {
           </View>
         </View>
 
+        {/* Personalize Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Personalize Your Trip</Text>
+          <Text style={styles.sectionSubtitle}>Customize suggestions to your style</Text>
+
+          {/* Food Preference */}
+          <View style={styles.prefGroup}>
+            <Text style={styles.prefLabel}>Food Preference</Text>
+            <View style={styles.chipContainer}>
+              {['any', 'vegetarian', 'non-vegetarian'].map((opt) => (
+                <TouchableOpacity
+                  key={opt}
+                  style={[styles.chip, prefFood === opt && styles.chipSelected]}
+                  onPress={() => setPrefFood(opt)}
+                >
+                  <Text style={[styles.chipText, prefFood === opt && styles.chipTextSelected]}>
+                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+          {/* Budget */}
+          <View style={styles.prefGroup}>
+            <Text style={styles.prefLabel}>Budget</Text>
+            <View style={styles.chipContainer}>
+              {['low', 'moderate', 'high'].map((opt) => (
+                <TouchableOpacity
+                  key={opt}
+                  style={[styles.chip, prefBudget === opt && styles.chipSelected]}
+                  onPress={() => setPrefBudget(opt)}
+                >
+                  <Text style={[styles.chipText, prefBudget === opt && styles.chipTextSelected]}>
+                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+          {/* Pace */}
+          <View style={styles.prefGroup}>
+            <Text style={styles.prefLabel}>Pace</Text>
+            <View style={styles.chipContainer}>
+              {['relaxed', 'balanced', 'fast'].map((opt) => (
+                <TouchableOpacity
+                  key={opt}
+                  style={[styles.chip, prefPace === opt && styles.chipSelected]}
+                  onPress={() => setPrefPace(opt)}
+                >
+                  <Text style={[styles.chipText, prefPace === opt && styles.chipTextSelected]}>
+                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+          {/* Mood */}
+          <View style={styles.prefGroup}>
+            <Text style={styles.prefLabel}>Mood</Text>
+            <View style={styles.chipContainer}>
+              {['adventure', 'chill', 'cultural'].map((opt) => (
+                <TouchableOpacity
+                  key={opt}
+                  style={[styles.chip, prefMood === opt && styles.chipSelected]}
+                  onPress={() => setPrefMood(opt)}
+                >
+                  <Text style={[styles.chipText, prefMood === opt && styles.chipTextSelected]}>
+                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+          {/* Companions */}
+          <View style={styles.prefGroup}>
+            <Text style={styles.prefLabel}>Companions</Text>
+            <View style={styles.chipContainer}>
+              {['solo', 'couple', 'family', 'friends'].map((opt) => (
+                <TouchableOpacity
+                  key={opt}
+                  style={[styles.chip, prefCompanions === opt && styles.chipSelected]}
+                  onPress={() => setPrefCompanions(opt)}
+                >
+                  <Text style={[styles.chipText, prefCompanions === opt && styles.chipTextSelected]}>
+                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+
+          <TouchableOpacity
+            style={{ marginTop: 16, alignSelf: 'flex-end', padding: 8 }}
+            onPress={savePreferences}
+          >
+            <Text style={{ color: '#007AFF', fontWeight: '600', fontSize: 14 }}>Save as default functionality</Text>
+          </TouchableOpacity>
+        </View>
+
         {/* Meal Preferences */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Meal Preferences</Text>
           <Text style={styles.sectionSubtitle}>Select meals you'd like to have during your trip</Text>
-          
+
           <View style={styles.mealOptionsContainer}>
             {mealOptions.map(meal => (
               <TouchableOpacity
@@ -739,10 +956,10 @@ const PlanTripScreen = () => {
         {/* Trip Settings */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Trip Settings</Text>
-          
+
           <View style={styles.settingRow}>
             <Text style={styles.settingLabel}>Arrival Time</Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.timeButton}
               onPress={() => setShowDatePicker(true)}
             >
@@ -755,31 +972,31 @@ const PlanTripScreen = () => {
           <View style={styles.settingRow}>
             <Text style={styles.settingLabel}>Max Detour (minutes)</Text>
             <View style={styles.sliderContainer}>
-            <View style={styles.sliderControlRow}>
-              <TouchableOpacity
-                style={styles.sliderButton}
-                onPress={() =>
-                  setTripData(prev => ({
-                    ...prev,
-                    maxDetour: Math.max(5, prev.maxDetour - 5),
-                  }))
-                }
-              >
-                <Icon name="remove" size={18} color="#007AFF" />
-              </TouchableOpacity>
-              <Text style={styles.sliderValue}>{tripData.maxDetour} min</Text>
-              <TouchableOpacity
-                style={styles.sliderButton}
-                onPress={() =>
-                  setTripData(prev => ({
-                    ...prev,
-                    maxDetour: Math.min(60, prev.maxDetour + 5),
-                  }))
-                }
-              >
-                <Icon name="add" size={18} color="#007AFF" />
-              </TouchableOpacity>
-            </View>
+              <View style={styles.sliderControlRow}>
+                <TouchableOpacity
+                  style={styles.sliderButton}
+                  onPress={() =>
+                    setTripData(prev => ({
+                      ...prev,
+                      maxDetour: Math.max(5, prev.maxDetour - 5),
+                    }))
+                  }
+                >
+                  <Icon name="remove" size={18} color="#007AFF" />
+                </TouchableOpacity>
+                <Text style={styles.sliderValue}>{tripData.maxDetour} min</Text>
+                <TouchableOpacity
+                  style={styles.sliderButton}
+                  onPress={() =>
+                    setTripData(prev => ({
+                      ...prev,
+                      maxDetour: Math.min(60, prev.maxDetour + 5),
+                    }))
+                  }
+                >
+                  <Icon name="add" size={18} color="#007AFF" />
+                </TouchableOpacity>
+              </View>
               <View style={styles.slider}>
                 <View style={[styles.sliderTrack, { width: `${(tripData.maxDetour / 60) * 100}%` }]} />
               </View>
@@ -793,31 +1010,31 @@ const PlanTripScreen = () => {
           <View style={styles.settingRow}>
             <Text style={styles.settingLabel}>Meal Duration (minutes)</Text>
             <View style={styles.sliderContainer}>
-            <View style={styles.sliderControlRow}>
-              <TouchableOpacity
-                style={styles.sliderButton}
-                onPress={() =>
-                  setTripData(prev => ({
-                    ...prev,
-                    mealDuration: Math.max(15, prev.mealDuration - 5),
-                  }))
-                }
-              >
-                <Icon name="remove" size={18} color="#007AFF" />
-              </TouchableOpacity>
-              <Text style={styles.sliderValue}>{tripData.mealDuration} min</Text>
-              <TouchableOpacity
-                style={styles.sliderButton}
-                onPress={() =>
-                  setTripData(prev => ({
-                    ...prev,
-                    mealDuration: Math.min(60, prev.mealDuration + 5),
-                  }))
-                }
-              >
-                <Icon name="add" size={18} color="#007AFF" />
-              </TouchableOpacity>
-            </View>
+              <View style={styles.sliderControlRow}>
+                <TouchableOpacity
+                  style={styles.sliderButton}
+                  onPress={() =>
+                    setTripData(prev => ({
+                      ...prev,
+                      mealDuration: Math.max(15, prev.mealDuration - 5),
+                    }))
+                  }
+                >
+                  <Icon name="remove" size={18} color="#007AFF" />
+                </TouchableOpacity>
+                <Text style={styles.sliderValue}>{tripData.mealDuration} min</Text>
+                <TouchableOpacity
+                  style={styles.sliderButton}
+                  onPress={() =>
+                    setTripData(prev => ({
+                      ...prev,
+                      mealDuration: Math.min(60, prev.mealDuration + 5),
+                    }))
+                  }
+                >
+                  <Icon name="add" size={18} color="#007AFF" />
+                </TouchableOpacity>
+              </View>
               <View style={styles.slider}>
                 <View style={[styles.sliderTrack, { width: `${((tripData.mealDuration - 15) / 45) * 100}%` }]} />
               </View>
@@ -828,53 +1045,14 @@ const PlanTripScreen = () => {
             </View>
           </View>
 
-          {/* User Preferences (autofilled from backend, editable) */}
-          <View style={styles.preferencesCard}>
-            <Text style={styles.sectionTitle}>Preferences</Text>
-            <Text style={styles.prefLabel}>Food preference</Text>
-            <TextInput
-              style={styles.textInput}
-              value={userPrefs?.foodPreference || ''}
-              placeholder="e.g. any, vegetarian"
-              onChangeText={(t) => setUserPrefs(prev => ({ ...(prev||{}), foodPreference: t }))}
-            />
 
-            <Text style={styles.prefLabel}>Budget</Text>
-            <TextInput
-              style={styles.textInput}
-              value={userPrefs?.budget || ''}
-              placeholder="e.g. budget, moderate, luxury"
-              onChangeText={(t) => setUserPrefs(prev => ({ ...(prev||{}), budget: t }))}
-            />
-
-            <Text style={styles.prefLabel}>Accessibility</Text>
-            <TextInput
-              style={styles.textInput}
-              value={userPrefs?.accessibility || ''}
-              placeholder="e.g. none, wheelchair"
-              onChangeText={(t) => setUserPrefs(prev => ({ ...(prev||{}), accessibility: t }))}
-            />
-
-            <Text style={styles.prefLabel}>Activities (comma separated)</Text>
-            <TextInput
-              style={styles.textInput}
-              value={(userPrefs?.activities || []).join(', ')}
-              placeholder="e.g. hiking, shopping"
-              onChangeText={(t) => setUserPrefs(prev => ({ ...(prev||{}), activities: t.split(',').map(s => s.trim()).filter(Boolean) }))}
-            />
-            <View style={{flexDirection:'row',justifyContent:'flex-end',marginTop:12}}>
-              <TouchableOpacity style={[styles.planButton, {paddingHorizontal:12,paddingVertical:8,marginLeft:8}]} onPress={savePreferences}>
-                <Text style={[styles.planButtonText, {fontSize:14}]}>Save Preferences</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
         </View>
 
         {/* Action Button */}
         <TouchableOpacity
           style={[
             styles.planButton,
-            (!tripData.source.name || !tripData.destination.name || tripData.mealPreferences.length === 0) && 
+            (!tripData.source.name || !tripData.destination.name || tripData.mealPreferences.length === 0) &&
             styles.planButtonDisabled,
           ]}
           onPress={handlePlanTrip}
@@ -892,130 +1070,114 @@ const PlanTripScreen = () => {
       </ScrollView>
 
       {/* Date/Time Pickers */}
-      {showDatePicker && (
-        <DateTimePicker
-          value={tripData.preferredReachTime}
-          mode="datetime"
-          display="default"
-          minimumDate={new Date()}
-          onChange={(event, date) => {
-            setShowDatePicker(false);
-            if (date) {
-              setTripData(prev => ({ ...prev, preferredReachTime: date }));
-            }
-          }}
-        />
-      )}
+      {
+        showDatePicker && (
+          <DateTimePicker
+            value={tripData.preferredReachTime}
+            mode="datetime"
+            display="default"
+            minimumDate={new Date()}
+            onChange={(event, date) => {
+              setShowDatePicker(false);
+              if (date) {
+                setTripData(prev => ({ ...prev, preferredReachTime: date }));
+              }
+            }}
+          />
+        )
+      }
 
-      {showTimePicker && (
-        <DateTimePicker
-          value={new Date()}
-          mode="time"
-          display="spinner"
-          onChange={(event, time) => {
-            const [meal, field] = showTimePicker.split('-');
-            handleTimeChange(event, time, meal, field);
-          }}
-        />
-      )}
-    </KeyboardAvoidingView>
+      {
+        showTimePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode="time"
+            display="spinner"
+            onChange={(event, time) => {
+              const [meal, field] = showTimePicker.split('-');
+              handleTimeChange(event, time, meal, field);
+            }}
+          />
+        )
+      }
+    </KeyboardAvoidingView >
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
-  },
-  preferencesCard: {
-    backgroundColor: '#fff',
-    margin: 16,
-    padding: 16,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  prefLabel: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 8,
-    marginBottom: 4,
+    backgroundColor: '#F8F9FB', // Lighter, cooler grey
   },
   scrollView: {
-    flex: 1,
     padding: 20,
   },
   header: {
-    alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 24,
     marginTop: 10,
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1a1a1a',
+    fontWeight: '800', // Extra bold
+    color: '#111',
     marginBottom: 8,
+    letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 16,
     color: '#666',
-    textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 24,
   },
   section: {
     backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 20,
+    borderRadius: 20, // More rounded
+    padding: 24, // More breathing room
+    marginBottom: 24,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06, // Softer shadow
+    shadowRadius: 12,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.03)',
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1a1a1a',
-    marginBottom: 8,
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#111',
+    marginBottom: 16,
+    letterSpacing: -0.3,
   },
   sectionSubtitle: {
     fontSize: 14,
-    color: '#666',
-    marginBottom: 16,
+    color: '#888',
+    marginBottom: 20,
+    marginTop: -10,
   },
   locationSection: {
-    marginBottom: 20,
+    marginBottom: 8,
   },
   locationInputContainer: {
-    marginBottom: 8,
+    marginBottom: 12,
     position: 'relative',
   },
   inputWithIcon: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#e1e5e9',
-    borderRadius: 12,
+    borderRadius: 16,
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
+    paddingVertical: 14,
+    backgroundColor: '#F5F7F9', // Light background instead of border
   },
   inputIcon: {
     marginRight: 12,
+    opacity: 0.5,
   },
   textInput: {
     flex: 1,
     fontSize: 16,
-    color: '#1a1a1a',
+    color: '#111',
+    fontWeight: '500',
   },
   suggestionsContainer: {
     position: 'absolute',
@@ -1023,108 +1185,115 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#e1e5e9',
-    borderTopWidth: 0,
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
+    borderRadius: 16,
+    marginTop: 4,
     zIndex: 1000,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 24,
+    elevation: 8,
   },
   suggestionItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
+    padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
   suggestionText: {
-    marginLeft: 8,
+    marginLeft: 12,
     fontSize: 14,
     color: '#333',
     flex: 1,
   },
   divider: {
     alignItems: 'center',
-    marginVertical: 8,
+    marginVertical: 4,
+    height: 20,
+    justifyContent: 'center',
+    zIndex: 1,
   },
   dividerLine: {
-    height: 1,
-    backgroundColor: '#e1e5e9',
-    width: '80%',
+    display: 'none', // Hide line, just usage icon
   },
   stopsSection: {
-    marginTop: 16,
+    marginTop: 8,
   },
   stopsTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
-    color: '#1a1a1a',
+    color: '#666',
     marginBottom: 12,
+    marginTop: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   addedStop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#f8f9fa',
-    padding: 12,
-    borderRadius: 8,
+    backgroundColor: '#F5F7F9',
+    padding: 16,
+    borderRadius: 12,
     marginTop: 8,
   },
   addedStopText: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#333',
     flex: 1,
     marginRight: 8,
+    fontWeight: '500',
   },
   mealOptionsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginBottom: 16,
+    marginHorizontal: -4,
   },
   mealOption: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: '#f8f9fa',
-    marginRight: 8,
-    marginBottom: 8,
-    borderWidth: 1,
-    borderColor: '#e1e5e9',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 100, // Pill
+    backgroundColor: '#F5F7F9',
+    margin: 6,
   },
   mealOptionSelected: {
-    backgroundColor: '#007AFF',
-    borderColor: '#007AFF',
+    backgroundColor: '#007AFF', // Brand color
+    shadowColor: '#007AFF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   mealOptionText: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#666',
+    fontWeight: '600',
+    color: '#555',
   },
   mealOptionTextSelected: {
     color: '#fff',
   },
   mealTimesSection: {
-    marginTop: 16,
+    marginTop: 20,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
   },
   mealTimesTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#1a1a1a',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   mealTimeContainer: {
-    marginBottom: 16,
+    marginBottom: 20,
   },
   mealTimeLabel: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
-    marginBottom: 8,
+    fontWeight: '600',
+    color: '#444',
+    marginBottom: 10,
   },
   timeInputsContainer: {
     flexDirection: 'row',
@@ -1135,96 +1304,146 @@ const styles = StyleSheet.create({
   },
   timeLabel: {
     fontSize: 12,
-    color: '#666',
-    marginBottom: 4,
+    color: '#888',
+    marginBottom: 6,
+    fontWeight: '500',
   },
   timeButton: {
-    borderWidth: 1,
-    borderColor: '#e1e5e9',
-    borderRadius: 8,
-    padding: 12,
-    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    padding: 14,
+    backgroundColor: '#F5F7F9',
+    alignItems: 'center',
   },
   timeText: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#333',
-    textAlign: 'center',
+    fontWeight: '600',
   },
   settingRow: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   settingLabel: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
     color: '#333',
-    marginBottom: 8,
+    marginBottom: 12,
   },
   sliderContainer: {
-    marginTop: 8,
+    marginTop: 0,
   },
   sliderControlRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 12,
+    backgroundColor: '#F5F7F9',
+    padding: 8,
+    borderRadius: 16,
   },
   sliderValue: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '700',
     color: '#007AFF',
+    minWidth: 60,
+    textAlign: 'center',
   },
   sliderButton: {
-    width: 36,
-    height: 32,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#e1e5e9',
+    width: 40,
+    height: 40,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   slider: {
-    height: 4,
-    backgroundColor: '#e1e5e9',
-    borderRadius: 2,
-    marginBottom: 4,
+    height: 6,
+    backgroundColor: '#E1E5E9',
+    borderRadius: 3,
+    marginBottom: 8,
+    marginHorizontal: 4,
   },
   sliderTrack: {
     height: '100%',
     backgroundColor: '#007AFF',
-    borderRadius: 2,
+    borderRadius: 3,
   },
   sliderLabels: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginHorizontal: 4,
   },
   sliderLabel: {
     fontSize: 12,
-    color: '#666',
+    color: '#999',
+    fontWeight: '500',
   },
   planButton: {
     backgroundColor: '#007AFF',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
-    borderRadius: 16,
-    marginBottom: 30,
+    paddingVertical: 18,
+    borderRadius: 20, // Bigger rounding
+    marginBottom: 40,
     shadowColor: '#007AFF',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.4,
+    shadowRadius: 16,
+    elevation: 8,
+    marginHorizontal: 4,
   },
   planButtonDisabled: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#DBE2E8',
     shadowOpacity: 0,
   },
   planButtonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '700',
     marginRight: 8,
+    letterSpacing: 0.5,
+  },
+  prefGroup: {
+    marginBottom: 24,
+  },
+  prefLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#555',
+    marginBottom: 12,
+    marginLeft: 4,
+  },
+  chipContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: -4,
+  },
+  chip: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 100,
+    backgroundColor: '#F5F7F9',
+    margin: 4,
+    borderWidth: 0, // No border for cleaner look
+  },
+  chipSelected: {
+    backgroundColor: '#E3F2FD', // Light blue bg
+    borderWidth: 1.5,
+    borderColor: '#007AFF',
+  },
+  chipText: {
+    fontSize: 14,
+    color: '#555',
+    fontWeight: '500',
+  },
+  chipTextSelected: {
+    color: '#007AFF', // Blue text for selected state
+    fontWeight: '700',
   },
 });
 

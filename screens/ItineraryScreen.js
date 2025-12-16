@@ -20,7 +20,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { db } from '../firebase';
-import { doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion, getDoc, setDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import logger from '../utils/logger';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,6 +30,8 @@ const ItineraryScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { itineraryData } = route.params;
+
+  const auth = getAuth();
 
   const [itinerary, setItinerary] = useState(null);
   const [requestDoc, setRequestDoc] = useState(null);
@@ -59,12 +63,14 @@ const ItineraryScreen = () => {
         try {
           const tripRef = doc(db, 'trips', itineraryData.firebaseTripId);
           const snap = await getDoc(tripRef);
+          logger.info('ItineraryScreen: fetched trip request doc', itineraryData.firebaseTripId);
           if (snap.exists()) {
             fetchedRequest = snap.data();
+            logger.debug('Fetched request doc data:', fetchedRequest);
             setRequestDoc(fetchedRequest);
           }
         } catch (err) {
-          console.warn('Could not fetch trip request doc:', err);
+          logger.error('Could not fetch trip request doc:', err);
         }
       }
 
@@ -201,6 +207,8 @@ const ItineraryScreen = () => {
       };
 
       setItinerary(generatedItinerary);
+  logger.info('Itinerary generated for itineraryData', itineraryData.trip_id || itineraryData.firebaseTripId);
+  logger.debug('Generated itinerary:', generatedItinerary);
       
       // Start animations
       Animated.parallel([
@@ -412,21 +420,64 @@ const ItineraryScreen = () => {
     setSaving(true);
     try {
       if (itineraryData.firebaseTripId) {
-        await updateDoc(doc(db, 'trips', itineraryData.firebaseTripId), {
-          itinerary: itinerary,
-          status: 'saved',
+        logger.info('Saving full trip document to', itineraryData.firebaseTripId);
+
+        // Build full trip object to store
+        const fullTrip = {
           tripName: tripName,
-          notes: notes,
+          name: tripName,
+          notes: notes || '',
+          itinerary: itinerary || null,
+          arrival: itinerary?.arrival || null,
+          departure: itinerary?.departure || null,
+          mapRegion: itinerary?.mapRegion || null,
+          polylineCoordinates: itinerary?.polylineCoordinates || itinerary?.polylineCoordinates || null,
+          stops: itinerary?.stops || null,
+          timeline: itinerary?.timeline || null,
+          totalDistance: itinerary?.totalDistance || itineraryData.route_summary?.total_distance_km || null,
+          totalDuration: itinerary?.totalDuration || itineraryData.route_summary?.total_duration_min || null,
+          max_detour_minutes: itineraryData.max_detour_minutes || itineraryData.maxDetour || itineraryData.max_detour || null,
+          mealPreferences: itineraryData.mealPreferences || itineraryData.meal_preferences || [],
+          mealWindows: itineraryData.meal_windows || itineraryData.mealWindows || {},
+          meal_duration_min: itineraryData.meal_duration_min || itineraryData.mealDuration || null,
+          members: Array.from(new Set([...(itinerary?.members || []), auth.currentUser?.uid].filter(Boolean))),
+          selectedMeals: itineraryData.selectedMeals || itineraryData.selected_meals || {},
+          source: itineraryData.source || null,
+          sourceName: itineraryData.sourceName || itineraryData.source_name || null,
+          destination: itineraryData.destination || null,
+          destinationName: itineraryData.destinationName || itineraryData.destination_name || null,
+          status: 'saved',
           savedAt: new Date(),
-          members: [auth.currentUser.uid]
-        });
+          updatedAt: new Date(),
+          userId: auth.currentUser?.uid || itineraryData.userId || itineraryData.user_id || null,
+          user_id: auth.currentUser?.uid || itineraryData.userId || itineraryData.user_id || null,
+        };
+
+        // Preserve createdAt if present on the existing trip doc
+        try {
+          const tripRef = doc(db, 'trips', itineraryData.firebaseTripId);
+          const snap = await getDoc(tripRef);
+          if (snap.exists()) {
+            const existing = snap.data();
+            if (existing.createdAt) fullTrip.createdAt = existing.createdAt;
+            if (existing.tripId) fullTrip.tripId = existing.tripId;
+          } else {
+            // If no existing doc, create an id field
+            fullTrip.createdAt = new Date();
+          }
+        } catch (e) {
+          logger.warn('Could not read existing trip doc to preserve createdAt:', e);
+        }
+
+  // Use setDoc with merge to create or update the trip document safely
+  await setDoc(doc(db, 'trips', itineraryData.firebaseTripId), fullTrip, { merge: true });
 
         Alert.alert('Success', 'Trip saved to My Trips!', [
           { text: 'OK', onPress: () => navigation.navigate('MyTrips') }
         ]);
       }
     } catch (error) {
-      console.error('Error saving trip:', error);
+      logger.error('Error saving trip:', error);
       Alert.alert('Error', 'Failed to save trip');
     } finally {
       setSaving(false);
@@ -444,6 +495,7 @@ const ItineraryScreen = () => {
           onPress: async () => {
             try {
               if (itineraryData.firebaseTripId) {
+                logger.info('Starting trip, updating status to active:', itineraryData.firebaseTripId);
                 await updateDoc(doc(db, 'trips', itineraryData.firebaseTripId), {
                   status: 'active',
                   startedAt: new Date(),

@@ -8,7 +8,8 @@ const LeafletMap = ({
   destination, 
   stops = [], 
   height = 200,
-  interactive = false 
+  interactive = false,
+  onMessage = null,
 }) => {
   const webViewRef = useRef(null);
 
@@ -33,7 +34,7 @@ const LeafletMap = ({
       center.lng /= allCoordinates.length;
     }
 
-    const coordinates = routeCoordinates.length > 0 ? routeCoordinates : allCoordinates;
+  const coordinates = routeCoordinates.length > 0 ? routeCoordinates : allCoordinates;
     
     // Create HTML for Leaflet map
     return `
@@ -109,13 +110,43 @@ const LeafletMap = ({
           
           stops.forEach((stop, index) => {
             const iconColor = stop.type === 'meal' ? '#FF9800' : '#9C27B0';
+            const details = stop.details || {};
+            const tags = details.tags || {};
+            const imgUrl = (tags.photo || tags.image) ? (tags.photo || tags.image) : ('https://via.placeholder.com/240x140.png?text=' + encodeURIComponent(stop.name || 'Place'));
+            const opening = tags.opening_hours || tags['opening_hours'] || 'N/A';
+            const rating = tags.rating || details.rating || 'N/A';
+            const detour = details.detour_minutes || tags.detour_minutes || '';
+            const reasons = details.match_reasons || [];
+
+            var popupHtml = '';
+            popupHtml += '<div style="max-width:260px;font-family:Arial,Helvetica,sans-serif">';
+            popupHtml += '<div style="display:flex;align-items:center;margin-bottom:8px">';
+            popupHtml += '<img src="' + imgUrl + '" style="width:80px;height:60px;object-fit:cover;border-radius:6px;margin-right:8px" />';
+            popupHtml += '<div style="flex:1">';
+            popupHtml += '<div style="font-weight:700;color:#1a1a1a;margin-bottom:4px">' + (stop.name || 'Place') + '</div>';
+            popupHtml += '<div style="font-size:12px;color:#666">' + (tags.cuisine || '') + '</div>';
+            popupHtml += '</div></div>';
+            popupHtml += '<div style="font-size:13px;color:#333;margin-bottom:6px"><strong>Opening:</strong> ' + opening + '</div>';
+            popupHtml += '<div style="font-size:13px;color:#333;margin-bottom:6px"><strong>Rating:</strong> ' + rating + (detour ? ' | <strong>Detour:</strong> ' + detour + ' min' : '') + '</div>';
+            if (reasons.length > 0) {
+              popupHtml += '<div style="margin-top:6px"><strong>Why recommended:</strong><ul style="padding-left:16px;margin:6px 0">';
+              for (var ri = 0; ri < reasons.length; ri++) {
+                popupHtml += '<li style="font-size:12px;color:#444">' + reasons[ri] + '</li>';
+              }
+              popupHtml += '</ul></div>';
+            }
+            var safeName = (stop.name || '').replace(/"/g, '\\"').replace(/'/g, "\\'");
+            popupHtml += '<div style="margin-top:8px;text-align:right">';
+            popupHtml += '<button class="view-details" data-name="' + safeName + '" style="background:#007AFF;color:white;border-radius:6px;padding:6px 10px;border:none;cursor:pointer">View Details</button></div>';
+            popupHtml += '</div>';
+
             L.marker([stop.lat, stop.lng], {
               icon: L.divIcon({
-                html: \`<div style="background: \${iconColor}; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">\${index + 1}</div>\`,
+                html: '<div style="background: ' + iconColor + '; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px;">' + (index + 1) + '</div>',
                 iconSize: [24, 24],
                 className: 'stop-marker'
               })
-            }).addTo(map);
+            }).addTo(map).bindPopup(popupHtml);
           });` : ''}
 
           // Fit bounds to show all markers
@@ -133,6 +164,19 @@ const LeafletMap = ({
           map.scrollWheelZoom.disable();
           map.boxZoom.disable();
           map.keyboard.disable();` : ''}
+
+          // Listen for view details clicks and post message to React Native
+          document.addEventListener('click', function(e) {
+            var el = e.target || e.srcElement;
+            if (el && el.classList && el.classList.contains('view-details')) {
+              var name = el.getAttribute('data-name');
+              try {
+                window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'showDetails', name: name }));
+              } catch (err) {
+                console.warn('postMessage failed', err);
+              }
+            }
+          });
         </script>
       </body>
       </html>
@@ -147,7 +191,8 @@ const LeafletMap = ({
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
-        startInLoadingState={true}
+  startInLoadingState={true}
+  onMessage={onMessage}
         renderLoading={() => (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#007AFF" />

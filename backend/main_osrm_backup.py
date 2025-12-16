@@ -98,19 +98,6 @@ class PlaceSuggestion(BaseModel):
     personalization_score: float = 0.0
     match_reasons: List[str] = []
 
-
-# ----------------------------
-# Middleware for Request Logging
-# ----------------------------
-@app.middleware("http")
-async def log_requests(request, call_next):
-    import time
-    start_time = time.time()
-    response = await call_next(request)
-    process_time = (time.time() - start_time) * 1000
-    logger.info(f"Request: {request.method} {request.url.path} - Status: {response.status_code} - Duration: {process_time:.2f}ms")
-    return response
-
 class RouteSummary(BaseModel):
     total_distance_km: float
     total_duration_min: float
@@ -123,7 +110,6 @@ class TripResponse(BaseModel):
     recommended_departure_window: List[str]
     route_summary: RouteSummary
     meal_suggestions: Dict[str, List[PlaceSuggestion]]
-    tourist_suggestions: Optional[List[PlaceSuggestion]] = []
     personalization_used: bool = False
 
 class FinalizeTripRequest(BaseModel):
@@ -397,8 +383,6 @@ async def call_osrm_route(origin: LatLng, destination: LatLng, waypoints: Option
 
 
 async def search_places(lat: float, lon: float, radius: int = 2000, query: str = "restaurant") -> List[Dict]:
-    logger.info(f"Searching Overpass for '{query}' around {lat},{lon} (radius={radius}m)")
-    # ... (keep existing implementation exactly as is)
     # ... (keep existing implementation exactly as is)
     q = f"""
     [out:json][timeout:25];
@@ -635,7 +619,6 @@ async def compute_detour_osrm(origin: LatLng, destination: LatLng, via: LatLng) 
         base_seconds = getattr(compute_detour_osrm, "_base_cache", {}).get(cache_key)
         
         coords3 = f"{origin.lng},{origin.lat};{via.lng},{via.lat};{destination.lng},{destination.lat}"
-        logger.debug(f"Computing OSRM detour via {via.lat},{via.lng}")
         url = f"{OSRM_BASE_URL}/table/v1/driving/{coords3}"
         params = {"annotations": "duration"}
         
@@ -1002,66 +985,12 @@ async def create_trip(tr: TripRequest):
                 logger.info(f"DEBUG: Suggestion {i+1}: {suggestion}")
 
 
-        # 8.5 FETCH TOURIST SPOTS
-        tourist_suggestions_list = []
-        try:
-            logger.info("Searching for tourist spots along the route...")
-            # Increased limit for raw fetch since we filter aggressively now
-            raw_attractions = await find_tourist_spots(checkpoints, tr.max_detour_minutes, limit=20)
-            
-            promising_candidates = []
-            
-            # 1. HEURISTIC FILTERING (Haversine)
-            for attract in raw_attractions:
-                # Use heuristic to prune obviously far places
-                from_loc = tr.source
-                to_loc = tr.destination
-                via = attract.location
-                
-                heuristic_detour = estimate_detour_heuristic(from_loc, to_loc, via)
-                
-                # Allow 50% margin of error for heuristic
-                if heuristic_detour <= tr.max_detour_minutes * 1.5:
-                    promising_candidates.append((heuristic_detour, attract))
-                else:
-                    logger.debug(f"Skipping tourist spot {attract.name} due to heuristic detour {heuristic_detour}m > limit")
-            
-            # Sort by heuristic detour to prioritize checking the most likely valid ones first
-            promising_candidates.sort(key=lambda x: x[0])
-            
-            # Limit strictly to top 10 candidates for expensive OSRM check
-            candidate_pool = promising_candidates[:10]
-            
-            # 2. PRECISE OSRM CHECK
-            for h_detour, attract in candidate_pool:
-                try:
-                    via = attract.location
-                    detour = await compute_detour_osrm(tr.source, tr.destination, via)
-                    
-                    if detour is not None and detour <= tr.max_detour_minutes:
-                        attract.detour_minutes = detour
-                        attract.eta_iso = trip_departure_dt.isoformat() # Placeholder for MVP
-                        tourist_suggestions_list.append(attract)
-                except Exception as ex:
-                    logger.warning(f"OSRM check failed for {attract.name}: {ex}")
-                    continue
-            
-            tourist_suggestions_list.sort(key=lambda x: x.detour_minutes)
-            tourist_suggestions_list = tourist_suggestions_list[:10]
-            
-            logger.info(f"Final Selection: {len(tourist_suggestions_list)} tourist spots (from {len(raw_attractions)} raw)")
-            
-        except Exception as e:
-            logger.error(f"Failed to process tourist spots: {e}", exc_info=True)
-            tourist_suggestions_list = []
-
         response = TripResponse(
             trip_id=trip_id,
             recommended_departure_iso=latest_start_dt_final.isoformat(),
             recommended_departure_window=recommended_window_final,
             route_summary=route_summary,
             meal_suggestions=meal_suggestions,
-            tourist_suggestions=tourist_suggestions_list,
             personalization_used=personalization_used
         )
         logger.info(f"DEBUG: Final response meal_suggestions: {response.meal_suggestions}")

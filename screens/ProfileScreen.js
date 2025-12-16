@@ -19,14 +19,17 @@ const ProfileScreen = ({ navigation }) => {
     const fetchProfile = async () => {
       try {
         const docRef = doc(db, 'users', uid);
+        logger.info('Fetching profile for', uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
+          logger.debug('Profile data', docSnap.data());
           setProfile(docSnap.data());
         } else {
+          logger.warn('Profile not found for uid', uid);
           Alert.alert('Error', 'Profile not found.');
         }
       } catch (error) {
-        console.log('Error fetching profile:', error);
+        logger.error('Error fetching profile:', error);
         Alert.alert('Error', 'Failed to fetch profile.');
       } finally {
         setLoading(false);
