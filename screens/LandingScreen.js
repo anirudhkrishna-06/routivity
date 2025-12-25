@@ -10,7 +10,6 @@ import {
   Animated,
   Dimensions,
 } from 'react-native';
-
 const { width, height } = Dimensions.get('window');
 
 export default function LandingScreen({ navigation }) {
@@ -54,6 +53,7 @@ export default function LandingScreen({ navigation }) {
 
   return (
     <>
+
       <StatusBar barStyle="dark-content" backgroundColor="white" />
 
       <ImageBackground

@@ -94,7 +94,7 @@ const TripSuggestionsScreen = () => {
     // Generate placeholder image based on place type/name
     const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD'];
     const color = colors[place.name.length % colors.length];
-    return `https://via.placeholder.com/150/${color.replace('#', '')}/FFFFFF?text=${encodeURIComponent(place.name.charAt(0))}`;
+    return `../assets/placeholder-image.png`;
   };
 
   const calculatePersonalizationScore = (place) => {

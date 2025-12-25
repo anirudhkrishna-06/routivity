@@ -19,7 +19,7 @@ import logger from '../utils/logger';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const BACKEND_URL = 'http://192.168.31.131:8000';
+const BACKEND_URL = 'http://192.168.31.195:8000';
 
 const PlanTripScreen = () => {
   const navigation = useNavigation();
@@ -779,7 +779,7 @@ const PlanTripScreen = () => {
             />
           </View>
 
-          {/* Stops */}
+          {/* Stops 
           <View style={styles.stopsSection}>
             <Text style={styles.stopsTitle}>Add Stopovers (Optional)</Text>
             <LocationInput
@@ -795,7 +795,7 @@ const PlanTripScreen = () => {
               type="stop"
             />
 
-            {/* Added Stops */}
+            {/* Added Stops 
             {tripData.stops.map((stop, index) => (
               <View key={index} style={styles.addedStop}>
                 <Text style={styles.addedStopText} numberOfLines={1}>
@@ -807,6 +807,7 @@ const PlanTripScreen = () => {
               </View>
             ))}
           </View>
+          */}
         </View>
 
         {/* Personalize Section */}

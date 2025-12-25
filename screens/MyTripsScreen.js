@@ -7,15 +7,38 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
-  StyleSheet
+  StyleSheet,
+  Image,
+  ImageBackground
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { db } from '../firebase';
 import { collection, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons'; // or any icon library you use
+import { Ionicons } from '@expo/vector-icons';
 import logger from '../utils/logger';
 
+// City image mapping - in production, you'd fetch these from your database or a service
+// Replace the CITY_IMAGES object with this:
+const TAMIL_CULTURE_IMAGES = [
+  'https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?w=800&auto=format&fit=crop', // Temple
+  'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&auto=format&fit=crop', // Kolam
+  'https://images.unsplash.com/photo-1587654780298-6f4d7db4e8c9?w=800&auto=format&fit=crop', // Bharatanatyam
+  'https://images.unsplash.com/photo-1563201514-47a6c06d37c5?w=800&auto=format&fit=crop', // Traditional art
+  'https://images.unsplash.com/photo-1601063458289-77247ba4852d?w=800&auto=format&fit=crop', // Tamil architecture
+  'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&auto=format&fit=crop', // Pongal celebration
+  'https://images.unsplash.com/photo-1611605698323-9f2d5c4c2d1e?w=800&auto=format&fit=crop', // Tamil cuisine
+  'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&auto=format&fit=crop', // Cultural festival
+  'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=800&auto=format&fit=crop', // Traditional clothing
+  'https://images.unsplash.com/photo-1593697821259-005d5f9dcbd9?w=800&auto=format&fit=crop', // Tamil literature art
+];
+
+// Helper function to get random Tamil culture image
+const getRandomTamilImage = () => {
+  const randomIndex = Math.floor(Math.random() * TAMIL_CULTURE_IMAGES.length);
+  return TAMIL_CULTURE_IMAGES[randomIndex];
+};
 const MyTripsScreen = () => {
   const auth = getAuth();
   const navigation = useNavigation();
@@ -24,81 +47,104 @@ const MyTripsScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchTrips = async () => {
-  setLoading(true);
-  try {
-    logger.info('Fetching MyTrips for user', auth.currentUser.uid);
-    const tripsRef = collection(db, 'trips');
-    // Query trips where user is creator OR member
-    const q = query(
-      tripsRef,
-      where('userId', '==', auth.currentUser.uid)
-    );
-    const snap = await getDocs(q);
-    const items = [];
-    snap.forEach((doc) => {
-      const data = doc.data();
-      items.push({ 
-        id: doc.id, 
-        ...data,
-        // Format total duration for display
-        formattedDuration: formatDuration(data.totalDuration || 0),
-        // Format total distance for display
-        formattedDistance: formatDistance(data.totalDistance || 0),
-        // Check if user is admin (creator)
-        isAdmin: data.userId === auth.currentUser.uid
-      });
-    });
-    
-    // Now also query for trips where user is a member (but not creator)
-    const memberTripsRef = collection(db, 'trips');
-    const memberQ = query(
-      memberTripsRef,
-      where('members', 'array-contains', auth.currentUser.uid)
-    );
-    const memberSnap = await getDocs(memberQ);
-    
-    memberSnap.forEach((doc) => {
-      const data = doc.data();
-      // Only add if not already in items (to avoid duplicates)
-      if (!items.find(item => item.id === doc.id)) {
+    setLoading(true);
+    try {
+      logger.info('Fetching MyTrips for user', auth.currentUser.uid);
+      const tripsRef = collection(db, 'trips');
+      const q = query(
+        tripsRef,
+        where('userId', '==', auth.currentUser.uid)
+      );
+      const snap = await getDocs(q);
+      const items = [];
+      
+      snap.forEach((doc) => {
+        const data = doc.data();
+        const sourceName = getSourceName(data);
+        const destinationName = getDestinationName(data);
+        
         items.push({ 
           id: doc.id, 
           ...data,
+          sourceName,
+          destinationName,
+          // Get city images
+          sourceImage: getRandomImage(),
+
+          destinationImage: getRandomImage(),
           formattedDuration: formatDuration(data.totalDuration || 0),
           formattedDistance: formatDistance(data.totalDistance || 0),
           isAdmin: data.userId === auth.currentUser.uid
         });
-      }
-    });
-    
-    // Sort by latest first (by createdAt or savedAt)
-    items.sort((a, b) => {
-      const timeA = a.savedAt?.toDate?.() || a.createdAt?.toDate?.() || new Date(0);
-      const timeB = b.savedAt?.toDate?.() || b.createdAt?.toDate?.() || new Date(0);
-      return timeB - timeA;
-    });
-    
-    setTrips(items);
-    logger.info('MyTrips fetched, count=', items.length);
-  } catch (err) {
-    logger.error('Failed to fetch trips', err);
-    Alert.alert('Error', 'Failed to load trips. Please try again.');
-  } finally {
-    setLoading(false);
-    setRefreshing(false);
-  }
-};
+      });
+      
+      const memberTripsRef = collection(db, 'trips');
+      const memberQ = query(
+        memberTripsRef,
+        where('members', 'array-contains', auth.currentUser.uid)
+      );
+      const memberSnap = await getDocs(memberQ);
+      
+      memberSnap.forEach((doc) => {
+        const data = doc.data();
+        if (!items.find(item => item.id === doc.id)) {
+          const sourceName = getSourceName(data);
+          const destinationName = getDestinationName(data);
+          
+          items.push({ 
+            id: doc.id, 
+            ...data,
+            sourceName,
+            destinationName,
+            sourceImage: getRandomImage(),
+
+            destinationImage: getRandomImage(),
+            formattedDuration: formatDuration(data.totalDuration || 0),
+            formattedDistance: formatDistance(data.totalDistance || 0),
+            isAdmin: data.userId === auth.currentUser.uid
+          });
+        }
+      });
+      
+      items.sort((a, b) => {
+        const timeA = a.savedAt?.toDate?.() || a.createdAt?.toDate?.() || new Date(0);
+        const timeB = b.savedAt?.toDate?.() || b.createdAt?.toDate?.() || new Date(0);
+        return timeB - timeA;
+      });
+      
+      setTrips(items);
+      logger.info('MyTrips fetched, count=', items.length);
+    } catch (err) {
+      logger.error('Failed to fetch trips', err);
+      Alert.alert('Error', 'Failed to load trips. Please try again.');
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
   useEffect(() => {
     fetchTrips();
   }, []);
 
-  // Refresh when screen comes into focus
   useFocusEffect(
     React.useCallback(() => {
       fetchTrips();
     }, [])
   );
+
+  const getSourceName = (trip) => {
+    return trip.sourceName || trip.source?.sourceName || 'Unknown';
+  };
+
+  const getDestinationName = (trip) => {
+    return trip.destinationName || trip.destination?.destinationName || 'Unknown';
+  };
+
+ // Replace the getCityImage function with:
+const getRandomImage = () => {
+  return getRandomTamilImage();
+};
 
   const handleDeleteTrip = (tripId, tripName) => {
     Alert.alert(
@@ -112,8 +158,7 @@ const MyTripsScreen = () => {
           onPress: async () => {
             try {
               await deleteDoc(doc(db, 'trips', tripId));
-              Alert.alert('Success', 'Trip deleted successfully');
-              fetchTrips(); // Refresh the list
+              fetchTrips();
             } catch (err) {
               console.error('Failed to delete trip', err);
               Alert.alert('Error', 'Failed to delete trip. Please try again.');
@@ -125,7 +170,7 @@ const MyTripsScreen = () => {
   };
 
   const formatDuration = (minutes) => {
-    if (!minutes) return 'N/A';
+    if (!minutes) return '0m';
     const hours = Math.floor(minutes / 60);
     const mins = Math.round(minutes % 60);
     if (hours > 0) {
@@ -135,47 +180,223 @@ const MyTripsScreen = () => {
   };
 
   const formatDistance = (km) => {
-    if (!km) return 'N/A';
+    if (!km) return '0 km';
     return `${km.toFixed(1)} km`;
   };
 
-  const getSourceName = (trip) => {
-    return trip.sourceName || trip.source?.sourceName || 'Unknown Source';
-  };
-
-  const getDestinationName = (trip) => {
-    return trip.destinationName || trip.destination?.destinationName || 'Unknown Destination';
-  };
+  // Simple fix - just handle the error case:
+const formatDate = (timestamp) => {
+  if (!timestamp) return 'Recently';
+  
+  try {
+    // Try to get date from Firestore timestamp
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    
+    if (isNaN(date.getTime())) {
+      return 'Recently';
+    }
+    
+    const now = new Date();
+    const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+    
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  } catch (error) {
+    return 'Recently';
+  }
+};
 
   const handleRefresh = () => {
     setRefreshing(true);
     fetchTrips();
   };
 
+  const TripCard = ({ item }) => {
+    const isSameCity = item.sourceName === item.destinationName;
+    
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate('TripDashboard', { tripId: item.id })}
+        style={styles.card}
+        activeOpacity={0.9}
+      >
+        {/* Image Zone */}
+        <View style={styles.imageContainer}>
+          {isSameCity ? (
+            // Single image for same city
+            <ImageBackground
+              source={{ uri: item.sourceImage }}
+              style={styles.singleImage}
+              imageStyle={styles.singleImageStyle}
+            >
+              <LinearGradient
+                colors={['transparent', 'rgba(0,0,0,0.7)']}
+                style={styles.imageGradient}
+              >
+                <Text style={styles.cityLabel}>
+                  {item.sourceName.toUpperCase()}
+                </Text>
+              </LinearGradient>
+            </ImageBackground>
+          ) : (
+            // Split image for different cities
+            <View style={styles.splitImageContainer}>
+              <ImageBackground
+                source={{ uri: item.sourceImage }}
+                style={styles.halfImage}
+                imageStyle={styles.halfImageStyle}
+              >
+                <LinearGradient
+                  colors={['transparent', 'rgba(0,0,0,0.7)']}
+                  style={styles.halfImageGradient}
+                >
+                  <Text style={styles.cityLabel}>
+                    {item.sourceName.split(',')[0].toUpperCase()}
+                  </Text>
+                </LinearGradient>
+              </ImageBackground>
+              
+              <View style={styles.imageDivider} />
+              
+              <ImageBackground
+                source={{ uri: item.destinationImage }}
+                style={styles.halfImage}
+                imageStyle={styles.halfImageStyle}
+              >
+                <LinearGradient
+                  colors={['transparent', 'rgba(0,0,0,0.7)']}
+                  style={styles.halfImageGradient}
+                >
+                  <Text style={styles.cityLabel}>
+                    {item.destinationName.split(',')[0].toUpperCase()}
+                  </Text>
+                </LinearGradient>
+              </ImageBackground>
+            </View>
+          )}
+        </View>
+
+        {/* Content Zone */}
+        <View style={styles.contentContainer}>
+          {/* Title & Admin Badge */}
+          <View style={styles.titleRow}>
+            <Text style={styles.tripTitle} numberOfLines={1}>
+              {item.tripName || 'Untitled Trip'}
+            </Text>
+            {item.isAdmin && (
+              <View style={styles.adminBadge}>
+                <Text style={styles.adminBadgeText}>Admin</Text>
+              </View>
+            )}
+          </View>
+
+          {/* Route & Status */}
+          <View style={styles.routeRow}>
+            {!isSameCity ? (
+              <Text style={styles.routeText}>
+                {item.sourceName.split(',')[0]} → {item.destinationName.split(',')[0]}
+              </Text>
+            ) : (
+              <Text style={styles.routeText}>
+                {item.sourceName.split(',')[0]}
+              </Text>
+            )}
+            {item.status && (
+              <Text style={styles.statusText}>
+                • {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+              </Text>
+            )}
+          </View>
+
+          {/* Stats */}
+          <View style={styles.statsContainer}>
+            <View style={styles.statItem}>
+              <Ionicons name="time-outline" size={16} color="#666" />
+              <Text style={styles.statText}>{item.formattedDuration}</Text>
+            </View>
+            
+            <View style={styles.statDivider} />
+            
+            <View style={styles.statItem}>
+              <Ionicons name="speedometer-outline" size={16} color="#666" />
+              <Text style={styles.statText}>{item.formattedDistance}</Text>
+            </View>
+            
+            <View style={styles.statDivider} />
+            
+            <View style={styles.statItem}>
+              <Ionicons name="people-outline" size={16} color="#666" />
+              <Text style={styles.statText}>{item.members?.length || 1}</Text>
+              <Text style={styles.membersSuffix}>
+                {item.members?.length === 1 ? ' member' : ' members'}
+              </Text>
+            </View>
+          </View>
+
+          {/* Footer */}
+          <View style={styles.footer}>
+            <Text style={styles.dateText}>
+              {formatDate(item.savedAt || item.createdAt)}
+            </Text>
+            
+            <TouchableOpacity 
+              style={styles.viewButton}
+              onPress={() => navigation.navigate('TripDashboard', { tripId: item.id })}
+            >
+              <Text style={styles.viewButtonText}>View Trip</Text>
+              <Ionicons name="chevron-forward" size={14} color="#007AFF" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Delete Button (Admin only) */}
+        {item.isAdmin && (
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => handleDeleteTrip(item.id, item.tripName || 'Untitled Trip')}
+          >
+            <Ionicons name="trash-outline" size={18} color="#ff3b30" />
+          </TouchableOpacity>
+        )}
+      </TouchableOpacity>
+    );
+  };
+
   if (loading && !refreshing) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#007AFF" />
       </View>
     );
   }
 
   if (!trips.length) {
     return (
-      <View style={styles.centerContainer}>
-        <Ionicons name="car-outline" size={64} color="#ccc" style={styles.emptyIcon} />
-        <Text style={styles.emptyText}>No trips yet.</Text>
-        <Text style={styles.emptySubtext}>Create one from Plan Trip.</Text>
-        <TouchableOpacity style={styles.refreshButton} onPress={fetchTrips}>
-          <Ionicons name="refresh" size={20} color="#fff" />
-          <Text style={styles.refreshButtonText}>Refresh</Text>
-        </TouchableOpacity>
+      <View style={styles.emptyContainer}>
+        <Ionicons name="map-outline" size={80} color="#E0E0E0" />
+        <Text style={styles.emptyTitle}>Your journeys will live here</Text>
+        <Text style={styles.emptySubtitle}>
+          Plan your first trip and start exploring
+        </Text>
+        
         <TouchableOpacity
-          style={styles.scanButton}
+          style={styles.primaryButton}
+          onPress={() => navigation.navigate('PlanTrip')}
+        >
+          <Ionicons name="add-circle-outline" size={20} color="#FFF" />
+          <Text style={styles.primaryButtonText}>Plan a Trip</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={styles.secondaryButton}
           onPress={() => navigation.navigate('QRScanner')}
         >
-          <Ionicons name="qr-code" size={20} color="#007AFF" />
-          <Text style={styles.scanButtonText}>Scan QR Code</Text>
+          <Ionicons name="qr-code-outline" size={20} color="#007AFF" />
+          <Text style={styles.secondaryButtonText}>Scan QR Code</Text>
         </TouchableOpacity>
       </View>
     );
@@ -190,208 +411,164 @@ const MyTripsScreen = () => {
         onRefresh={handleRefresh}
         ListHeaderComponent={() => (
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>My Trips ({trips.length})</Text>
+            <Text style={styles.headerTitle}>My Trips</Text>
+            <Text style={styles.headerSubtitle}>{trips.length} {trips.length === 1 ? 'Trip' : 'Trips'}</Text>
           </View>
         )}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('TripDashboard', { 
-              tripId: item.id 
-            })}
-            onLongPress={() => handleDeleteTrip(item.id, item.tripName || 'Untitled Trip')}
-            style={styles.tripCard}
-            activeOpacity={0.7}
-          >
-            <View style={styles.cardHeader}>
-              <View style={styles.titleContainer}>
-                <Text style={styles.tripTitle} numberOfLines={1}>
-                  {item.tripName || 'Untitled Trip'}
-                </Text>
-                {item.isAdmin && (
-                  <View style={styles.adminBadge}>
-                    <Text style={styles.adminBadgeText}>Admin</Text>
-                  </View>
-                )}
-                <Text style={styles.tripStatus}>
-                  {item.status ? `• ${item.status.charAt(0).toUpperCase() + item.status.slice(1)}` : ''}
-                </Text>
-              </View>
-              {item.isAdmin && (
-                <TouchableOpacity
-                  onPress={() => handleDeleteTrip(item.id, item.tripName || 'Untitled Trip')}
-                  style={styles.deleteButton}
-                >
-                  <Ionicons name="trash-outline" size={20} color="#ff3b30" />
-                </TouchableOpacity>
-              )}
-            </View>
-            
-            <View style={styles.routeContainer}>
-              <View style={styles.routeDot} />
-              <View style={styles.routeLine} />
-              <View style={[styles.routeDot, styles.destinationDot]} />
-            </View>
-            
-            <View style={styles.routeInfo}>
-              <View style={styles.locationRow}>
-                <Ionicons name="location-outline" size={16} color="#4CAF50" />
-                <Text style={styles.locationText} numberOfLines={1}>
-                  {getSourceName(item)}
-                </Text>
-              </View>
-              <View style={styles.locationRow}>
-                <Ionicons name="flag-outline" size={16} color="#FF5722" />
-                <Text style={styles.locationText} numberOfLines={1}>
-                  {getDestinationName(item)}
-                </Text>
-              </View>
-            </View>
-            
-            <View style={styles.statsContainer}>
-              <View style={styles.statItem}>
-                <Ionicons name="time-outline" size={18} color="#666" />
-                <Text style={styles.statText}>{item.formattedDuration}</Text>
-              </View>
-              <View style={styles.statDivider} />
-              <View style={styles.statItem}>
-                <Ionicons name="speedometer-outline" size={18} color="#666" />
-                <Text style={styles.statText}>{item.formattedDistance}</Text>
-              </View>
-              <View style={styles.statDivider} />
-              <View style={styles.statItem}>
-                <Ionicons name="people-outline" size={18} color="#666" />
-                <Text style={styles.statText}>{item.members?.length || 1}</Text>
-                <Text style={styles.membersLabel}> member{item.members?.length !== 1 ? 's' : ''}</Text>
-              </View>
-            </View>
-            
-            <View style={styles.footer}>
-              <Text style={styles.dateText}>
-                {item.savedAt?.toDate?.().toLocaleDateString() || 
-                 item.createdAt?.toDate?.().toLocaleDateString() || 
-                 'Recently'}
-              </Text>
-              <TouchableOpacity 
-                style={styles.viewButton}
-                onPress={() => navigation.navigate('TripDashboard', { 
-                   tripId: item.id 
-                })}
-              >
-                <Text style={styles.viewButtonText}>View Trip</Text>
-                <Ionicons name="chevron-forward" size={16} color="#007AFF" />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-        )}
+        renderItem={({ item }) => <TripCard item={item} />}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
-      
     </View>
-    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F5F5F5',
   },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F5F5F5',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    backgroundColor: '#F5F5F5',
   },
   header: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
+    letterSpacing: -0.5,
+  },
+  headerSubtitle: {
+    fontSize: 16,
+    color: '#666',
+    marginTop: 4,
   },
   listContent: {
     paddingBottom: 20,
   },
-  tripCard: {
+  separator: {
+    height: 16,
+  },
+  // Card Styles
+  card: {
     backgroundColor: 'white',
-    marginHorizontal: 16,
-    marginTop: 12,
-    borderRadius: 12,
-    padding: 16,
+    marginHorizontal: 20,
+    borderRadius: 20,
+    overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 12,
+    elevation: 5,
   },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
+  // Image Zone
+  imageContainer: {
+    height: 180,
   },
-  titleContainer: {
+  splitImageContainer: {
     flex: 1,
     flexDirection: 'row',
+  },
+  halfImage: {
+    flex: 1,
+  },
+  halfImageStyle: {
+    resizeMode: 'cover',
+  },
+  halfImageGradient: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    padding: 16,
+  },
+  singleImage: {
+    flex: 1,
+  },
+  singleImageStyle: {
+    resizeMode: 'cover',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  imageGradient: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    padding: 16,
+  },
+  imageDivider: {
+    width: 1,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+  },
+  cityLabel: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 1,
+    opacity: 0.9,
+  },
+  // Content Zone
+  contentContainer: {
+    padding: 20,
+  },
+  titleRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 8,
   },
   tripTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1A1A1A',
     flex: 1,
+    marginRight: 8,
   },
-  tripStatus: {
-    fontSize: 12,
-    color: '#666',
-    marginLeft: 8,
-    fontStyle: 'italic',
+  adminBadge: {
+    backgroundColor: '#E8F5E9',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
   },
-  deleteButton: {
-    padding: 4,
+  adminBadgeText: {
+    fontSize: 10,
+    color: '#2E7D32',
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
-  routeContainer: {
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  routeDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#4CAF50',
-  },
-  destinationDot: {
-    backgroundColor: '#FF5722',
-  },
-  routeLine: {
-    width: 2,
-    height: 20,
-    backgroundColor: '#ddd',
-    marginVertical: 2,
-  },
-  routeInfo: {
-    marginBottom: 16,
-  },
-  locationRow: {
+  routeRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 6,
+    marginBottom: 16,
   },
-  locationText: {
+  routeText: {
+    fontSize: 15,
+    color: '#444',
+    fontWeight: '500',
+    marginRight: 8,
+  },
+  statusText: {
     fontSize: 14,
-    color: '#555',
-    marginLeft: 8,
-    flex: 1,
+    color: '#666',
+    fontStyle: 'italic',
   },
+  // Stats
   statsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f8f8f8',
-    borderRadius: 8,
+    backgroundColor: '#FAFAFA',
+    borderRadius: 12,
     padding: 12,
     marginBottom: 16,
   },
@@ -408,98 +585,106 @@ const styles = StyleSheet.create({
   },
   statDivider: {
     width: 1,
-    height: 20,
-    backgroundColor: '#ddd',
-    marginHorizontal: 8,
+    height: 16,
+    backgroundColor: '#E0E0E0',
+    marginHorizontal: 12,
   },
-  membersLabel: {
+  membersSuffix: {
     fontSize: 12,
     color: '#666',
     marginLeft: 2,
   },
+  // Footer
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
     paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#F0F0F0',
   },
   dateText: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#888',
   },
   viewButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 4,
-    paddingHorizontal: 8,
   },
   viewButtonText: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '600',
     color: '#007AFF',
     marginRight: 4,
   },
-  emptyIcon: {
-    marginBottom: 16,
+  // Delete Button
+  deleteButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  emptyText: {
-    fontSize: 18,
+  // Empty State
+  emptyTitle: {
+    fontSize: 24,
     fontWeight: '600',
-    color: '#666',
+    color: '#333',
+    marginTop: 24,
     marginBottom: 8,
-  },
-  emptySubtext: {
-    fontSize: 14,
-    color: '#999',
     textAlign: 'center',
-    marginBottom: 24,
   },
-  refreshButton: {
+  emptySubtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 32,
+    lineHeight: 22,
+  },
+  primaryButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#007AFF',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 12,
+    marginBottom: 12,
+    minWidth: 200,
+    justifyContent: 'center',
   },
-  refreshButtonText: {
+  primaryButtonText: {
     color: 'white',
+    fontSize: 16,
     fontWeight: '600',
     marginLeft: 8,
   },
-  adminBadge: {
-  backgroundColor: '#E8F5E9',
-  paddingHorizontal: 6,
-  paddingVertical: 2,
-  borderRadius: 4,
-  marginLeft: 8,
-},
-adminBadgeText: {
-  fontSize: 10,
-  color: '#2E7D32',
-  fontWeight: '600',
-},
-
-scanButton: {
-  backgroundColor: 'white',
-  flexDirection: 'row',
-  alignItems: 'center',
-  paddingHorizontal: 24,
-  paddingVertical: 12,
-  borderRadius: 8,
-  marginTop: 12,
-  borderWidth: 1,
-  borderColor: '#007AFF',
-},
-scanButtonText: {
-  color: '#007AFF',
-  fontSize: 16,
-  fontWeight: '600',
-  marginLeft: 8,
-},
-
+  secondaryButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    minWidth: 200,
+    justifyContent: 'center',
+  },
+  secondaryButtonText: {
+    color: '#007AFF',
+    fontSize: 16,
+    fontWeight: '600',
+    marginLeft: 8,
+  },
 });
 
 export default MyTripsScreen;

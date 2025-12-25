@@ -63,6 +63,16 @@ const CARD_DATA = [
     image: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80',
     route: 'Profile',
   },
+  {
+    key: 'plantripplus',
+    title: 'Plan Trip Plus',
+    subtitle: 'Ace through our Dynamic Itenerary Generation',
+    icon: 'user-cog',
+    iconType: 'fontawesome5',
+    gradient: ['#7C3AED', '#8B5CF6'],
+    image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80',
+    route: 'PlanTripPlus',
+  },
 ];
 
 const HomeScreen = () => {

@@ -514,6 +514,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
+    marginTop: 40
   },
   headerBack: { padding: 8 },
   headerBackText: { color: '#2D336B', fontWeight: '600' },

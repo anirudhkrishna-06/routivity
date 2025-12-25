@@ -26,6 +26,7 @@ import AddExpenseScreen from './screens/Expenses/AddExpenseScreen';
 import ExpenseListScreen from './screens/Expenses/ExpenseListScreen';
 import ExpenseDetailScreen from './screens/Expenses/ExpenseDetailScreen';
 import NotFoundScreen from './screens/NotFoundScreen'
+import PlanTripPlusScreen from './screens/PlanTripPlusScreen';
 
 
 
@@ -80,7 +81,7 @@ export default function App() {
         <Stack.Screen name="ExpenseList" component={ExpenseListScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="ExpenseDetail" component={ExpenseDetailScreen} options={{ headerShown: false }} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ headerShown: false }} />
-
+        <Stack.Screen name="PlanTripPlus" component={PlanTripPlusScreen} options={{ headerShown: false }} />
 
 
 
