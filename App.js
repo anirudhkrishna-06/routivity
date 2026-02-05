@@ -27,6 +27,7 @@ import ExpenseListScreen from './screens/Expenses/ExpenseListScreen';
 import ExpenseDetailScreen from './screens/Expenses/ExpenseDetailScreen';
 import NotFoundScreen from './screens/NotFoundScreen'
 import PlanTripPlusScreen from './screens/PlanTripPlusScreen';
+import TripPlusResultsScreen from './screens/TripPlusResultsScreen';
 
 
 
@@ -37,57 +38,58 @@ export default function App() {
   return (
     <PreferencesProvider>
       <NavigationContainer>
-      <Stack.Navigator>
-        {/* Auth Flow */}
-        <Stack.Screen
-          name="Landing"
-          component={LandingScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={CreateAccountScreen}
-          options={{ headerShown: false }}
-        />
+        <Stack.Navigator>
+          {/* Auth Flow */}
+          <Stack.Screen
+            name="Landing"
+            component={LandingScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={CreateAccountScreen}
+            options={{ headerShown: false }}
+          />
 
-        {/* Main Home */}
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
+          {/* Main Home */}
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
 
-        {/* Trip Planning Flow */}
-        <Stack.Screen name="PlanTrip" component={PlanTripScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Suggestions" component={TripSuggestionsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Itinerary" component={ItineraryScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}}/>
-        <Stack.Screen name="PersonalizationForm" component={PersonalizationForm} options={{headerShown: false}}/>
+          {/* Trip Planning Flow */}
+          <Stack.Screen name="PlanTrip" component={PlanTripScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Suggestions" component={TripSuggestionsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Itinerary" component={ItineraryScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="PersonalizationForm" component={PersonalizationForm} options={{ headerShown: false }} />
 
-        {/* Trips Management */}
-        <Stack.Screen name="MyTrips" component={MyTripsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="JoinTrip" component={JoinTripScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="TripDashboard" component={TripDashboardScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ManageMembers" component={ManageMembersScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="AddMember" component={AddMemberScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="QRScanner" component={QRScannerScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="BillTracker" component={BillTrackerScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="AddExpense" component={AddExpenseScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="ExpenseList" component={ExpenseListScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="ExpenseDetail" component={ExpenseDetailScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="PlanTripPlus" component={PlanTripPlusScreen} options={{ headerShown: false }} />
-
-
-
+          {/* Trips Management */}
+          <Stack.Screen name="MyTrips" component={MyTripsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="JoinTrip" component={JoinTripScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="TripDashboard" component={TripDashboardScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ManageMembers" component={ManageMembersScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AddMember" component={AddMemberScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="QRScanner" component={QRScannerScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="BillTracker" component={BillTrackerScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AddExpense" component={AddExpenseScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ExpenseList" component={ExpenseListScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ExpenseDetail" component={ExpenseDetailScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="PlanTripPlus" component={PlanTripPlusScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="TripPlusResults" component={TripPlusResultsScreen} options={{ headerShown: false }} />
 
 
-      </Stack.Navigator>
+
+
+
+        </Stack.Navigator>
       </NavigationContainer>
     </PreferencesProvider>
   );

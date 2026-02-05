@@ -1,0 +1,45 @@
+Starting Verification...
+VERIFICATION FAILED With Error: 6 validation errors for TripRequest
+route.start.lat
+  Field required [type=missing, input_value={'address': 'Paris, Franc...: '2025-06-01T10:00:00'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.start.lng
+  Field required [type=missing, input_value={'address': 'Paris, Franc...: '2025-06-01T10:00:00'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.start.place_id
+  Field required [type=missing, input_value={'address': 'Paris, Franc...: '2025-06-01T10:00:00'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.stops.0.lat
+  Field required [type=missing, input_value={'stop_id': 1, 'name': 'P...laces_per_half_day': 2}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.stops.0.lng
+  Field required [type=missing, input_value={'stop_id': 1, 'name': 'P...laces_per_half_day': 2}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.stops.0.place_id
+  Field required [type=missing, input_value={'stop_id': 1, 'name': 'P...laces_per_half_day': 2}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\routivity-1\backend\verify_backend.py", line 60, in verify
+    trip_request = TripRequest(**MOCK_PAYLOAD)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\pydantic\main.py", line 164, in __init__
+    __pydantic_self__.__pydantic_validator__.validate_python(data, self_instance=__pydantic_self__)
+pydantic_core._pydantic_core.ValidationError: 6 validation errors for TripRequest
+route.start.lat
+  Field required [type=missing, input_value={'address': 'Paris, Franc...: '2025-06-01T10:00:00'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.start.lng
+  Field required [type=missing, input_value={'address': 'Paris, Franc...: '2025-06-01T10:00:00'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.start.place_id
+  Field required [type=missing, input_value={'address': 'Paris, Franc...: '2025-06-01T10:00:00'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.stops.0.lat
+  Field required [type=missing, input_value={'stop_id': 1, 'name': 'P...laces_per_half_day': 2}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.stops.0.lng
+  Field required [type=missing, input_value={'stop_id': 1, 'name': 'P...laces_per_half_day': 2}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing
+route.stops.0.place_id
+  Field required [type=missing, input_value={'stop_id': 1, 'name': 'P...laces_per_half_day': 2}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.5/v/missing

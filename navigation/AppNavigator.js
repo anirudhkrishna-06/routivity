@@ -10,15 +10,17 @@ import ItineraryScreen from '../screens/ItineraryScreen';
 import MyTripsScreen from '../screens/MyTripsScreen';
 import JoinTripScreen from '../screens/JoinTripScreen';
 import TripDashboardScreen from '../screens/TripDashboardScreen';
+import PlanTripPlusScreen from '../screens/PlanTripPlusScreen';
+import TripPlusResultsScreen from '../screens/TripPlusResultsScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName="Home" 
-        screenOptions={{ 
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
           headerShown: true,
           headerStyle: {
             backgroundColor: '#007AFF',
@@ -29,40 +31,50 @@ export default function AppNavigator() {
           },
         }}
       >
-        <Stack.Screen 
-          name="Home" 
-          component={HomeScreen} 
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
           options={{ title: 'Routivity' }}
         />
-        <Stack.Screen 
-          name="PlanTrip" 
-          component={PlanTripScreen} 
+        <Stack.Screen
+          name="PlanTrip"
+          component={PlanTripScreen}
           options={{ title: 'Plan Your Trip' }}
         />
-        <Stack.Screen 
-          name="TripSuggestions" 
-          component={TripSuggestionsScreen} 
+        <Stack.Screen
+          name="TripSuggestions"
+          component={TripSuggestionsScreen}
           options={{ title: 'Meal Suggestions' }}
         />
-        <Stack.Screen 
-          name="Itinerary" 
-          component={ItineraryScreen} 
+        <Stack.Screen
+          name="Itinerary"
+          component={ItineraryScreen}
           options={{ title: 'Your Itinerary' }}
         />
-        <Stack.Screen 
-          name="TripDashboard" 
-          component={TripDashboardScreen} 
+        <Stack.Screen
+          name="TripDashboard"
+          component={TripDashboardScreen}
           options={{ title: 'Trip Dashboard' }}
         />
-        <Stack.Screen 
-          name="MyTrips" 
-          component={MyTripsScreen} 
+        <Stack.Screen
+          name="MyTrips"
+          component={MyTripsScreen}
           options={{ title: 'My Trips' }}
         />
-        <Stack.Screen 
-          name="JoinTrip" 
-          component={JoinTripScreen} 
+        <Stack.Screen
+          name="JoinTrip"
+          component={JoinTripScreen}
           options={{ title: 'Join a Trip' }}
+        />
+        <Stack.Screen
+          name="PlanTripPlus"
+          component={PlanTripPlusScreen}
+          options={{ title: 'AI Trip Planner', headerShown: false }}
+        />
+        <Stack.Screen
+          name="TripPlusResults"
+          component={TripPlusResultsScreen}
+          options={{ title: 'Trip Results', headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -12,28 +12,36 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
+  LogBox,
 } from 'react-native';
+
+// Suppress nested VirtualizedList warning properly handled by logic
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 import { useNavigation } from '@react-navigation/native';
 import { auth, db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import logger from '../utils/logger';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Slider from '@react-native-community/slider';
 
 const { width } = Dimensions.get('window');
-const SCREEN_COUNT = 6;
+const SCREEN_COUNT = 7;
 
 const PlanTripPlusScreen = () => {
   const navigation = useNavigation();
-  
+
   // Current screen state
   const [currentScreen, setCurrentScreen] = useState(1);
   const [loading, setLoading] = useState(false);
-  
+
   // Screen 1: Trip Basics
   const [tripName, setTripName] = useState('');
   const [tripNotes, setTripNotes] = useState('');
+
+  // Google API Key
+  const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_PLACES_AUTOCOMPLETE_KEY;
   const [startLocation, setStartLocation] = useState({
     place_id: '',
     lat: null,
@@ -47,7 +55,7 @@ const PlanTripPlusScreen = () => {
   const [tripType, setTripType] = useState('one_way');
   const [pace, setPace] = useState('balanced');
   const [transportMode, setTransportMode] = useState('car');
-  
+
   // Screen 2: Meal & Rest Rules
   const [mealWindows, setMealWindows] = useState({
     breakfast: { start: '08:00', end: '09:30' },
@@ -60,7 +68,7 @@ const PlanTripPlusScreen = () => {
   const [middayRest, setMiddayRest] = useState(true);
   const [restDuration, setRestDuration] = useState(150); // 2.5 hours
   const [restWindow, setRestWindow] = useState('post_lunch');
-  
+
   // Screen 3: Route Builder
   const [stops, setStops] = useState([
     {
@@ -74,19 +82,24 @@ const PlanTripPlusScreen = () => {
       departure_pref: 'early',
     },
   ]);
-  
+
   // Screen 4: Stay Preferences
   const [stayPrefs, setStayPrefs] = useState({});
-  
+
   // Screen 5: Attraction Preferences
   const [attractionPrefs, setAttractionPrefs] = useState({});
-  
+
   // Screen 6: Review data
   const [constraints, setConstraints] = useState({
     max_detour_minutes: 30,
     open_time_enforced: true,
     buffer_percentage: 15,
   });
+
+  // Screen 7: Hotel Selection
+  const [hotelOptions, setHotelOptions] = useState({}); // { 0: [hotel1, hotel2], ... }
+  const [selectedHotels, setSelectedHotels] = useState({}); // { 0: hotelObj, ... }
+  const [fetchingHotels, setFetchingHotels] = useState(false);
 
   // Cuisine options
   const cuisineOptions = [
@@ -96,16 +109,16 @@ const PlanTripPlusScreen = () => {
 
   // Accommodation types
   const accommodationTypes = ['home_stay', 'lodge', 'hotel'];
-  
+
   // Star ratings
   const starRatings = ['budget', '3_star', '4_star', '5_star', 'no_preference'];
-  
+
   // Environment options
   const environmentOptions = ['quiet', 'near_temple', 'city_center', 'near_nature'];
-  
+
   // Attraction themes
   const themeOptions = ['religious', 'historical', 'unesco', 'scenic', 'cultural', 'adventure'];
-  
+
   // Walking tolerance options
   const walkingOptions = ['low', 'medium', 'high'];
 
@@ -114,12 +127,57 @@ const PlanTripPlusScreen = () => {
     return Math.round((currentScreen / SCREEN_COUNT) * 100);
   };
 
+  // Fetch Hotel Suggestions
+  const fetchHotelSuggestions = async () => {
+    try {
+      setFetchingHotels(true);
+      const payload = preparePayload(); // Base payload
+
+      // Ensure user_id is included
+      const userId = auth.currentUser?.uid || 'guest';
+      payload.user_id = userId;
+      payload.trip_metadata.user_id = userId;
+
+      const response = await fetch(`${BACKEND_URL}/itinerary/accommodations`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch hotels');
+
+      const data = await response.json();
+      if (data.status === 'success') {
+        // Map stop_id (1-based) to index (0-based) for state
+        const options = {};
+        Object.keys(data.accommodations).forEach(stopId => {
+          options[stopId - 1] = data.accommodations[stopId];
+        });
+        setHotelOptions(options);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Hotel fetch error:", error);
+      Alert.alert("Error", "Could not fetch hotel suggestions. Proceeding without selection.");
+      return true; // Allow proceeding anyway? Or fail? Let's allow proceeding.
+    } finally {
+      setFetchingHotels(false);
+    }
+  };
+
   // Handle next screen
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentScreen < SCREEN_COUNT) {
       // Validate current screen before proceeding
       if (validateCurrentScreen()) {
-        setCurrentScreen(currentScreen + 1);
+        if (currentScreen === 6) {
+          // Fetch hotels before moving to Screen 7
+          const success = await fetchHotelSuggestions();
+          if (success) setCurrentScreen(currentScreen + 1);
+        } else {
+          setCurrentScreen(currentScreen + 1);
+        }
       }
     } else {
       // On last screen, submit the data
@@ -147,7 +205,7 @@ const PlanTripPlusScreen = () => {
         //   return false;
         // }
         return true;
-      
+
       case 3:
         // if (stops.length === 0) {
         //   Alert.alert('Error', 'Please add at least one stop');
@@ -164,7 +222,7 @@ const PlanTripPlusScreen = () => {
         //   }
         // }
         return true;
-      
+
       default:
         return true;
     }
@@ -228,7 +286,7 @@ const PlanTripPlusScreen = () => {
   const preparePayload = () => {
     // Calculate route waypoints for polyline generation
     const waypoints = [];
-    
+
     // Add start location
     if (startLocation.lat && startLocation.lng) {
       waypoints.push({
@@ -237,7 +295,7 @@ const PlanTripPlusScreen = () => {
         name: startLocation.address
       });
     }
-    
+
     // Add all stops
     stops.forEach((stop) => {
       if (stop.lat && stop.lng) {
@@ -249,7 +307,7 @@ const PlanTripPlusScreen = () => {
         });
       }
     });
-    
+
     // Add return to start if round trip
     if (tripType === 'round_trip' && startLocation.lat && startLocation.lng) {
       waypoints.push({
@@ -259,13 +317,13 @@ const PlanTripPlusScreen = () => {
         is_return: true
       });
     }
-    
+
     // Convert meal windows to the format your backend expects
     const activeMealWindows = {};
     Object.entries(mealWindows).forEach(([meal, window]) => {
       activeMealWindows[meal] = window;
     });
-    
+
     // Build user preferences object
     const userPreferences = {
       tripType: tripType,
@@ -275,7 +333,11 @@ const PlanTripPlusScreen = () => {
       cuisinePreferences: selectedCuisines,
       walkingTolerance: attractionPrefs[stops[0]?.name]?.walking_tolerance || 'medium',
       crowdAvoidance: Object.values(attractionPrefs).some(pref => pref?.avoid_crowds) || false,
-      accommodationPreferences: stayPrefs,
+      accommodationPreferences: Object.keys(stayPrefs).reduce((acc, key) => {
+        const validKey = key || `Stop ${stops.findIndex(s => !s.name) + 1}`;
+        acc[validKey] = stayPrefs[key];
+        return acc;
+      }, {}),
       activityThemes: Object.values(attractionPrefs).reduce((themes, pref) => {
         if (pref?.themes) themes.push(...pref.themes);
         return themes;
@@ -286,7 +348,7 @@ const PlanTripPlusScreen = () => {
       familyFriendly: Object.values(stayPrefs).some(pref => pref?.family_friendly) || false,
       parkingRequired: Object.values(stayPrefs).some(pref => pref?.parking) || false
     };
-    
+
     // Build trip stops data for backend
     const tripStops = stops.map((stop, index) => ({
       stop_id: index + 1,
@@ -297,15 +359,18 @@ const PlanTripPlusScreen = () => {
       nights: stop.nights,
       arrival_preference: stop.arrival_pref,
       departure_preference: stop.departure_pref,
-      stay_preferences: stayPrefs[stop.name] || {},
-      attraction_preferences: attractionPrefs[stop.name] || {
+      arrival_preference: stop.arrival_pref,
+      departure_preference: stop.departure_pref,
+      stay_preferences: stayPrefs[index] || {},
+      selected_accommodation: selectedHotels[index] || null,
+      attraction_preferences: attractionPrefs[index] || {
         themes: [],
         max_places_per_half_day: 2,
         avoid_crowds: false,
         walking_tolerance: 'medium'
       }
     }));
-    
+
     // Prepare the complete payload matching your backend schema
     const payload = {
       // Trip basics
@@ -318,7 +383,7 @@ const PlanTripPlusScreen = () => {
         trip_type: tripType,
         version: 'trip_plus_v1'
       },
-      
+
       // Route information
       route: {
         start: {
@@ -326,11 +391,10 @@ const PlanTripPlusScreen = () => {
           lng: startLocation.lng,
           place_id: startLocation.place_id,
           address: startLocation.address,
-          date: startDate.toISOString().split('T')[0],
-          time: startTime.toTimeString().split(' ')[0].substring(0, 5),
-          timestamp: new Date(
-            `${startDate.toISOString().split('T')[0]}T${startTime.toTimeString().split(' ')[0]}`
-          ).toISOString()
+          address: startLocation.address,
+          date: `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}-${String(startDate.getDate()).padStart(2, '0')}`,
+          time: `${String(startTime.getHours()).padStart(2, '0')}:${String(startTime.getMinutes()).padStart(2, '0')}`,
+          timestamp: startDate.toISOString() // Keep timestamp as ISO for fallback
         },
         waypoints: waypoints,
         stops: tripStops,
@@ -338,7 +402,7 @@ const PlanTripPlusScreen = () => {
         total_nights: stops.reduce((sum, stop) => sum + (stop.nights || 0), 0),
         transport_mode: transportMode
       },
-      
+
       // Preferences and constraints
       preferences: {
         travel_style: {
@@ -348,7 +412,13 @@ const PlanTripPlusScreen = () => {
           open_time_enforced: constraints.open_time_enforced,
           buffer_percentage: constraints.buffer_percentage
         },
-        
+
+        rest_preferences: {
+          midday_rest: middayRest,
+          duration_min: restDuration,
+          window: restWindow // 'pre_lunch' or 'post_lunch'
+        },
+
         meal_preferences: {
           meal_windows: activeMealWindows,
           meal_duration_min: mealDuration,
@@ -357,11 +427,22 @@ const PlanTripPlusScreen = () => {
             cuisines: selectedCuisines
           }
         },
-        
-        accommodation_preferences: stayPrefs,
-        
-        activity_preferences: attractionPrefs,
-        
+
+
+
+        // Sanitize preferences to avoid empty keys (Firebase requirement)
+        accommodation_preferences: Object.keys(stayPrefs).reduce((acc, key) => {
+          const validKey = key || `Stop ${stops.findIndex(s => !s.name) + 1}`;
+          acc[validKey] = stayPrefs[key];
+          return acc;
+        }, {}),
+
+        activity_preferences: Object.keys(attractionPrefs).reduce((acc, key) => {
+          const validKey = key || `Stop ${stops.findIndex(s => !s.name) + 1}`;
+          acc[validKey] = attractionPrefs[key];
+          return acc;
+        }, {}),
+
         rest_preferences: {
           midday_rest: {
             required: middayRest,
@@ -369,18 +450,18 @@ const PlanTripPlusScreen = () => {
             preferred_window: restWindow
           }
         },
-        
+
         user_preferences: userPreferences
       },
-      
+
       // Constraints for AI planner
       constraints: {
         scheduling: {
-          max_places_per_half_day: Object.values(attractionPrefs).reduce((max, pref) => 
+          max_places_per_half_day: Object.values(attractionPrefs).reduce((max, pref) =>
             Math.max(max, pref?.max_places_per_half_day || 2), 2
           ),
           avoid_crowds: Object.values(attractionPrefs).some(pref => pref?.avoid_crowds),
-          walking_tolerance: Object.values(attractionPrefs).reduce((tolerance, pref) => 
+          walking_tolerance: Object.values(attractionPrefs).reduce((tolerance, pref) =>
             pref?.walking_tolerance || tolerance, 'medium'
           ),
           time_windows: {
@@ -389,14 +470,14 @@ const PlanTripPlusScreen = () => {
             dinner: mealWindows.dinner
           }
         },
-        
+
         routing: {
           transport_mode: transportMode,
           allow_detours: true,
           max_detour_minutes: constraints.max_detour_minutes,
           optimize_for: pace === 'fast' ? 'time' : pace === 'leisurely' ? 'scenic' : 'balanced'
         },
-        
+
         accommodation: {
           types: Object.values(stayPrefs).reduce((types, pref) => {
             if (pref?.type) types.push(...pref.type);
@@ -406,7 +487,7 @@ const PlanTripPlusScreen = () => {
           parking_required: Object.values(stayPrefs).some(pref => pref?.parking)
         }
       },
-      
+
       // Additional metadata
       metadata: {
         app_version: '1.0.0',
@@ -415,15 +496,21 @@ const PlanTripPlusScreen = () => {
         session_id: Date.now().toString()
       }
     };
-    
+
     return payload;
   };
+
+  // ADDED: Backend URL definition (Replace with your actual IP if testing on device)
+  // For Android Emulator: http://10.0.2.2:8000
+  // For iOS Simulator: http://localhost:8000
+  // Auto-detected Host IP: 192.168.31.131
+  const BACKEND_URL = 'http://192.168.31.131:8000';
 
   // Enhanced handleSubmit function
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      
+
       // Validate user authentication
       const user = auth.currentUser;
       if (!user) {
@@ -431,47 +518,54 @@ const PlanTripPlusScreen = () => {
         navigation.navigate('Login');
         return;
       }
-      
+
       // Validate required data
       if (!validateCurrentScreen()) {
         Alert.alert('Error', 'Please fill all required fields');
         return;
       }
-      
+
       // Prepare the complete payload
       const requestData = preparePayload();
-      
+
       // Add user ID to payload
       requestData.trip_metadata.user_id = user.uid;
       requestData.user_id = user.uid;
-      
+
       console.log('Sending trip-plus data to backend:', JSON.stringify(requestData, null, 2));
-      
+
       // Send to backend endpoint
-      const response = await fetch(`${BACKEND_URL}/trip-plus/create`, {
+      // UPDATED: Point to the new intelligent backend
+      const response = await fetch(`${BACKEND_URL}/itinerary/generate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${await user.getIdToken()}`
+          // 'Authorization': `Bearer ${await user.getIdToken()}` // Uncomment if backend requires auth
         },
         body: JSON.stringify(requestData),
       });
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Backend error response:', errorText);
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
-      
+
       const result = await response.json();
-      console.log('Trip Plus created successfully:', result);
-      
+      console.log('Backend generation successful:', result);
+
+      // Normalize result for Frontend usage
+      // Backend returns { status: "success", itinerary: { schedule: [...] } }
+      // We need to map this to what the UI expects or what we save to Firebase
+
+      const generatedTripId = result.itinerary?.trip_id || `trip_plus_${Date.now()}`;
+
       // Generate polyline using our custom algorithm (not OSRM)
       let customPolyline = null;
       try {
         // Extract coordinates for polyline generation
         const coordinates = [];
-        
+
         // Add start point
         if (startLocation.lat && startLocation.lng) {
           coordinates.push({
@@ -479,7 +573,7 @@ const PlanTripPlusScreen = () => {
             longitude: startLocation.lng
           });
         }
-        
+
         // Add all stops
         stops.forEach(stop => {
           if (stop.lat && stop.lng) {
@@ -489,7 +583,7 @@ const PlanTripPlusScreen = () => {
             });
           }
         });
-        
+
         // Add return point if round trip
         if (tripType === 'round_trip' && startLocation.lat && startLocation.lng) {
           coordinates.push({
@@ -497,7 +591,7 @@ const PlanTripPlusScreen = () => {
             longitude: startLocation.lng
           });
         }
-        
+
         // Generate optimized polyline using our algorithm
         if (coordinates.length >= 2) {
           customPolyline = await generateOptimizedPolyline(coordinates, {
@@ -511,9 +605,10 @@ const PlanTripPlusScreen = () => {
         console.warn('Custom polyline generation failed:', polylineError);
         customPolyline = null;
       }
-      
+
       // Prepare Firestore document
-      const generatedTripId = result.trip_id || `trip_plus_${Date.now()}`;
+      // Note: generatedTripId is already defined above
+
       const firebasePayload = {
         // Trip metadata
         userId: user.uid,
@@ -524,14 +619,14 @@ const PlanTripPlusScreen = () => {
         status: 'planned',
         createdAt: new Date().toISOString(),
         savedAt: null,
-        
+
         // Source and destination
         source: {
           lat: startLocation.lat,
           lng: startLocation.lng,
         },
         sourceName: startLocation.address,
-        
+
         // Route information
         stops: stops.map(stop => ({
           lat: stop.lat,
@@ -543,44 +638,44 @@ const PlanTripPlusScreen = () => {
         })),
         stopNames: stops.map(stop => stop.name),
         totalNights: stops.reduce((sum, stop) => sum + (stop.nights || 0), 0),
-        
+
         // Trip type and style
         trip_type: tripType,
         pace: pace,
         transport_mode: transportMode,
-        
-        // Backend result
+
+        // Backend result - keeping raw result just in case
         ...result,
-        
-        // Itinerary data
-        itinerary: result.itinerary || result.itineraryData || {},
-        timeline: result.timeline || [],
-        
+
+        // Itinerary data - MAPPED from new backend structure
+        itinerary: result.itinerary || {},
+        timeline: result.itinerary?.days || [], // New backend uses 'days' array
+
         // Map data
         mapRegion: result.mapRegion || null,
-        polylineCoordinates: customPolyline || result.polylineCoordinates || result.polyline || [],
-        polylineSource: customPolyline ? 'custom_algorithm' : (result.polylineCoordinates ? 'backend' : 'none'),
-        
+        polylineCoordinates: customPolyline || [],
+        polylineSource: customPolyline ? 'custom_algorithm' : 'none',
+
         // Distances and durations
-        totalDistance: result.totalDistance || result.route_summary?.total_distance_km || 0,
-        totalDuration: result.totalDuration || result.route_summary?.total_duration_min || 0,
-        totalDays: Math.ceil(
-          stops.reduce((sum, stop) => sum + (stop.nights || 0), 0) + 
+        totalDistance: result.itinerary?.summary?.total_distance || 0,
+        totalDuration: 0,
+        totalDays: result.itinerary?.summary?.total_days || Math.ceil(
+          stops.reduce((sum, stop) => sum + (stop.nights || 0), 0) +
           (tripType === 'round_trip' ? 1 : 0)
         ),
-        
+
         // Preferences
-        mealPreferences: ['breakfast', 'lunch', 'dinner'].filter(meal => 
+        mealPreferences: ['breakfast', 'lunch', 'dinner'].filter(meal =>
           mealWindows[meal]?.start && mealWindows[meal]?.end
         ),
         mealWindows: mealWindows,
         meal_duration_min: mealDuration,
-        
+
         // Constraints
         max_detour_minutes: constraints.max_detour_minutes,
         open_time_enforced: constraints.open_time_enforced,
         buffer_percentage: constraints.buffer_percentage,
-        
+
         // User preferences
         veg_pref: foodPref,
         user_preferences: {
@@ -589,36 +684,44 @@ const PlanTripPlusScreen = () => {
           pace: pace,
           transport: transportMode,
           middayRest: middayRest,
-          walkingTolerance: Object.values(attractionPrefs).reduce((tolerance, pref) => 
+          walkingTolerance: Object.values(attractionPrefs).reduce((tolerance, pref) =>
             pref?.walking_tolerance || tolerance, 'medium'
           )
         },
-        
-        // Stay and attraction preferences
-        stay_preferences: stayPrefs,
-        attraction_preferences: attractionPrefs,
-        
+
+        // Stay and attraction preferences (Sanitized for Firestore)
+        stay_preferences: Object.keys(stayPrefs).reduce((acc, key) => {
+          const validKey = key || `Stop ${stops.findIndex(s => !s.name) + 1}`;
+          acc[validKey] = stayPrefs[key];
+          return acc;
+        }, {}),
+        attraction_preferences: Object.keys(attractionPrefs).reduce((acc, key) => {
+          const validKey = key || `Stop ${stops.findIndex(s => !s.name) + 1}`;
+          acc[validKey] = attractionPrefs[key];
+          return acc;
+        }, {}),
+
         // Collections
         members: [user.uid],
         notes: tripNotes || '',
-        
+
         // Timestamps
         preferred_start_time: new Date(
           `${startDate.toISOString().split('T')[0]}T${startTime.toTimeString().split(' ')[0]}`
         ).toISOString(),
-        
+
         // System fields
         version: 'trip_plus_v1',
         collection: 'trip_plus',
         updatedAt: new Date().toISOString()
       };
-      
+
       // Save to Firestore trip_plus collection
       const tripPlusRef = collection(db, 'trip_plus');
       const docRef = await addDoc(tripPlusRef, firebasePayload);
-      
+
       console.log('Trip Plus saved to Firestore with ID:', docRef.id);
-      
+
       // Navigate to results screen
       navigation.navigate('TripPlusResults', {
         tripData: result,
@@ -631,20 +734,20 @@ const PlanTripPlusScreen = () => {
           attractionPrefs: attractionPrefs
         }
       });
-      
+
     } catch (error) {
       console.error('Error creating Trip Plus:', error);
-      
+
       // Try to save to Firestore even if backend fails
       try {
         const fallbackPayload = preparePayload();
         fallbackPayload.status = 'backend_failed';
         fallbackPayload.error = error.message;
         fallbackPayload.createdAt = new Date().toISOString();
-        
+
         const tripPlusRef = collection(db, 'trip_plus');
         const docRef = await addDoc(tripPlusRef, fallbackPayload);
-        
+
         Alert.alert(
           'Partial Success',
           'Trip saved locally. Backend processing failed. You can try again later.',
@@ -676,7 +779,7 @@ const PlanTripPlusScreen = () => {
     // This is where your custom polyline algorithm will go
     // For now, return the coordinates as-is
     console.log('Generating polyline for', coordinates.length, 'points with options:', options);
-    
+
     // Simulate API call or algorithm processing
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -704,6 +807,8 @@ const PlanTripPlusScreen = () => {
         return renderScreen5();
       case 6:
         return renderScreen6();
+      case 7:
+        return renderScreen7();
       default:
         return renderScreen1();
     }
@@ -711,9 +816,13 @@ const PlanTripPlusScreen = () => {
 
   // Screen 1: Trip Basics
   const renderScreen1 = () => (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+      contentContainerStyle={{ paddingBottom: 100 }}
+    >
       <Text style={styles.screenTitle}>Trip Basics</Text>
-      
+
       {/* Trip Identity */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Trip Identity</Text>
@@ -738,18 +847,72 @@ const PlanTripPlusScreen = () => {
       {/* Start & End */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Start Location</Text>
-        <TouchableOpacity 
-          style={styles.input}
-          onPress={() => Alert.alert('Info', 'Google Places integration needed')}
-        >
-          <Text style={startLocation.address ? styles.inputText : styles.placeholder}>
-            {startLocation.address || 'Search for location *'}
-          </Text>
-          <MaterialIcons name="place" size={20} color="#666" />
-        </TouchableOpacity>
-        
+        <View style={{ zIndex: 9999, marginBottom: 10 }}>
+          <GooglePlacesAutocomplete
+            placeholder="Search for start location *"
+            debounce={300}
+            onPress={(data, details = null) => {
+              setStartLocation({
+                address: data.description,
+                place_id: details?.place_id,
+                lat: details?.geometry?.location?.lat,
+                lng: details?.geometry?.location?.lng,
+              });
+            }}
+            onFail={(error) => console.error('Google Places Error:', error)}
+            query={{
+              key: GOOGLE_API_KEY,
+              language: 'en',
+              types: '(cities)',
+            }}
+            fetchDetails={true}
+            textInputProps={{
+              placeholderTextColor: '#999',
+            }}
+            styles={{
+              container: {
+                flex: 0,
+              },
+              textInput: {
+                height: 50,
+                color: '#333',
+                fontSize: 16,
+                backgroundColor: '#fff',
+                borderWidth: 1,
+                borderColor: '#eee',
+                borderRadius: 8,
+                paddingHorizontal: 15,
+              },
+              listView: {
+                position: 'absolute',
+                top: 55,
+                width: '100%',
+                backgroundColor: 'white',
+                borderRadius: 5,
+                elevation: 10,
+                zIndex: 9999,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.2,
+                shadowRadius: 4,
+              },
+              row: {
+                backgroundColor: '#FFFFFF',
+                padding: 13,
+                height: 44,
+                flexDirection: 'row',
+              },
+              separator: {
+                height: 0.5,
+                backgroundColor: '#c8c7cc',
+              },
+            }}
+            enablePoweredByContainer={false}
+          />
+        </View>
+
         <View style={styles.row}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[styles.input, styles.halfInput]}
             onPress={() => setShowDatePicker(true)}
           >
@@ -758,8 +921,8 @@ const PlanTripPlusScreen = () => {
             </Text>
             <MaterialIcons name="calendar-today" size={20} color="#666" />
           </TouchableOpacity>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={[styles.input, styles.halfInput]}
             onPress={() => setShowTimePicker(true)}
           >
@@ -795,7 +958,7 @@ const PlanTripPlusScreen = () => {
       {/* Travel Style */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Travel Style</Text>
-        
+
         <Text style={styles.subSectionTitle}>Pace</Text>
         <View style={styles.radioGroup}>
           {['leisurely', 'balanced', 'fast'].map((p) => (
@@ -826,8 +989,8 @@ const PlanTripPlusScreen = () => {
                 {transportMode === mode && <View style={styles.selectedRadio} />}
               </View>
               <Text style={styles.radioLabel}>
-                {mode === 'car' ? 'Self-drive car' : 
-                 mode === 'cab' ? 'Cab' : 'Bike'}
+                {mode === 'car' ? 'Self-drive car' :
+                  mode === 'cab' ? 'Cab' : 'Bike'}
               </Text>
             </TouchableOpacity>
           ))}
@@ -847,7 +1010,7 @@ const PlanTripPlusScreen = () => {
           minimumDate={new Date()}
         />
       )}
-      
+
       {showTimePicker && (
         <DateTimePicker
           value={startTime}
@@ -866,11 +1029,11 @@ const PlanTripPlusScreen = () => {
   const renderScreen2 = () => (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.screenTitle}>Meal & Rest Rules</Text>
-      
+
       {/* Meal Windows */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Meal Windows</Text>
-        
+
         {['breakfast', 'lunch', 'dinner'].map((meal) => (
           <View key={meal} style={styles.timeWindowContainer}>
             <Text style={styles.mealLabel}>
@@ -900,7 +1063,7 @@ const PlanTripPlusScreen = () => {
       {/* Meal Preferences */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Meal Preferences</Text>
-        
+
         <Text style={styles.subSectionTitle}>Food Preference</Text>
         <View style={styles.radioGroup}>
           {['veg', 'non_veg', 'any'].map((pref) => (
@@ -913,8 +1076,8 @@ const PlanTripPlusScreen = () => {
                 {foodPref === pref && <View style={styles.selectedRadio} />}
               </View>
               <Text style={styles.radioLabel}>
-                {pref === 'veg' ? 'Vegetarian' : 
-                 pref === 'non_veg' ? 'Non-vegetarian' : 'Any'}
+                {pref === 'veg' ? 'Vegetarian' :
+                  pref === 'non_veg' ? 'Non-vegetarian' : 'Any'}
               </Text>
             </TouchableOpacity>
           ))}
@@ -958,7 +1121,7 @@ const PlanTripPlusScreen = () => {
       {/* Rest Rules */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Rest Rules</Text>
-        
+
         <View style={styles.switchContainer}>
           <Text style={styles.switchLabel}>Midday Rest Required?</Text>
           <TouchableOpacity
@@ -1017,14 +1180,18 @@ const PlanTripPlusScreen = () => {
 
   // Screen 3: Route Builder
   const renderScreen3 = () => (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+      contentContainerStyle={{ paddingBottom: 100 }}
+    >
       <Text style={styles.screenTitle}>Route & Stops Builder</Text>
-      
+
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>
           Stops {tripType === 'round_trip' ? '(Round Trip)' : '(One Way)'}
         </Text>
-        
+
         {stops.map((stop, index) => (
           <View key={index} style={styles.stopCard}>
             <View style={styles.stopHeader}>
@@ -1045,17 +1212,76 @@ const PlanTripPlusScreen = () => {
                 </TouchableOpacity>
               )}
             </View>
-            
-            <TouchableOpacity 
-              style={styles.input}
-              onPress={() => Alert.alert('Info', 'Google Places integration needed')}
-            >
-              <Text style={stop.name ? styles.inputText : styles.placeholder}>
-                {stop.name || `City / Location ${index + 1} *`}
-              </Text>
-              <MaterialIcons name="place" size={20} color="#666" />
-            </TouchableOpacity>
-            
+
+            <View style={{ zIndex: 10000 - index, marginBottom: 10 }}>
+              <GooglePlacesAutocomplete
+                placeholder={`Search for stop ${index + 1} *`}
+                debounce={300}
+                onPress={(data, details = null) => {
+                  const updatedStops = [...stops];
+                  updatedStops[index] = {
+                    ...updatedStops[index],
+                    name: data.description,
+                    place_id: details?.place_id || data.place_id,
+                    lat: details?.geometry?.location?.lat,
+                    lng: details?.geometry?.location?.lng,
+                    address: data.description
+                  };
+                  setStops(updatedStops);
+                }}
+                onFail={(error) => console.error('Google Places Error (Stop):', error)}
+                query={{
+                  key: GOOGLE_API_KEY,
+                  language: 'en',
+                  types: '(cities)',
+                }}
+                fetchDetails={true}
+                textInputProps={{
+                  placeholderTextColor: '#999',
+                  defaultValue: stop.name || '',
+                }}
+                styles={{
+                  container: {
+                    flex: 0,
+                  },
+                  textInput: {
+                    height: 50,
+                    color: '#333',
+                    fontSize: 16,
+                    backgroundColor: '#fff',
+                    borderWidth: 1,
+                    borderColor: '#eee',
+                    borderRadius: 8,
+                    paddingHorizontal: 15,
+                  },
+                  listView: {
+                    position: 'absolute',
+                    top: 55,
+                    width: '100%',
+                    backgroundColor: 'white',
+                    borderRadius: 5,
+                    elevation: 10,
+                    zIndex: 10000,
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 4,
+                  },
+                  row: {
+                    backgroundColor: '#FFFFFF',
+                    padding: 13,
+                    height: 44,
+                    flexDirection: 'row',
+                  },
+                  separator: {
+                    height: 0.5,
+                    backgroundColor: '#c8c7cc',
+                  },
+                }}
+                enablePoweredByContainer={false}
+              />
+            </View>
+
             <View style={styles.row}>
               <View style={[styles.input, styles.halfInput]}>
                 <Text style={styles.inputLabel}>Nights</Text>
@@ -1075,7 +1301,7 @@ const PlanTripPlusScreen = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              
+
               <View style={[styles.input, styles.halfInput]}>
                 <Text style={styles.inputLabel}>Arrival</Text>
                 <View style={styles.prefButtons}>
@@ -1099,7 +1325,7 @@ const PlanTripPlusScreen = () => {
                 </View>
               </View>
             </View>
-            
+
             <View style={styles.input}>
               <Text style={styles.inputLabel}>Departure</Text>
               <View style={styles.prefButtons}>
@@ -1124,7 +1350,7 @@ const PlanTripPlusScreen = () => {
             </View>
           </View>
         ))}
-        
+
         <TouchableOpacity style={styles.addButton} onPress={addStop}>
           <MaterialIcons name="add-circle" size={24} color="#4A90E2" />
           <Text style={styles.addButtonText}>Add Stop</Text>
@@ -1137,19 +1363,18 @@ const PlanTripPlusScreen = () => {
   const renderScreen4 = () => (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.screenTitle}>Stay Preferences</Text>
-      
+
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Accommodation Preferences per Stop</Text>
-        
+
         {stops.map((stop, index) => (
           <View key={index} style={styles.stopCard}>
             <Text style={styles.stopName}>{stop.name || `Stop ${index + 1}`}</Text>
-            
-            <Text style={styles.inputLabel}>Accommodation Type</Text>
+
+            <Text style={styles.inputLabel}>Type</Text>
             <View style={styles.chipContainer}>
               {accommodationTypes.map((type) => {
-                const currentTypes = stayPrefs[stop.name]?.type || [];
-                const isSelected = currentTypes.includes(type);
+                const isSelected = stayPrefs[index]?.type?.includes(type);
                 return (
                   <TouchableOpacity
                     key={type}
@@ -1159,22 +1384,21 @@ const PlanTripPlusScreen = () => {
                     ]}
                     onPress={() => {
                       const updatedPrefs = { ...stayPrefs };
-                      if (!updatedPrefs[stop.name]) {
-                        updatedPrefs[stop.name] = {
-                          type: [],
+                      if (!updatedPrefs[index]) {
+                        updatedPrefs[index] = {
+                          type: [type],
                           star: 'no_preference',
                           family_friendly: false,
                           environment: [],
                           parking: false,
                         };
-                      }
-                      
-                      if (isSelected) {
-                        updatedPrefs[stop.name].type = currentTypes.filter(t => t !== type);
                       } else {
-                        updatedPrefs[stop.name].type = [...currentTypes, type];
+                        if (isSelected) {
+                          updatedPrefs[index].type = updatedPrefs[index].type.filter(t => t !== type);
+                        } else {
+                          updatedPrefs[index].type = [...updatedPrefs[index].type, type];
+                        }
                       }
-                      
                       setStayPrefs(updatedPrefs);
                     }}
                   >
@@ -1188,48 +1412,51 @@ const PlanTripPlusScreen = () => {
                 );
               })}
             </View>
-            
+
             <Text style={styles.inputLabel}>Star Rating</Text>
-            <View style={styles.radioGroup}>
-              {starRatings.map((star) => {
-                const currentStar = stayPrefs[stop.name]?.star || 'no_preference';
-                return (
-                  <TouchableOpacity
-                    key={star}
-                    style={styles.radioOption}
-                    onPress={() => {
-                      const updatedPrefs = { ...stayPrefs };
-                      if (!updatedPrefs[stop.name]) {
-                        updatedPrefs[stop.name] = {
-                          type: [],
-                          star: star,
-                          family_friendly: false,
-                          environment: [],
-                          parking: false,
-                        };
-                      } else {
-                        updatedPrefs[stop.name].star = star;
-                      }
-                      setStayPrefs(updatedPrefs);
-                    }}
-                  >
-                    <View style={styles.radioCircle}>
-                      {currentStar === star && <View style={styles.selectedRadio} />}
-                    </View>
-                    <Text style={styles.radioLabel}>
-                      {star === 'no_preference' ? 'No preference' : 
-                       star === 'budget' ? 'Budget' : 
-                       star.replace('_', '-').toUpperCase()}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-            
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View style={styles.chipContainer}>
+                {starRatings.map((star) => {
+                  const isSelected = stayPrefs[index]?.star === star;
+                  return (
+                    <TouchableOpacity
+                      key={star}
+                      style={[
+                        styles.chip,
+                        isSelected && styles.chipSelected
+                      ]}
+                      onPress={() => {
+                        const updatedPrefs = { ...stayPrefs };
+                        if (!updatedPrefs[index]) {
+                          updatedPrefs[index] = {
+                            type: [],
+                            star: star,
+                            family_friendly: false,
+                            environment: [],
+                            parking: false,
+                          };
+                        } else {
+                          updatedPrefs[index].star = star;
+                        }
+                        setStayPrefs(updatedPrefs);
+                      }}
+                    >
+                      <Text style={[
+                        styles.chipText,
+                        isSelected && styles.chipTextSelected
+                      ]}>
+                        {star.replace('_', ' ').toUpperCase()}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </ScrollView>
+
             <Text style={styles.inputLabel}>Environment</Text>
             <View style={styles.chipContainer}>
               {environmentOptions.map((env) => {
-                const currentEnvs = stayPrefs[stop.name]?.environment || [];
+                const currentEnvs = stayPrefs[index]?.environment || [];
                 const isSelected = currentEnvs.includes(env);
                 return (
                   <TouchableOpacity
@@ -1240,8 +1467,8 @@ const PlanTripPlusScreen = () => {
                     ]}
                     onPress={() => {
                       const updatedPrefs = { ...stayPrefs };
-                      if (!updatedPrefs[stop.name]) {
-                        updatedPrefs[stop.name] = {
+                      if (!updatedPrefs[index]) {
+                        updatedPrefs[index] = {
                           type: [],
                           star: 'no_preference',
                           family_friendly: false,
@@ -1250,9 +1477,9 @@ const PlanTripPlusScreen = () => {
                         };
                       } else {
                         if (isSelected) {
-                          updatedPrefs[stop.name].environment = currentEnvs.filter(e => e !== env);
+                          updatedPrefs[index].environment = currentEnvs.filter(e => e !== env);
                         } else {
-                          updatedPrefs[stop.name].environment = [...currentEnvs, env];
+                          updatedPrefs[index].environment = [...currentEnvs, env];
                         }
                       }
                       setStayPrefs(updatedPrefs);
@@ -1268,18 +1495,18 @@ const PlanTripPlusScreen = () => {
                 );
               })}
             </View>
-            
+
             <View style={styles.switchContainer}>
               <Text style={styles.switchLabel}>Family Friendly</Text>
               <TouchableOpacity
                 style={[
                   styles.toggle,
-                  stayPrefs[stop.name]?.family_friendly ? styles.toggleOn : styles.toggleOff
+                  stayPrefs[index]?.family_friendly ? styles.toggleOn : styles.toggleOff
                 ]}
                 onPress={() => {
                   const updatedPrefs = { ...stayPrefs };
-                  if (!updatedPrefs[stop.name]) {
-                    updatedPrefs[stop.name] = {
+                  if (!updatedPrefs[index]) {
+                    updatedPrefs[index] = {
                       type: [],
                       star: 'no_preference',
                       family_friendly: true,
@@ -1287,29 +1514,29 @@ const PlanTripPlusScreen = () => {
                       parking: false,
                     };
                   } else {
-                    updatedPrefs[stop.name].family_friendly = !updatedPrefs[stop.name].family_friendly;
+                    updatedPrefs[index].family_friendly = !updatedPrefs[index].family_friendly;
                   }
                   setStayPrefs(updatedPrefs);
                 }}
               >
                 <View style={[
                   styles.toggleCircle,
-                  stayPrefs[stop.name]?.family_friendly && styles.toggleCircleOn
+                  stayPrefs[index]?.family_friendly && styles.toggleCircleOn
                 ]} />
               </TouchableOpacity>
             </View>
-            
+
             <View style={styles.switchContainer}>
               <Text style={styles.switchLabel}>Parking Required</Text>
               <TouchableOpacity
                 style={[
                   styles.toggle,
-                  stayPrefs[stop.name]?.parking ? styles.toggleOn : styles.toggleOff
+                  stayPrefs[index]?.parking ? styles.toggleOn : styles.toggleOff
                 ]}
                 onPress={() => {
                   const updatedPrefs = { ...stayPrefs };
-                  if (!updatedPrefs[stop.name]) {
-                    updatedPrefs[stop.name] = {
+                  if (!updatedPrefs[index]) {
+                    updatedPrefs[index] = {
                       type: [],
                       star: 'no_preference',
                       family_friendly: false,
@@ -1317,14 +1544,14 @@ const PlanTripPlusScreen = () => {
                       parking: true,
                     };
                   } else {
-                    updatedPrefs[stop.name].parking = !updatedPrefs[stop.name].parking;
+                    updatedPrefs[index].parking = !updatedPrefs[index].parking;
                   }
                   setStayPrefs(updatedPrefs);
                 }}
               >
                 <View style={[
                   styles.toggleCircle,
-                  stayPrefs[stop.name]?.parking && styles.toggleCircleOn
+                  stayPrefs[index]?.parking && styles.toggleCircleOn
                 ]} />
               </TouchableOpacity>
             </View>
@@ -1338,18 +1565,18 @@ const PlanTripPlusScreen = () => {
   const renderScreen5 = () => (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.screenTitle}>Attraction Preferences</Text>
-      
+
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Preferences per Stop</Text>
-        
+
         {stops.map((stop, index) => (
           <View key={index} style={styles.stopCard}>
             <Text style={styles.stopName}>{stop.name || `Stop ${index + 1}`}</Text>
-            
+
             <Text style={styles.inputLabel}>Themes</Text>
             <View style={styles.chipContainer}>
               {themeOptions.map((theme) => {
-                const currentThemes = attractionPrefs[stop.name]?.themes || [];
+                const currentThemes = attractionPrefs[index]?.themes || [];
                 const isSelected = currentThemes.includes(theme);
                 return (
                   <TouchableOpacity
@@ -1360,8 +1587,8 @@ const PlanTripPlusScreen = () => {
                     ]}
                     onPress={() => {
                       const updatedPrefs = { ...attractionPrefs };
-                      if (!updatedPrefs[stop.name]) {
-                        updatedPrefs[stop.name] = {
+                      if (!updatedPrefs[index]) {
+                        updatedPrefs[index] = {
                           themes: [theme],
                           max_places_per_half_day: 2,
                           avoid_crowds: false,
@@ -1369,9 +1596,9 @@ const PlanTripPlusScreen = () => {
                         };
                       } else {
                         if (isSelected) {
-                          updatedPrefs[stop.name].themes = currentThemes.filter(t => t !== theme);
+                          updatedPrefs[index].themes = currentThemes.filter(t => t !== theme);
                         } else {
-                          updatedPrefs[stop.name].themes = [...currentThemes, theme];
+                          updatedPrefs[index].themes = [...currentThemes, theme];
                         }
                       }
                       setAttractionPrefs(updatedPrefs);
@@ -1387,27 +1614,27 @@ const PlanTripPlusScreen = () => {
                 );
               })}
             </View>
-            
+
             <Text style={styles.inputLabel}>
-              Max places per half-day: {attractionPrefs[stop.name]?.max_places_per_half_day || 2}
+              Max places per half-day: {attractionPrefs[index]?.max_places_per_half_day || 2}
             </Text>
             <Slider
               style={styles.slider}
               minimumValue={1}
               maximumValue={3}
               step={1}
-              value={attractionPrefs[stop.name]?.max_places_per_half_day || 2}
+              value={attractionPrefs[index]?.max_places_per_half_day || 2}
               onValueChange={(value) => {
                 const updatedPrefs = { ...attractionPrefs };
-                if (!updatedPrefs[stop.name]) {
-                  updatedPrefs[stop.name] = {
+                if (!updatedPrefs[index]) {
+                  updatedPrefs[index] = {
                     themes: [],
                     max_places_per_half_day: value,
                     avoid_crowds: false,
                     walking_tolerance: 'medium',
                   };
                 } else {
-                  updatedPrefs[stop.name].max_places_per_half_day = value;
+                  updatedPrefs[index].max_places_per_half_day = value;
                 }
                 setAttractionPrefs(updatedPrefs);
               }}
@@ -1415,55 +1642,56 @@ const PlanTripPlusScreen = () => {
               maximumTrackTintColor="#E0E0E0"
               thumbTintColor="#4A90E2"
             />
-            
+
             <View style={styles.switchContainer}>
               <Text style={styles.switchLabel}>Avoid Crowds</Text>
               <TouchableOpacity
                 style={[
                   styles.toggle,
-                  attractionPrefs[stop.name]?.avoid_crowds ? styles.toggleOn : styles.toggleOff
+                  attractionPrefs[index]?.avoid_crowds ? styles.toggleOn : styles.toggleOff
                 ]}
                 onPress={() => {
                   const updatedPrefs = { ...attractionPrefs };
-                  if (!updatedPrefs[stop.name]) {
-                    updatedPrefs[stop.name] = {
+                  if (!updatedPrefs[index]) {
+                    updatedPrefs[index] = {
                       themes: [],
                       max_places_per_half_day: 2,
                       avoid_crowds: true,
+                      include_rest: false,
                       walking_tolerance: 'medium',
                     };
                   } else {
-                    updatedPrefs[stop.name].avoid_crowds = !updatedPrefs[stop.name].avoid_crowds;
+                    updatedPrefs[index].avoid_crowds = !updatedPrefs[index].avoid_crowds;
                   }
                   setAttractionPrefs(updatedPrefs);
                 }}
               >
                 <View style={[
                   styles.toggleCircle,
-                  attractionPrefs[stop.name]?.avoid_crowds && styles.toggleCircleOn
+                  attractionPrefs[index]?.avoid_crowds && styles.toggleCircleOn
                 ]} />
               </TouchableOpacity>
             </View>
-            
+
             <Text style={styles.inputLabel}>Walking Tolerance</Text>
             <View style={styles.radioGroup}>
               {walkingOptions.map((tolerance) => {
-                const currentTolerance = attractionPrefs[stop.name]?.walking_tolerance || 'medium';
+                const currentTolerance = attractionPrefs[index]?.walking_tolerance || 'medium';
                 return (
                   <TouchableOpacity
                     key={tolerance}
                     style={styles.radioOption}
                     onPress={() => {
                       const updatedPrefs = { ...attractionPrefs };
-                      if (!updatedPrefs[stop.name]) {
-                        updatedPrefs[stop.name] = {
+                      if (!updatedPrefs[index]) {
+                        updatedPrefs[index] = {
                           themes: [],
                           max_places_per_half_day: 2,
                           avoid_crowds: false,
                           walking_tolerance: tolerance,
                         };
                       } else {
-                        updatedPrefs[stop.name].walking_tolerance = tolerance;
+                        updatedPrefs[index].walking_tolerance = tolerance;
                       }
                       setAttractionPrefs(updatedPrefs);
                     }}
@@ -1487,14 +1715,14 @@ const PlanTripPlusScreen = () => {
   // Screen 6: Review & Generate
   const renderScreen6 = () => {
     const payload = preparePayload();
-    
+
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.screenTitle}>Review & Generate</Text>
-        
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Trip Summary</Text>
-          
+
           <View style={styles.summaryCard}>
             <Text style={styles.summaryTitle}>Trip Basics</Text>
             <Text style={styles.summaryText}>Name: {tripName}</Text>
@@ -1503,7 +1731,7 @@ const PlanTripPlusScreen = () => {
             <Text style={styles.summaryText}>Pace: {pace}</Text>
             <Text style={styles.summaryText}>Transport: {transportMode}</Text>
           </View>
-          
+
           <View style={styles.summaryCard}>
             <Text style={styles.summaryTitle}>Route</Text>
             {stops.map((stop, index) => (
@@ -1512,7 +1740,7 @@ const PlanTripPlusScreen = () => {
               </Text>
             ))}
           </View>
-          
+
           <View style={styles.summaryCard}>
             <Text style={styles.summaryTitle}>Meal Rules</Text>
             <Text style={styles.summaryText}>Breakfast: {mealWindows.breakfast.start} - {mealWindows.breakfast.end}</Text>
@@ -1520,7 +1748,7 @@ const PlanTripPlusScreen = () => {
             <Text style={styles.summaryText}>Dinner: {mealWindows.dinner.start} - {mealWindows.dinner.end}</Text>
             <Text style={styles.summaryText}>Food: {foodPref}</Text>
           </View>
-          
+
           <View style={styles.summaryCard}>
             <Text style={styles.summaryTitle}>Stay Preferences</Text>
             {Object.keys(stayPrefs).map((stopName) => (
@@ -1529,7 +1757,7 @@ const PlanTripPlusScreen = () => {
               </Text>
             ))}
           </View>
-          
+
           <View style={styles.summaryCard}>
             <Text style={styles.summaryTitle}>Attraction Preferences</Text>
             {Object.keys(attractionPrefs).map((stopName) => (
@@ -1538,7 +1766,7 @@ const PlanTripPlusScreen = () => {
               </Text>
             ))}
           </View>
-          
+
           <View style={styles.noteBox}>
             <MaterialIcons name="info" size={20} color="#4A90E2" />
             <Text style={styles.noteText}>
@@ -1550,15 +1778,79 @@ const PlanTripPlusScreen = () => {
     );
   };
 
+  // Screen 7: Hotel Selection
+  const renderScreen7 = () => (
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <Text style={styles.screenTitle}>Select Accommodations</Text>
+
+      {fetchingHotels ? (
+        <View style={{ padding: 20, alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#02214aff" />
+          <Text style={{ marginTop: 10, color: '#666' }}>Finding best hotels for you...</Text>
+        </View>
+      ) : (
+        <View style={styles.section}>
+          {stops.map((stop, index) => {
+            const options = hotelOptions[index] || [];
+            if (options.length === 0) return null;
+
+            return (
+              <View key={index} style={styles.stopCard}>
+                <Text style={styles.stopName}>Stay in {stop.name}</Text>
+                <Text style={styles.inputLabel}>Recommended based on your preferences:</Text>
+
+                {options.map((hotel, hIdx) => {
+                  const isSelected = selectedHotels[index]?.place_id === hotel.place_id;
+                  return (
+                    <TouchableOpacity
+                      key={hIdx}
+                      style={[styles.hotelCard, isSelected && styles.hotelCardSelected]}
+                      onPress={() => {
+                        const newSelected = { ...selectedHotels };
+                        if (isSelected) delete newSelected[index];
+                        else newSelected[index] = hotel;
+                        setSelectedHotels(newSelected);
+                      }}
+                    >
+                      <View style={styles.row}>
+                        <Text style={[styles.hotelName, isSelected && styles.hotelNameSelected]}>
+                          {hotel.name}
+                        </Text>
+                        {hotel.rating && (
+                          <View style={styles.ratingBadge}>
+                            <MaterialIcons name="star" size={12} color="#FFD700" />
+                            <Text style={styles.ratingText}>{hotel.rating}</Text>
+                          </View>
+                        )}
+                      </View>
+                      <Text style={[styles.hotelAddress, isSelected && styles.hotelAddressSelected]}>
+                        {hotel.vicinity || hotel.formatted_address}
+                      </Text>
+                      {isSelected && (
+                        <View style={styles.selectedCheck}>
+                          <MaterialIcons name="check-circle" size={20} color="#02214aff" />
+                        </View>
+                      )}
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            );
+          })}
+        </View>
+      )}
+    </ScrollView>
+  );
+
   // Progress bar
   const ProgressBar = () => (
     <View style={styles.progressContainer}>
       <View style={styles.progressBar}>
-        <View 
+        <View
           style={[
-            styles.progressFill, 
+            styles.progressFill,
             { width: `${getCompletionPercentage()}%` }
-          ]} 
+          ]}
         />
       </View>
       <Text style={styles.progressText}>
@@ -1568,13 +1860,13 @@ const PlanTripPlusScreen = () => {
   );
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
@@ -1611,7 +1903,7 @@ const PlanTripPlusScreen = () => {
             Previous
           </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[
             styles.navButton,
@@ -2027,6 +2319,54 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     flex: 1,
   },
+  hotelCard: {
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: '#F9F9F9',
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#EEE',
+  },
+  hotelCardSelected: {
+    backgroundColor: '#E8F4FD',
+    borderColor: '#4A90E2',
+  },
+  hotelName: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+  },
+  hotelNameSelected: {
+    color: '#02214aff',
+  },
+  hotelAddress: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 2,
+  },
+  hotelAddressSelected: {
+    color: '#555',
+  },
+  ratingBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#EEE',
+  },
+  ratingText: {
+    fontSize: 10,
+    fontWeight: '600',
+    marginLeft: 2,
+  },
+  selectedCheck: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+  }
 });
 
 export default PlanTripPlusScreen;
